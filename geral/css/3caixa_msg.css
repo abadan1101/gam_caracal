@@ -1,0 +1,70 @@
+/*------------------------CAIXA DE DIALOGO DE ALERTAS E MENSAGENS-------------------------------*/
+#msgAlert{
+	left: 20vw;
+	right: 20vw;
+   	top: 20vh;
+	bottom: auto;
+   	width: auto;
+  	height: auto;
+  	border: solid 3px var(--blue);
+  	border-radius: 5px;
+	padding: 50px 10px 50px 20px;
+}
+#msgAlertText{
+	font-size: 20px;
+	text-align: center;
+}
+#msgAlertAct{
+	text-align: center;
+}
+#msgAlertBtn{
+	display:none;
+	border: solid 1px #ccc;
+	border-radius: 5px;
+	width: 150px;
+	height: 30px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 20px;
+	margin-right: 20px;
+}
+#msgAlertBtnY{
+	display:none;
+	border: solid 1px #006400;
+	border-radius: 5px;
+	width: 100px;
+	height: 30px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 20px;
+	background: #006400;
+	margin-right: 20px;
+	color: #fff;
+}
+#msgAlertBtnY:hover{
+	background: #389e38;
+}
+#msgAlertBtnN{
+	display:none;
+	border: solid 1px #FF6347;
+	border-radius: 5px;
+	width: 100px;
+	height: 30px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 20px;
+	background: #FF6347;
+	margin-right: 20px;
+	color: #fff;
+}
+#msgAlertBtnN:hover{
+	background: #f39786;
+}
+.msgAlert{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height:auto;
+	margin-bottom: 20px;
+}
+/*______________________________________________________________________________________________*/

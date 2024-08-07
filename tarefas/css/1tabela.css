@@ -1,0 +1,16 @@
+/*CONFIGURAÇÕES DO CABEÇALHO DO MODULO TAREFAS*/
+#trf_titulo, #trfANV, #trfEq{
+	display: inline;
+}
+#trfANV{
+	color: #0a0;
+}
+/*______________________________________________________________________________________________*/
+
+
+
+
+/*TABELAS DAS TAREFAS*/
+#trf_tbl{
+	display: none;
+}

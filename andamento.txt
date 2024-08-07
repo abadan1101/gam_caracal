@@ -1,0 +1,2 @@
+PRÓXIMOS PASSOS
+ajustar o recarregamento da página para volatar ao painel em uso

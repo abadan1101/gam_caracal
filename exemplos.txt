@@ -1,0 +1,54 @@
+---------------ASYNC AWAIT---------------
+function teste1(){
+	return new Promise((resolve)=>{
+		console.log("teste1")
+		resolve()
+	})
+}
+(async function teste2(){
+	await teste1()
+	console.log("teste2")
+})()
+-----------------------------------------
+
+
+
+
+----------FUNÇÃO COMO VARIÁVEL-----------
+var func = () => {minhaFuncao()}
+func()
+
+ou 
+
+var func = () => {console.log("teste")}
+(function x(){
+	func()
+})()
+----------------------------------------
+
+
+
+
+--------------------SETTIMEOUT-----------
+setTimeout(()=>{console.log('teste')}, 2000)
+
+ou
+setTimeout(minhaFuncao, 2000)
+----------------------------------------
+
+
+
+--------------------METODO MAP-----------
+const x = [...document.getElementsByClassName("x")]
+const y = [...document.getElementsByClassName("y")]
+x.map((e,index)=>{
+	e.addEventListener("change", ()=>{
+			if(e.value == ""){
+				y[index].disabled = true
+				y[index].checked = false
+			}else{
+				y[index].disabled = false
+			}
+	})	
+})
+----------------------------------------
