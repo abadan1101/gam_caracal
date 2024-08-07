@@ -1,101 +1,105 @@
 //CONFIGURAR CABEÇALHO DO FORMULÁRIO
 var configForm = setInterval(()=>{
-	if(getCT){
-		try{
-			//caixa do controle 0
-			if(getCT.chave00[1] == true){
-				const trf_form_Ch00 = document.getElementById("trf_form_Ch00")
-				document.getElementById("trf_form_Ch00Lb").innerHTML = getCT.chave00[0]
-				trf_form_Ch00.innerHTML = ""
-				for(i=2;i<12;i++){
-				    const x = document.createElement("option");
-				    var y = getCT.chave00[i]
-				    if(y != ""){
-					    x.innerHTML = getCT.chave00[i]
-					    trf_form_Ch00.appendChild(x);
-				    } 
+	try{
+		if(getCT){
+			try{
+				//caixa do controle 0
+				if(getCT.chave00[1] == true){
+					const trf_form_Ch00 = document.getElementById("trf_form_Ch00")
+					document.getElementById("trf_form_Ch00Lb").innerHTML = getCT.chave00[0]
+					trf_form_Ch00.innerHTML = ""
+					for(i=2;i<12;i++){
+						const x = document.createElement("option");
+						var y = getCT.chave00[i]
+						if(y != ""){
+							x.innerHTML = getCT.chave00[i]
+							trf_form_Ch00.appendChild(x);
+						} 
+					}
+				}else{
+					document.getElementById("trf_form_Ch00Dv").classList.add("ocultPainel")
 				}
-			}else{
-				document.getElementById("trf_form_Ch00Dv").classList.add("ocultPainel")
-			}
-
-			//caixa do controle 1
-			if(getCT.chave01[1] == true){
-				const trf_form_Ch01 = document.getElementById("trf_form_Ch01")
-				document.getElementById("trf_form_Ch01Lb").innerHTML = getCT.chave01[0]
-				trf_form_Ch01.innerHTML = ""
-				for(i=2;i<12;i++){
-				    const x = document.createElement("option");
-				    var y = getCT.chave01[i]
-				    if(y != ""){
-					    x.innerHTML = getCT.chave01[i]
-					    trf_form_Ch01.appendChild(x);
-				    } 
+	
+				//caixa do controle 1
+				if(getCT.chave01[1] == true){
+					const trf_form_Ch01 = document.getElementById("trf_form_Ch01")
+					document.getElementById("trf_form_Ch01Lb").innerHTML = getCT.chave01[0]
+					trf_form_Ch01.innerHTML = ""
+					for(i=2;i<12;i++){
+						const x = document.createElement("option");
+						var y = getCT.chave01[i]
+						if(y != ""){
+							x.innerHTML = getCT.chave01[i]
+							trf_form_Ch01.appendChild(x);
+						} 
+					}
+				}else{
+					document.getElementById("trf_form_Ch01Dv").classList.add("ocultPainel")
 				}
-			}else{
-				document.getElementById("trf_form_Ch01Dv").classList.add("ocultPainel")
-			}
-			
-			//caixa do controle 2
-			if(getCT.chave02[1] == true){
-				const trf_form_Ch02 = document.getElementById("trf_form_Ch02")
-				document.getElementById("trf_form_Ch02Lb").innerHTML = getCT.chave02[0]
-				trf_form_Ch02.innerHTML = "<option value='' selected>*selecione*</option>"
-				for(i=2;i<12;i++){
-				    const x = document.createElement("option");
-				    var y = getCT.chave02[i]
-				    if(y != ""){
-					    x.innerHTML = getCT.chave02[i]
-					    trf_form_Ch02.appendChild(x);
-				    } 
+				
+				//caixa do controle 2
+				if(getCT.chave02[1] == true){
+					const trf_form_Ch02 = document.getElementById("trf_form_Ch02")
+					document.getElementById("trf_form_Ch02Lb").innerHTML = getCT.chave02[0]
+					trf_form_Ch02.innerHTML = "<option value='' selected>*selecione*</option>"
+					for(i=2;i<12;i++){
+						const x = document.createElement("option");
+						var y = getCT.chave02[i]
+						if(y != ""){
+							x.innerHTML = getCT.chave02[i]
+							trf_form_Ch02.appendChild(x);
+						} 
+					}
+				}else{
+					document.getElementById("trf_form_Ch02Dv").classList.add("ocultPainel")
+				}	
+	
+				//caixa do controle 3
+				if(getCT.chave03[1] == true){
+					const trf_form_Ch03 = document.getElementById("trf_form_Ch03")
+					document.getElementById("trf_form_Ch03Lb").innerHTML = getCT.chave03[0]
+					trf_form_Ch03.innerHTML = "<option value='' selected>*selecione*</option>"
+					for(i=2;i<12;i++){
+						const x = document.createElement("option");
+						var y = getCT.chave03[i]
+						if(y != ""){
+							x.innerHTML = getCT.chave03[i]
+							trf_form_Ch03.appendChild(x);
+						} 
+					}
+				}else{
+					document.getElementById("trf_form_Ch03Dv").classList.add("ocultPainel")
+				}	
+	
+				//caixa do controle 4
+				if(getCT.chave04[1] == true){
+					document.getElementById("trf_form_Ch04Lb").innerHTML = getCT.chave04[0]
+				}else{
+					document.getElementById("trf_form_Ch04Dv").classList.add("ocultPainel")
 				}
-			}else{
-				document.getElementById("trf_form_Ch02Dv").classList.add("ocultPainel")
-			}	
-
-			//caixa do controle 3
-			if(getCT.chave03[1] == true){
-				const trf_form_Ch03 = document.getElementById("trf_form_Ch03")
-				document.getElementById("trf_form_Ch03Lb").innerHTML = getCT.chave03[0]
-				trf_form_Ch03.innerHTML = "<option value='' selected>*selecione*</option>"
-				for(i=2;i<12;i++){
-				    const x = document.createElement("option");
-				    var y = getCT.chave03[i]
-				    if(y != ""){
-					    x.innerHTML = getCT.chave03[i]
-					    trf_form_Ch03.appendChild(x);
-				    } 
+	
+				//caixa do controle 5
+				if(getCT.chave05[1] == true){
+					document.getElementById("trf_form_Ch05Lb").innerHTML = getCT.chave05[0]
+				}else{
+					document.getElementById("trf_form_Ch05Dv").classList.add("ocultPainel")
 				}
-			}else{
-				document.getElementById("trf_form_Ch03Dv").classList.add("ocultPainel")
-			}	
-
-			//caixa do controle 4
-			if(getCT.chave04[1] == true){
-				document.getElementById("trf_form_Ch04Lb").innerHTML = getCT.chave04[0]
-			}else{
-				document.getElementById("trf_form_Ch04Dv").classList.add("ocultPainel")
+	
+				//caixa do controle "Baixar"
+				if(!getCT.baixar[1] == true){
+					document.getElementById("trf_form_bxrDv").classList.add("ocultPainel")
+				}
+				console.log('Cabeçalho do form das tarefas carregados com sucesso!')
+			}catch{
+				console.log('Erro ao carregar form das tarefas carregados com sucesso!')
 			}
-
-			//caixa do controle 5
-			if(getCT.chave05[1] == true){
-				document.getElementById("trf_form_Ch05Lb").innerHTML = getCT.chave05[0]
-			}else{
-				document.getElementById("trf_form_Ch05Dv").classList.add("ocultPainel")
-			}
-
-			//caixa do controle "Baixar"
-			if(!getCT.baixar[1] == true){
-				document.getElementById("trf_form_bxrDv").classList.add("ocultPainel")
-			}
-			console.log('Cabeçalho do form das tarefas carregados com sucesso!')
-		}catch{
-			console.log('Erro ao carregar form das tarefas carregados com sucesso!')
+			//parar setInterval
+			clearInterval(configForm)
+		}else{
+			console.log('falha ao carregar configurações do cabeçalho das tarefas!')
 		}
-		//parar setInterval
-		clearInterval(configForm)
-	}else{
-		console.log('Erro no setInterval!')
+	}catch{
+		console.log("carregando configurações do cabeçalho das tarefas!")
 	}
 },10)
 //---------------------------------------------------------------------
