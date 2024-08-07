@@ -1,101 +1,110 @@
 //CONFIGURAR CABEÇALHO DO FORMULÁRIO
-function configForm(){
-	//caixa do controle 0
-	if(getCT.chave00[1] == true){
-		const trf_form_Ch00 = document.getElementById("trf_form_Ch00")
-		document.getElementById("trf_form_Ch00Lb").innerHTML = getCT.chave00[0]
-		trf_form_Ch00.innerHTML = ""
-		for(i=2;i<12;i++){
-		    const x = document.createElement("option");
-		    var y = getCT.chave00[i]
-		    if(y != ""){
-			    x.innerHTML = getCT.chave00[i]
-			    trf_form_Ch00.appendChild(x);
-		    } 
+var configForm = setInterval(()=>{
+	if(getCT){
+		try{
+			//caixa do controle 0
+			if(getCT.chave00[1] == true){
+				const trf_form_Ch00 = document.getElementById("trf_form_Ch00")
+				document.getElementById("trf_form_Ch00Lb").innerHTML = getCT.chave00[0]
+				trf_form_Ch00.innerHTML = ""
+				for(i=2;i<12;i++){
+				    const x = document.createElement("option");
+				    var y = getCT.chave00[i]
+				    if(y != ""){
+					    x.innerHTML = getCT.chave00[i]
+					    trf_form_Ch00.appendChild(x);
+				    } 
+				}
+			}else{
+				document.getElementById("trf_form_Ch00Dv").classList.add("ocultPainel")
+			}
+
+			//caixa do controle 1
+			if(getCT.chave01[1] == true){
+				const trf_form_Ch01 = document.getElementById("trf_form_Ch01")
+				document.getElementById("trf_form_Ch01Lb").innerHTML = getCT.chave01[0]
+				trf_form_Ch01.innerHTML = ""
+				for(i=2;i<12;i++){
+				    const x = document.createElement("option");
+				    var y = getCT.chave01[i]
+				    if(y != ""){
+					    x.innerHTML = getCT.chave01[i]
+					    trf_form_Ch01.appendChild(x);
+				    } 
+				}
+			}else{
+				document.getElementById("trf_form_Ch01Dv").classList.add("ocultPainel")
+			}
+			
+			//caixa do controle 2
+			if(getCT.chave02[1] == true){
+				const trf_form_Ch02 = document.getElementById("trf_form_Ch02")
+				document.getElementById("trf_form_Ch02Lb").innerHTML = getCT.chave02[0]
+				trf_form_Ch02.innerHTML = "<option value='' selected>*selecione*</option>"
+				for(i=2;i<12;i++){
+				    const x = document.createElement("option");
+				    var y = getCT.chave02[i]
+				    if(y != ""){
+					    x.innerHTML = getCT.chave02[i]
+					    trf_form_Ch02.appendChild(x);
+				    } 
+				}
+			}else{
+				document.getElementById("trf_form_Ch02Dv").classList.add("ocultPainel")
+			}	
+
+			//caixa do controle 3
+			if(getCT.chave03[1] == true){
+				const trf_form_Ch03 = document.getElementById("trf_form_Ch03")
+				document.getElementById("trf_form_Ch03Lb").innerHTML = getCT.chave03[0]
+				trf_form_Ch03.innerHTML = "<option value='' selected>*selecione*</option>"
+				for(i=2;i<12;i++){
+				    const x = document.createElement("option");
+				    var y = getCT.chave03[i]
+				    if(y != ""){
+					    x.innerHTML = getCT.chave03[i]
+					    trf_form_Ch03.appendChild(x);
+				    } 
+				}
+			}else{
+				document.getElementById("trf_form_Ch03Dv").classList.add("ocultPainel")
+			}	
+
+			//caixa do controle 4
+			if(getCT.chave04[1] == true){
+				document.getElementById("trf_form_Ch04Lb").innerHTML = getCT.chave04[0]
+			}else{
+				document.getElementById("trf_form_Ch04Dv").classList.add("ocultPainel")
+			}
+
+			//caixa do controle 5
+			if(getCT.chave05[1] == true){
+				document.getElementById("trf_form_Ch05Lb").innerHTML = getCT.chave05[0]
+			}else{
+				document.getElementById("trf_form_Ch05Dv").classList.add("ocultPainel")
+			}
+
+			//caixa do controle "Baixar"
+			if(!getCT.baixar[1] == true){
+				document.getElementById("trf_form_bxrDv").classList.add("ocultPainel")
+			}
+			console.log('Cabeçalho do form das tarefas carregados com sucesso!')
+		}catch{
+			console.log('Erro ao carregar form das tarefas carregados com sucesso!')
 		}
+		//parar setInterval
+		clearInterval(configForm)
 	}else{
-		document.getElementById("trf_form_Ch00Dv").classList.add("ocultPainel")
+		console.log('Erro no setInterval!')
 	}
-
-	//caixa do controle 1
-	if(getCT.chave01[1] == true){
-		const trf_form_Ch01 = document.getElementById("trf_form_Ch01")
-		document.getElementById("trf_form_Ch01Lb").innerHTML = getCT.chave01[0]
-		trf_form_Ch01.innerHTML = ""
-		for(i=2;i<12;i++){
-		    const x = document.createElement("option");
-		    var y = getCT.chave01[i]
-		    if(y != ""){
-			    x.innerHTML = getCT.chave01[i]
-			    trf_form_Ch01.appendChild(x);
-		    } 
-		}
-	}else{
-		document.getElementById("trf_form_Ch01Dv").classList.add("ocultPainel")
-	}
-	
-	//caixa do controle 2
-	if(getCT.chave02[1] == true){
-		const trf_form_Ch02 = document.getElementById("trf_form_Ch02")
-		document.getElementById("trf_form_Ch02Lb").innerHTML = getCT.chave02[0]
-		trf_form_Ch02.innerHTML = "<option value='' selected>*selecione*</option>"
-		for(i=2;i<12;i++){
-		    const x = document.createElement("option");
-		    var y = getCT.chave02[i]
-		    if(y != ""){
-			    x.innerHTML = getCT.chave02[i]
-			    trf_form_Ch02.appendChild(x);
-		    } 
-		}
-	}else{
-		document.getElementById("trf_form_Ch02Dv").classList.add("ocultPainel")
-	}	
-
-	//caixa do controle 3
-	if(getCT.chave03[1] == true){
-		const trf_form_Ch03 = document.getElementById("trf_form_Ch03")
-		document.getElementById("trf_form_Ch03Lb").innerHTML = getCT.chave03[0]
-		trf_form_Ch03.innerHTML = "<option value='' selected>*selecione*</option>"
-		for(i=2;i<12;i++){
-		    const x = document.createElement("option");
-		    var y = getCT.chave03[i]
-		    if(y != ""){
-			    x.innerHTML = getCT.chave03[i]
-			    trf_form_Ch03.appendChild(x);
-		    } 
-		}
-	}else{
-		document.getElementById("trf_form_Ch03Dv").classList.add("ocultPainel")
-	}	
-
-	//caixa do controle 4
-	if(getCT.chave04[1] == true){
-		document.getElementById("trf_form_Ch04Lb").innerHTML = getCT.chave04[0]
-	}else{
-		document.getElementById("trf_form_Ch04Dv").classList.add("ocultPainel")
-	}
-
-	//caixa do controle 5
-	if(getCT.chave05[1] == true){
-		document.getElementById("trf_form_Ch05Lb").innerHTML = getCT.chave05[0]
-	}else{
-		document.getElementById("trf_form_Ch05Dv").classList.add("ocultPainel")
-	}
-
-	//caixa do controle "Baixar"
-	if(!getCT.baixar[1] == true){
-		document.getElementById("trf_form_bxrDv").classList.add("ocultPainel")
-	}
-	console.log('Cabeçalho do form das tarefas carregados com sucesso!')
-}
-setTimeout(configForm,1000)
+},10)
 //---------------------------------------------------------------------
 
 
 
 
 //ABRIR FORMULÁRIO ----------------------------------------------------
-function novaTarefa(){
+function novaTarefa(){//funcção chamada na folha: /tarefas/js/2menuSec.js
 
 	const tf = document.getElementById("trf_form")
 	const tt= document.getElementById("trf_tbl")
@@ -117,17 +126,6 @@ function novaTarefa(){
 	tf.style.display = "block";
 	
 }
-//---------------------------------------------------------------------
-
-
-
-
-//FECHAR FORMULÁRIO ----------------------------------------------------
-const tfc = document.getElementById("trf_form_cnc")
-tfc.addEventListener("click",(evt)=>{
-	trf_tbl.style.display = "block";
-	trf_form.style.display = "none";
-})
 //---------------------------------------------------------------------
 
 
@@ -592,33 +590,47 @@ const salvTaref = document.querySelectorAll('.trf_form_btn');
 salvTaref.forEach(function(e){
     e.addEventListener('click', function(){
 	const f = e.id;
+	var modo = ""
+	var reload = ""
+	var func = ""
 	var icon = "";
 	var msg = "";
 	var act = "";
 	if(f != "trf_form_cnc" && trf_form_dat.value != "" && trf_form_num.value != "" && trf_form_txa1.value != ""){
-		addTarefa()	
-		var modo = "conf"
-		var reload = ""
-		var func = ""
-		var icon = "img/imgOK.png"
-		var msg = "Confirmado!"
-		var act = "Tarefa salva com sucesso"
-		openMSG(icon, msg, act, modo, reload,func);
 	
-		LimpTaref()
-		if(f == "trf_form_slv"){
-			trf_tbl.style.display = "block";
-			trf_form.style.display = "none";
+		addTarefa()//função pertence a folha: /tarefas/js/0banco.js
+		sessionStorage.setItem("reloadUpdate","true")
+		
+		if(f == "trf_form_slN"){
+			sessionStorage.setItem("index",1)//abrir formulário no reload
+		}else{
+			sessionStorage.setItem("index",0)
 		}
+		
+		location.reload();
 
 	}else{
 		if(f != "trf_form_cnc"){
+			modo = "conf"
+			var reload = ""
+			var func = ""
 			icon = "img/imgAlert.png"
 			msg = "formulário incompleto!"
 			act = "Preencha os itens obrigatórios!"
-			openMSG(icon, msg, act);
+			openMSG(icon, msg, act, modo, reload,func);
 		}
 	}
     })
 });
 //--------------------------------------------------------------------------------
+
+
+
+
+//FECHAR FORMULÁRIO ----------------------------------------------------
+const tfc = document.getElementById("trf_form_cnc")
+tfc.addEventListener("click",(evt)=>{
+	location.reload();
+	sessionStorage.setItem("reloadUpdate","false")
+})
+//---------------------------------------------------------------------

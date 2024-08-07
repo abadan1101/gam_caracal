@@ -13,7 +13,6 @@ function teste1(){
 
 
 
-
 ----------FUNÇÃO COMO VARIÁVEL-----------
 var func = () => {minhaFuncao()}
 func()
@@ -28,12 +27,25 @@ var func = () => {console.log("teste")}
 
 
 
-
 --------------------SETTIMEOUT-----------
 setTimeout(()=>{console.log('teste')}, 2000)
 
 ou
 setTimeout(minhaFuncao, 2000)
+----------------------------------------
+
+
+
+--------------------SETINTERVAL-----------
+var x = 0
+var intervalo = setInterval(()=>{
+	x++
+	console.log(x + " em andamento")
+	if(x==10){
+		console.log("fim")
+		clearInterval(intervalo)
+	}
+},1000)
 ----------------------------------------
 
 

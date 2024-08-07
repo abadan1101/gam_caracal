@@ -84,7 +84,7 @@ DBRequest.onsuccess = function(event) {
 //---------------------ALTERAÇÕES DAS TABELAS DAS LINHAS DE MANUTENÇÃO-------------------------
 //---------------------------------------------------------------------------------------------
 //INSERIR TAREFAS NO BANCO DE DADOS
-function addTarefa(){
+function addTarefa(){//função chamada na folha: /tarefas/js/5formulario.js
 
 	//criação da classe pedido
 	function pedido(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
@@ -197,7 +197,7 @@ function addTarefa(){
 //------------------------ALTERAÇÕES DAS TABELAS DAS CONFIGURAÇÕES DAS TAREFAS-------------------------
 //------------------------------------------------------------------------------------------------------
 //ALTERAR CONFIGURAÇÕES DAS TAREFAS
-function salvConfigTrf(){
+function salvConfigTrf(){//função chamada na folha: /tarefas/js/4configTarefas.js
 	//popular configurações no array de objetos
 	const trfGerTbl = document.getElementById('trf_confPnlTbl')
 	const x = trfGerTbl.rows
@@ -271,8 +271,8 @@ function salvConfigTrf(){
 			console.log('Configurações gerais das tarefas salvas com sucesso.');
 	    };
 	};
-}//função chamada na folha: /tarefas/js/4configTarefas.js
-
+}
+//-------------------------------------------------------------------------------------------------------
 
 
 

@@ -14,6 +14,9 @@ function btnL1(){
 	document.getElementById("trfANV").innerHTML = "7108 ";
 	document.getElementById("trfEq").innerHTML =  "S/N 2969 " + "(VN)";
 	dbLinha = "linha01"
+	
+	//configuração para reload
+	sessionStorage.setItem("reload", "TrfLin1")
 }
 document.getElementById("linha1").addEventListener('click',()=>{
 	btnL1()
@@ -40,6 +43,9 @@ function btnL2(){
 	document.getElementById("trfANV").innerHTML = "4201 ";
 	document.getElementById("trfEq").innerHTML =  "S/N 2385 " + "(VN)";
 	dbLinha = "linha02"
+	
+	//configuração para reload
+	sessionStorage.setItem("reload", "TrfLin2")
 }
 document.getElementById("linha2").addEventListener('click',()=>{
 	btnL2()
@@ -66,6 +72,9 @@ function btnL3(){
 	document.getElementById("trfANV").innerHTML = "VAGO ";
 	document.getElementById("trfEq").innerHTML =  " " + "(VN)";
 	dbLinha = "linha03"
+	
+	//configuração para reload
+	sessionStorage.setItem("reload", "TrfLin3")
 }
 document.getElementById("linha3").addEventListener('click',()=>{
 	btnL3()
@@ -119,8 +128,6 @@ function btnCnf(){
 	//configuração para reload
 	sessionStorage.setItem("reload", "trf_conf")
 	sessionStorage.setItem("index","0")
-
-	setTimeout(loadCnfTrf,500)//metodo contido na folha: /tarefas/js/6configTarefas.js
 }
 //botão de chamada das configurações das tarefas
 document.getElementById("cfgTarf").addEventListener('click',()=>{
