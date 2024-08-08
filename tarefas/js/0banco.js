@@ -3,7 +3,7 @@
 var db;
 var dbLinha = "linha01"
 //reqisição de criação do banco de dados
-var DBRequest = window.indexedDB.open("geralDB", 3);
+var DBRequest = window.indexedDB.open("geralDB", 1);
 //evento onerror
 DBRequest.onerror = function(event) {
 	console.log("Erro na criação do banco de dados: " + event.target.errorCode)
@@ -18,18 +18,23 @@ DBRequest.onerror = function(event) {
 DBRequest.onupgradeneeded = function(event) {
 	db = event.target.result
 
-	//tabelas das linhas
+	//------------------------------tabelas das linhas--------------------------------------
+	//-------------------------------------------------------------------------------------
 	var objectStore = db.createObjectStore("linha01", {keyPath: 'id', autoIncrement: true})
 	objectStore = db.createObjectStore("linha02", {keyPath: 'id', autoIncrement: true})
 	objectStore = db.createObjectStore("linha03", {keyPath: 'id', autoIncrement: true})
+	//-------------------------------------------------------------------------------------
 	
-	//tabela das configurações das tarefas
+	
+	//-------------------tabela das configurações das tarefas-------------------------------
+	//-------------------------------------------------------------------------------------
 	objectStore = db.createObjectStore("configTaref", {keyPath: 'id', autoIncrement: true})
 	objectStore.transaction.oncomplete = function (event) {
-	    // Armazenando valores no novo objectStore.
 	    var objectStore = db
 		.transaction("configTaref", "readwrite")
 		.objectStore("configTaref");
+		
+		//tabela das configurações gerais das tarefas
 		objectStore.put({
 			chave00: ["Andamento",true,"Aberto","Fechado","","","","","","","",""],
 			chave01: ["Tipo",true,"Indisponível","Disponível","Restrito","","","","","","",""],
@@ -39,7 +44,21 @@ DBRequest.onupgradeneeded = function(event) {
 			chave05: ["Chave",false],
 			baixar: ["Baixar",true]
 		})
-	  };	
+		
+		//tabela das configurações da linha 01 das tarefas
+		objectStore.put({
+			nANV: "VAGO",
+			snANV: "",
+			snMGB: "",
+			snGTM1: "",
+			snGTM2: "",
+			inicio: "",
+			fim: "",
+			status: ""
+		})
+	};
+	//-------------------------------------------------------------------------------------
+	
 	console.log('Upgrade do banco de dados realizado com sucesso!');
 }
 //--------------------------------------------------------------------------------------------
@@ -49,10 +68,6 @@ DBRequest.onupgradeneeded = function(event) {
 
 //----------------------------OBTENÇÃO DAS TABELAS DO BANCO DE DADOS--------------------------
 //--------------------------------------------------------------------------------------------
-
-//variáveis que informam carregamento das tabelas
-var trfConfBD = false//variável configurações das tarefas
-
 DBRequest.onsuccess = function(event) {
 	db = event.target.result
 	console.log('Sucesso na requisição do banco de dados!');
@@ -61,24 +76,30 @@ DBRequest.onsuccess = function(event) {
 	try{
 		var transaction = db.transaction('configTaref', "readonly");
 		var store = transaction.objectStore('configTaref');
-		var request = store.openCursor();
-		request.onsuccess = function (event) {
-			var cursor = event.target.result;
-			if (cursor) {;
-			cursor.continue();
-			getCT = cursor.value
-			trfConfBD = true//variável bd configurações das tarefas
+		const objectStoreRequest = store.get(1)
+			objectStoreRequest.onsuccess = (e) => {
+			getCT = objectStoreRequest.result
 			console.log('Configurações gerais das tarefas obtidas com sucesso!');
-			}	
 		}
 	}catch{
 		console.log("Erro ao obter configurações gerais das tarefas");
 	}
 	//----------------------------------------------------------
-
-
-	//obtenção da tabela das linhas de manutenção
-
+	
+	
+	//obtenção da tabela das configurações da linha 01 das tarefas
+	try{
+		var transaction = db.transaction('configTaref', "readonly");
+		var store = transaction.objectStore('configTaref');
+		const objectStoreRequest = store.get(2)
+			objectStoreRequest.onsuccess = (e) => {
+			getL1 = objectStoreRequest.result
+			console.log('Configurações das tarefas da linha 01 obtidas com sucesso!');
+		}
+	}catch{
+		console.log("Erro ao obter configurações da linha 01");
+	}
+	//----------------------------------------------------------
 }
 //--------------------------------------------------------------------------
 

@@ -7,6 +7,13 @@ function openInicio(){
 	sessionStorage.setItem("reload", "inicio")
 }
 
+//reload da aba início
+(function reloadInicio() {
+    if(sessionStorage.getItem("reload") == "inicio"){
+        openInicio();
+    }
+})();
+
 //botão de chamada do inicio
 document.getElementById("home").addEventListener('click',()=>{
 	openInicio()

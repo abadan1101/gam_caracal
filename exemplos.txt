@@ -1,3 +1,31 @@
+---------------GITHUB---------------
+instruções para fazer commit
+
+git init 
+
+git add README.md 
+
+ou
+
+git add .
+
+git status
+
+git commit -m "primeiro commit" 
+
+git branch -M main 
+
+git remote add origin https://github.com/abadan1101/gam_caracal.git
+
+git push -u origin main
+
+ou
+
+git pull origin main
+-----------------------------------------
+
+
+
 ---------------ASYNC AWAIT---------------
 function teste1(){
 	return new Promise((resolve)=>{
@@ -63,4 +91,22 @@ x.map((e,index)=>{
 			}
 	})	
 })
+----------------------------------------
+
+
+
+----------------IDEXED DB--------------------
+OBTER TODOS OS ITENS
+var transaction = db.transaction('configTaref', "readonly");
+	var store = transaction.objectStore('configTaref');
+	var request = store.openCursor();
+	request.onsuccess = function (event) {
+		var cursor = event.target.result;
+		if (cursor) {;
+		cursor.continue();
+		variavel = cursor.value
+		console.log('Configurações gerais das tarefas obtidas com sucesso!');
+		}	
+	}
+}
 ----------------------------------------

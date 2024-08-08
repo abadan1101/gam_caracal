@@ -16,13 +16,36 @@ function openL1(){
 	document.getElementById("trfEq").innerHTML =  "S/N 2969 " + "(VN)";
 	dbLinha = "linha01"
 	
-	//configuração para reload
-	sessionStorage.setItem("reload", "TrfLin1")
-}
+	//configurações para reload
+	if(sessionStorage.getItem("index") == 1){
+		setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
+        }
+        sessionStorage.setItem("reload", "TrfLin1")
+        sessionStorage.setItem("index",0)
+        
+        //configurações em caso de reload com update
+        if(sessionStorage.getItem("reloadUpdate") == "true"){
+		var modo = "conf"
+		var rld = ""
+		var func = ""
+		var icon = "img/imgOK.png"
+		var msg = "Confirmado!"
+		var act = "Tarefa salva com sucesso!"
+		openMSG(icon, msg, act, modo, rld,func);
+        }
+        sessionStorage.setItem("reloadUpdate","false")
+};
+
+//reload linha1
+(function reloadL1() {
+    if(sessionStorage.getItem("reload") == "TrfLin1"){
+        openL1();
+    }
+})();
 
 //botão de chamada da linha 01
 document.getElementById("linha1").addEventListener('click',()=>{
-	openL1()
+	openL1();
 });
 //----------------------------------------------------------------------------------
 
@@ -47,13 +70,36 @@ function openL2(){
 	document.getElementById("trfEq").innerHTML =  "S/N 2385 " + "(VN)";
 	dbLinha = "linha02"
 	
-	//configuração para reload
-	sessionStorage.setItem("reload", "TrfLin2")
-}
+	//configurações para reload
+	if(sessionStorage.getItem("index") == 1){
+        	setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
+        }
+        sessionStorage.setItem("reload", "TrfLin2")
+        sessionStorage.setItem("index",0)
+        
+        //configurações em caso de reload com update
+        if(sessionStorage.getItem("reloadUpdate") == "true"){
+            var modo = "conf"
+            var rld = ""
+            var func = ""
+            var icon = "img/imgOK.png"
+            var msg = "Confirmado!"
+            var act = "Tarefa salva com sucesso!"
+            openMSG(icon, msg, act, modo, rld,func);
+        }
+        sessionStorage.setItem("reloadUpdate","false") 
+};
+
+//reload linha2
+(function reloadL2() {
+    if(sessionStorage.getItem("reload") == "TrfLin2"){
+    	openL2();
+    }
+})();
 
 //botão de chamada da linha 02
 document.getElementById("linha2").addEventListener('click',()=>{
-	openL2()
+	openL2();
 });
 //------------------------------------------------------------------------------
 
@@ -78,9 +124,32 @@ function openL3(){
 	document.getElementById("trfEq").innerHTML =  " " + "(VN)";
 	dbLinha = "linha03"
 	
-	//configuração para reload
-	sessionStorage.setItem("reload", "TrfLin3")
+	//configurações para reload
+	if(sessionStorage.getItem("index") == 1){
+        	setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
+        }
+        sessionStorage.setItem("reload", "TrfLin3")
+        sessionStorage.setItem("index",0)
+        
+        //configurações em caso de reload com update
+        if(sessionStorage.getItem("reloadUpdate") == "true"){
+            var modo = "conf"
+            var rld = ""
+            var func = ""
+            var icon = "img/imgOK.png"
+            var msg = "Confirmado!"
+            var act = "Tarefa salva com sucesso!"
+            openMSG(icon, msg, act, modo, rld,func);
+        }
+        sessionStorage.setItem("reloadUpdate","false")  	
 }
+
+//reload linha3
+(function reloadL3() {
+    if(sessionStorage.getItem("reload") == "TrfLin3"){
+    	openL3();
+    }
+})();
 
 //botão de chamada da linha 03
 document.getElementById("linha3").addEventListener('click',()=>{
@@ -135,15 +204,32 @@ function openCnf(){
 	//configuração para reload
 	sessionStorage.setItem("reload", "trf_conf")
 	sessionStorage.setItem("index","0")
+	
+	//configurações em caso de reload com update
+	if(sessionStorage.getItem("reloadUpdate") == "true"){
+            var modo = "conf"
+            var rld = ""
+            var func = ""
+            var icon = "img/imgOK.png"
+            var msg = "Confirmado!"
+            var act = "Configurações salvas com sucesso!"
+            openMSG(icon, msg, act, modo, rld,func);
+        }
+        sessionStorage.setItem("reloadUpdate","false")  
 }
+
+//reload configurações das tarefas
+(function reloadTrfConf() {
+    if(sessionStorage.getItem("reload") == "trf_conf"){
+        openCnf()
+    }
+})();
 
 //botão de chamada das configurações das tarefas
 document.getElementById("cfgTarf").addEventListener('click',()=>{
 	openCnf()
 });
 //--------------------------------------------------------------------------------
-
-
 
 
 
