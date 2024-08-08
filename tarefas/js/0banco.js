@@ -49,7 +49,10 @@ DBRequest.onupgradeneeded = function(event) {
 
 //----------------------------OBTENÇÃO DAS TABELAS DO BANCO DE DADOS--------------------------
 //--------------------------------------------------------------------------------------------
-//evento onsucces
+
+//variáveis que informam carregamento das tabelas
+var trfConfBD = false//variável configurações das tarefas
+
 DBRequest.onsuccess = function(event) {
 	db = event.target.result
 	console.log('Sucesso na requisição do banco de dados!');
@@ -64,6 +67,7 @@ DBRequest.onsuccess = function(event) {
 			if (cursor) {;
 			cursor.continue();
 			getCT = cursor.value
+			trfConfBD = true//variável bd configurações das tarefas
 			console.log('Configurações gerais das tarefas obtidas com sucesso!');
 			}	
 		}

@@ -3,7 +3,7 @@
 (function callTrfLin1() {
     if(sessionStorage.getItem("reload") == "TrfLin1"){
     
-        btnL1();//metodo contido na folha: /tarefas/js/1menu.js
+        openL1();//metodo contido na folha: /tarefas/js/1menu.js
         
         if(sessionStorage.getItem("index") == 1){
         	setTimeout(novaTarefa,200);//funcção pertence a folha: /tarefas/js/5formulário.js
@@ -17,7 +17,7 @@
             var func = ""
             var icon = "img/imgOK.png"
             var msg = "Confirmado!"
-            var act = "Configurações salvas com sucesso!"
+            var act = "Tarefa salva com sucesso!"
             openMSG(icon, msg, act, modo, rld,func);
         }
         sessionStorage.setItem("reloadUpdate","false")  
@@ -33,7 +33,7 @@
 (function callTrfLin2() {
     if(sessionStorage.getItem("reload") == "TrfLin2"){
     
-        btnL2();//metodo contido na folha: /tarefas/js/1menu.js
+        openL2();//metodo contido na folha: /tarefas/js/1menu.js
         
         if(sessionStorage.getItem("index") == 1){
         	setTimeout(novaTarefa,200);//funcção pertence a folha: /tarefas/js/5formulário.js
@@ -47,7 +47,7 @@
             var func = ""
             var icon = "img/imgOK.png"
             var msg = "Confirmado!"
-            var act = "Configurações salvas com sucesso!"
+            var act = "Tarefa salva com sucesso!"
             openMSG(icon, msg, act, modo, rld,func);
         }
         sessionStorage.setItem("reloadUpdate","false")  
@@ -63,7 +63,7 @@
 (function callTrfLin3() {
     if(sessionStorage.getItem("reload") == "TrfLin3"){
     
-        btnL3();//metodo contido na folha: /tarefas/js/1menu.js
+        openL3();//metodo contido na folha: /tarefas/js/1menu.js
         
         if(sessionStorage.getItem("index") == 1){
         	setTimeout(novaTarefa,200);//funcção pertence a folha: /tarefas/js/5formulário.js
@@ -77,7 +77,7 @@
             var func = ""
             var icon = "img/imgOK.png"
             var msg = "Confirmado!"
-            var act = "Configurações salvas com sucesso!"
+            var act = "Tarefa salva com sucesso!"
             openMSG(icon, msg, act, modo, rld,func);
         }
         sessionStorage.setItem("reloadUpdate","false")  
@@ -92,7 +92,7 @@
 //-----------------------------------------------
 (function callTrfConf() {
     if(sessionStorage.getItem("reload") == "trf_conf"){
-        btnCnf()//metodo contido na folha: /tarefas/js/1menu.js
+        openCnf()//metodo contido na folha: /tarefas/js/1menu.js
         if(sessionStorage.getItem("reloadUpdate") == "true"){
             var modo = "conf"
             var rld = ""

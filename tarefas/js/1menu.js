@@ -1,6 +1,7 @@
 //---------------------------------CHAMADA DA LINHA 01----------------------------
 //--------------------------------------------------------------------------------
-function btnL1(){
+//funcção para abertura da linha 01
+function openL1(){
 	//ocultar paineis dos modulos principais e mostrar somente o painel ativo
 	const mAtv = "tarefas"
 	showModule(mAtv)//metodo contido na folha: /geral/js/2menuPrincipal.js
@@ -18,8 +19,10 @@ function btnL1(){
 	//configuração para reload
 	sessionStorage.setItem("reload", "TrfLin1")
 }
+
+//botão de chamada da linha 01
 document.getElementById("linha1").addEventListener('click',()=>{
-	btnL1()
+	openL1()
 });
 //----------------------------------------------------------------------------------
 
@@ -29,7 +32,7 @@ document.getElementById("linha1").addEventListener('click',()=>{
 //---------------------------------CHAMADA DA LINHA 02----------------------------
 //--------------------------------------------------------------------------------
 //chamada da linha 02
-function btnL2(){
+function openL2(){
 	//ocultar paineis dos modulos principais e mostrar somente o painel ativo
 	const mAtv = "tarefas"
 	showModule(mAtv)//metodo contido na folha: /geral/js/2menuPrincipal.js
@@ -47,8 +50,10 @@ function btnL2(){
 	//configuração para reload
 	sessionStorage.setItem("reload", "TrfLin2")
 }
+
+//botão de chamada da linha 02
 document.getElementById("linha2").addEventListener('click',()=>{
-	btnL2()
+	openL2()
 });
 //------------------------------------------------------------------------------
 
@@ -58,7 +63,7 @@ document.getElementById("linha2").addEventListener('click',()=>{
 //---------------------------------CHAMADA DA LINHA 03----------------------------
 //--------------------------------------------------------------------------------
 //chamada da linha 03
-function btnL3(){
+function openL3(){
 	//ocultar paineis dos modulos principais e mostrar somente o painel ativo
 	const mAtv = "tarefas"
 	showModule(mAtv)//metodo contido na folha: /geral/js/2menuPrincipal.js
@@ -76,8 +81,10 @@ function btnL3(){
 	//configuração para reload
 	sessionStorage.setItem("reload", "TrfLin3")
 }
+
+//botão de chamada da linha 03
 document.getElementById("linha3").addEventListener('click',()=>{
-	btnL3()
+	openL3()
 });
 //------------------------------------------------------------------------------------
 
@@ -87,7 +94,7 @@ document.getElementById("linha3").addEventListener('click',()=>{
 //------------------------CHAMADA DAS CONFIGURAÇÕES DAS TAREFAS-------------------
 //--------------------------------------------------------------------------------
 //chamada das configurações das tarefas
-function btnCnf(){
+function openCnf(){
 
 	//configura painel secundário ativo
 	document.getElementById("trf_conf").style.display = "block";
@@ -129,9 +136,10 @@ function btnCnf(){
 	sessionStorage.setItem("reload", "trf_conf")
 	sessionStorage.setItem("index","0")
 }
+
 //botão de chamada das configurações das tarefas
 document.getElementById("cfgTarf").addEventListener('click',()=>{
-	btnCnf()
+	openCnf()
 });
 //--------------------------------------------------------------------------------
 
