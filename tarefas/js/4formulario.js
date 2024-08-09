@@ -133,7 +133,7 @@ function LimpTaref(){
 	document.getElementById('trf_form_num').value = "";
 
 	document.getElementById('trf_form_Ch00').value = "Aberto"
-	document.getElementById('trf_form_Ch01').value = "indisponível"
+	document.getElementById('trf_form_Ch01').value = "Indisponível"
 	document.getElementById('trf_form_Ch02').value = "";
 	document.getElementById('trf_form_Ch03').value = "";
 	document.getElementById('trf_form_Ch04').value = "";
