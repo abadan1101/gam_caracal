@@ -110,3 +110,11 @@ var transaction = db.transaction('configTaref', "readonly");
 	}
 }
 ----------------------------------------
+
+
+
+----------------SELECT 2--------------------
+alterar valor
+const tfe = document.getElementById('trf_form_EquMem');
+tfe.value = $(tfe).val("selecione um membro").select2();
+----------------------------------------

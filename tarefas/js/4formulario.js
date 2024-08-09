@@ -98,7 +98,7 @@ function configForm(){//função chamada na folha: /tarefas/js/banco.js
 
 
 //ABRIR FORMULÁRIO ----------------------------------------------------
-function novaTarefa(){//funcção chamada na folha: /tarefas/js/2menuSec.js
+function novaTarefa(reload){//funcção chamada na folha: /tarefas/js/2menuSec.js
 
 	const tf = document.getElementById("trf_form")
 	const tt= document.getElementById("trf_tbl")
@@ -112,7 +112,10 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/2menuSec.js
 	const dia = data.getDate().toString().padStart(2, "0");
 	const dtHoje = tfd.value = ano + "-" + mes + "-" + dia;
 	
-	LimpTaref();
+	//limpar formulário
+	if(reload == false){
+		LimpTaref();
+	}
 	
 	if(tfd.value == "" || tfd.value == "dd/mm/aaaa"){dtHoje}
 	tt.style.display = "none";

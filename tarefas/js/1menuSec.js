@@ -17,7 +17,7 @@ window.addEventListener('click', function (e) {
 //botão nova tarefa
 const tmAf = document.getElementById("trf_menu_afNew")	
 tmAf.addEventListener("click",(evt)=>{
-	novaTarefa()//funcção pertence a folha: /tarefas/js/5formulário.js
+	novaTarefa(false)//funcção pertence a folha: /tarefas/js/5formulário.js
 })
 //________________________________________________________________________________
 //--------------------------------------------------------------------------------

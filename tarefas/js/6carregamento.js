@@ -18,7 +18,7 @@ function openL1(){
 	
 	//configurações para reload
 	if(sessionStorage.getItem("index") == 1){
-		novaTarefa()//função pertence a folha: /tarefas/js/configTarefas.js
+		novaTarefa(true)//função pertence a folha: /tarefas/js/configTarefas.js
     }
 	sessionStorage.setItem("reload", "TrfLin1")
 	sessionStorage.setItem("index",0)
