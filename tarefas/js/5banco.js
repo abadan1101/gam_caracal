@@ -80,6 +80,12 @@ DBRequest.onsuccess = function(event) {
 			objectStoreRequest.onsuccess = (e) => {
 			getCT = objectStoreRequest.result
 			console.log('Configurações gerais das tarefas obtidas com sucesso!');
+
+			//função pertence a folha: /tarefas/js/configTarefas.js
+			loadCnfTrf()//carregar configurações gerais das tarefas
+
+			//função pertence a folha: /tarefas/js/formulario.js
+			configForm()//configura o cabeçalho do formulário
 		}
 	}catch{
 		console.log("Erro ao obter configurações gerais das tarefas");

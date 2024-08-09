@@ -46,7 +46,7 @@ document.getElementById("trf_confSlv").addEventListener('click', (e)=>{
 })
 
 //carregar configurações gerais das tarefas
-function loadCnfTrf(){
+function loadCnfTrf(){//função chamada na folha: /tarefas/js/banco.js
 	try{
 		//popular configurações na tabela
 		const trfGerTbl = document.getElementById('trf_confPnlTbl')
@@ -153,7 +153,7 @@ function loadCnfTrf(){
 		var act = "Erro ao carregar dados!"
 		openMSG(icon, msg, act, modo, reload,func);
 	}
-}setTimeout(loadCnfTrf,100)
+}
 //--------------------------------------------------------------------
 
 

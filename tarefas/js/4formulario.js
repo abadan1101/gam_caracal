@@ -1,5 +1,5 @@
 //CONFIGURAR CABEÇALHO DO FORMULÁRIO
-function configForm(){
+function configForm(){//função chamada na folha: /tarefas/js/banco.js
 	try{
 		//caixa do controle 0
 		if(getCT.chave00[1] == true){
@@ -91,7 +91,7 @@ function configForm(){
 	}catch{
 		console.log('Erro ao carregar form das tarefas!')
 	}
-}setTimeout(configForm,100)
+}
 //---------------------------------------------------------------------
 
 
@@ -132,12 +132,8 @@ function LimpTaref(){
 	//cabeçalho
 	document.getElementById('trf_form_num').value = "";
 
-	const x = document.getElementById('trf_form_Ch00')
-	x.value = x.firstElementChild.innerHTML;
-
-	const y = document.getElementById('trf_form_Ch01')
-	y.value = y.firstElementChild.innerHTML;
-
+	document.getElementById('trf_form_Ch00').value = "Aberto"
+	document.getElementById('trf_form_Ch01').value = "indisponível"
 	document.getElementById('trf_form_Ch02').value = "";
 	document.getElementById('trf_form_Ch03').value = "";
 	document.getElementById('trf_form_Ch04').value = "";
@@ -150,7 +146,7 @@ function LimpTaref(){
 	document.getElementById('trf_form_txa2').value = "";
 	
 	//caixa dos pedidos
-	tfPlimp ()
+	tfPlimp()
 
 	//caixa das ferramentas
 	const tff = document.getElementById('trf_form_Fer');

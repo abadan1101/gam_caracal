@@ -18,22 +18,22 @@ function openL1(){
 	
 	//configurações para reload
 	if(sessionStorage.getItem("index") == 1){
-		setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
-        }
-        sessionStorage.setItem("reload", "TrfLin1")
-        sessionStorage.setItem("index",0)
-        
-        //configurações em caso de reload com update
-        if(sessionStorage.getItem("reloadUpdate") == "true"){
-		var modo = "conf"
-		var rld = ""
-		var func = ""
-		var icon = "img/imgOK.png"
-		var msg = "Confirmado!"
-		var act = "Tarefa salva com sucesso!"
-		openMSG(icon, msg, act, modo, rld,func);
-        }
-        sessionStorage.setItem("reloadUpdate","false")
+		novaTarefa()//função pertence a folha: /tarefas/js/configTarefas.js
+    }
+	sessionStorage.setItem("reload", "TrfLin1")
+	sessionStorage.setItem("index",0)
+	
+	//configurações em caso de reload com update
+	if(sessionStorage.getItem("reloadUpdate") == "true"){
+	var modo = "conf"
+	var rld = ""
+	var func = ""
+	var icon = "img/imgOK.png"
+	var msg = "Confirmado!"
+	var act = "Tarefa salva com sucesso!"
+	openMSG(icon, msg, act, modo, rld,func);
+	}
+	sessionStorage.setItem("reloadUpdate","false")
 };
 
 //reload linha1
@@ -72,22 +72,22 @@ function openL2(){
 	
 	//configurações para reload
 	if(sessionStorage.getItem("index") == 1){
-        	setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
-        }
-        sessionStorage.setItem("reload", "TrfLin2")
-        sessionStorage.setItem("index",0)
-        
-        //configurações em caso de reload com update
-        if(sessionStorage.getItem("reloadUpdate") == "true"){
-            var modo = "conf"
-            var rld = ""
-            var func = ""
-            var icon = "img/imgOK.png"
-            var msg = "Confirmado!"
-            var act = "Tarefa salva com sucesso!"
-            openMSG(icon, msg, act, modo, rld,func);
-        }
-        sessionStorage.setItem("reloadUpdate","false") 
+		novaTarefa()//função pertence a folha: /tarefas/js/configTarefas.js
+	}
+	sessionStorage.setItem("reload", "TrfLin2")
+	sessionStorage.setItem("index",0)
+	
+	//configurações em caso de reload com update
+	if(sessionStorage.getItem("reloadUpdate") == "true"){
+		var modo = "conf"
+		var rld = ""
+		var func = ""
+		var icon = "img/imgOK.png"
+		var msg = "Confirmado!"
+		var act = "Tarefa salva com sucesso!"
+		openMSG(icon, msg, act, modo, rld,func);
+	}
+	sessionStorage.setItem("reloadUpdate","false") 
 };
 
 //reload linha2
@@ -126,22 +126,22 @@ function openL3(){
 	
 	//configurações para reload
 	if(sessionStorage.getItem("index") == 1){
-        	setTimeout(novaTarefa,100)//funcção pertence a folha: /tarefas/js/5formulário.js
-        }
-        sessionStorage.setItem("reload", "TrfLin3")
-        sessionStorage.setItem("index",0)
-        
-        //configurações em caso de reload com update
-        if(sessionStorage.getItem("reloadUpdate") == "true"){
-            var modo = "conf"
-            var rld = ""
-            var func = ""
-            var icon = "img/imgOK.png"
-            var msg = "Confirmado!"
-            var act = "Tarefa salva com sucesso!"
-            openMSG(icon, msg, act, modo, rld,func);
-        }
-        sessionStorage.setItem("reloadUpdate","false")  	
+		novaTarefa()//função pertence a folha: /tarefas/js/configTarefas.js
+	}
+	sessionStorage.setItem("reload", "TrfLin3")
+	sessionStorage.setItem("index",0)
+	
+	//configurações em caso de reload com update
+	if(sessionStorage.getItem("reloadUpdate") == "true"){
+		var modo = "conf"
+		var rld = ""
+		var func = ""
+		var icon = "img/imgOK.png"
+		var msg = "Confirmado!"
+		var act = "Tarefa salva com sucesso!"
+		openMSG(icon, msg, act, modo, rld,func);
+	}
+	sessionStorage.setItem("reloadUpdate","false")  	
 }
 
 //reload linha3
