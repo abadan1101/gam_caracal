@@ -1,0 +1,119 @@
+---------------GITHUB----------------
+instruções para fazer commit
+
+git init 
+
+git add README.md 
+
+ou
+
+git add .
+
+git status
+
+git commit -m "commit" 
+
+git branch -M main 
+
+git remote add origin https://github.com/abadan1101/gam_caracal.git
+
+git push -u origin main
+
+ou.
+
+git pull origin main
+-----------------------------------------
+
+
+
+---------------ASYNC AWAIT---------------
+function teste1(){
+	return new Promise((resolve)=>{
+		console.log("teste1")
+		resolve()
+	})
+}
+(async function teste2(){
+	await teste1()
+	console.log("teste2")
+})()
+-----------------------------------------
+
+
+
+----------FUNÇÃO COMO VARIÁVEL-----------
+var func = () => {minhaFuncao()}
+func()
+
+ou 
+
+var func = () => {console.log("teste")}
+(function x(){
+	func()
+})()
+----------------------------------------
+
+
+
+--------------------SETTIMEOUT-----------
+setTimeout(()=>{console.log('teste')}, 2000)
+
+ou
+setTimeout(minhaFuncao, 2000)
+----------------------------------------
+
+
+
+--------------------SETINTERVAL-----------
+var x = 0
+var intervalo = setInterval(()=>{
+	x++
+	console.log(x + " em andamento")
+	if(x==10){
+		console.log("fim")
+		clearInterval(intervalo)
+	}
+},1000)
+----------------------------------------
+
+
+
+--------------------METODO MAP-----------
+const x = [...document.getElementsByClassName("x")]
+const y = [...document.getElementsByClassName("y")]
+x.map((e,index)=>{
+	e.addEventListener("change", ()=>{
+			if(e.value == ""){
+				y[index].disabled = true
+				y[index].checked = false
+			}else{
+				y[index].disabled = false
+			}
+	})	
+})
+----------------------------------------
+
+
+
+----------------IDEXED DB--------------------
+OBTER TODOS OS ITENS
+var transaction = db.transaction('configTaref', "readonly");
+var store = transaction.objectStore('configTaref');
+var request = store.openCursor();
+request.onsuccess = function (event) {
+	var cursor = event.target.result;
+	if (cursor) {;
+	cursor.continue();
+	variavel = cursor.value
+	console.log('Configurações gerais das tarefas obtidas com sucesso!');
+	}	
+}
+----------------------------------------
+
+
+
+----------------SELECT 2--------------------
+alterar valor
+const tfe = document.getElementById('trf_form_EquMem');
+tfe.value = $(tfe).val("selecione um membro").select2();
+----------------------------------------
