@@ -128,14 +128,14 @@
 	max-width: 120px;
 	text-align: center;
 }
-.trfTblCol5, .trfTblCol10{
+.trfTblCol4, .trfTblCol10{
 	width: 80px;
 	max-width: 80px;
 	text-align: center;
 }
-.trfTblCol4, .trfTblCol6, .trfTblCol7, .trfTblCol13, .trfTblCol14{
-	width: 130px;
-	max-width: 130px;
+.trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol13, .trfTblCol14{
+	width: 140px;
+	max-width: 140px;
 	text-align: center;
 }
 .trfTblCol11, .trfTblCol12{
@@ -162,7 +162,7 @@
 .trf_tblSlctTbl{
 	background: transparent;
 	border:none;
-	width: 120px;
+	width: 130px;
 	cursor: pointer;
 }
 

@@ -287,8 +287,8 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				var id = linha.insertCell(0);
 				var numero = linha.insertCell(1);
 				var data = linha.insertCell(2);
-				var andamento = linha.insertCell(3);
-				var disponibilidade = linha.insertCell(4);
+				var disponibilidade = linha.insertCell(3);
+				var andamento = linha.insertCell(4);
 				var ch01 = linha.insertCell(5);
 				var ch02 = linha.insertCell(6);
 				var ch03 = linha.insertCell(7);
@@ -312,6 +312,18 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 					data.innerHTML = new Date(bdTabela[i].data).toLocaleDateString("pt-BR");
 				}
 				
+				//preencher disponibilidade
+				if(bdTabela[i].chave01 == "Indisponível"){
+					bdTabela[i].chave01 = "I"
+				}
+				if(bdTabela[i].chave01 == "Disponível"){
+					bdTabela[i].chave01 = "D"
+				}
+				if(bdTabela[i].chave01 == "Restrito"){
+					bdTabela[i].chave01 = "R"
+				}
+				disponibilidade.innerHTML = bdTabela[i].chave01;
+
 				//preencher andamento
 				const slct = document.createElement("select")
 				slct.classList.add('trf_tblSlctTbl');
@@ -327,18 +339,6 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				}
 				andamento.appendChild(slct);
 				andamento.firstChild.value = bdTabela[i].chave00
-				
-				//preencher disponibilidade
-				if(bdTabela[i].chave01 == "Indisponível"){
-					bdTabela[i].chave01 = "I"
-				}
-				if(bdTabela[i].chave01 == "Disponível"){
-					bdTabela[i].chave01 = "D"
-				}
-				if(bdTabela[i].chave01 == "Restrito"){
-					bdTabela[i].chave01 = "R"
-				}
-				disponibilidade.innerHTML = bdTabela[i].chave01;
 				
 				//preencher chave 01
 				const slct1 = document.createElement("select")
@@ -417,8 +417,8 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				id.classList.add('trfTblCol1');
 				numero.classList.add('trfTblCol2');
 				data.classList.add('trfTblCol3');
-				andamento.classList.add('trfTblCol4');
-				disponibilidade.classList.add('trfTblCol5');
+				disponibilidade.classList.add('trfTblCol4');
+				andamento.classList.add('trfTblCol5');
 				ch01.classList.add('trfTblCol6');
 				ch02.classList.add('trfTblCol7');
 				ch03.classList.add('trfTblCol8');
@@ -470,13 +470,13 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 	var y2 = []
 	var y3 = []
 	for(i=0;i < x.length;i++){
-		let a0 = y0.includes(x[i].children[3].firstChild.value)
+		let a0 = y0.includes(x[i].children[4].firstChild.value)
 		if(a0 == false){
-			y0.push(x[i].children[3].firstChild.value)
+			y0.push(x[i].children[4].firstChild.value)
 		}
-		let a1 = y1.includes(x[i].children[4].innerHTML)
+		let a1 = y1.includes(x[i].children[3].innerHTML)
 		if(a1 == false){
-			y1.push(x[i].children[4].innerHTML)
+			y1.push(x[i].children[3].innerHTML)
 		}
 		let a2 = y2.includes(x[i].children[5].innerHTML)
 		if(a2 == false){
@@ -486,6 +486,10 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 		if(a3 == false){
 			y3.push(x[i].children[6].innerHTML)
 		}	
+		console.log(y0)
+		console.log(y1)
+		console.log(y2)
+		console.log(y3)
 	}
 	try{
 		var transaction = db.transaction('configTaref', "readonly");
@@ -508,27 +512,27 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 			const d1 = document.createElement("option");
 			const d2 = document.createElement("option");
 			const d3 = document.createElement("option");
-			d0.innerHTML = getCT.chave00[0]
-			d1.innerHTML = getCT.chave01[0]
+			d0.innerHTML = getCT.chave01[0]
+			d1.innerHTML = getCT.chave00[0]
 			d2.innerHTML = getCT.chave02[0]
 			d3.innerHTML = getCT.chave03[0]
 			c0.appendChild(d0);
 			c1.appendChild(d1);
 			c2.appendChild(d2);
 			c3.appendChild(d3);
-			for(i=0;i<y0.length;i++){
+			for(i=0;i<y1.length;i++){
 				const z0 = document.createElement("option");
-				var num = y0[i]
+				var num = y1[i]
 				if(num != ""){
-					z0.innerHTML = y0[i]
+					z0.innerHTML = y1[i]
 					c0.appendChild(z0);
 				}
 			}
-			for(i=0;i<y1.length;i++){
+			for(i=0;i<y0.length;i++){
 				const z1 = document.createElement("option");
-				var num = y1[i]
+				var num = y0[i]
 				if(num != ""){
-					z1.innerHTML = y1[i]
+					z1.innerHTML = y0[i]
 					c1.appendChild(z1);
 				}
 			}
@@ -553,8 +557,8 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 			q[8].innerHTML = getCT.chave05[0]
 			
 			//nomear checkbox do menu de controles das colunas
-			document.getElementById('trf_tblCtrllb1').innerHTML = getCT.chave00[0]
-			document.getElementById('trf_tblCtrllb2').innerHTML = getCT.chave01[0]
+			document.getElementById('trf_tblCtrllb1').innerHTML = getCT.chave01[0]
+			document.getElementById('trf_tblCtrllb2').innerHTML = getCT.chave00[0]
 			document.getElementById('trf_tblCtrllb3').innerHTML = getCT.chave02[0]
 			document.getElementById('trf_tblCtrllb4').innerHTML = getCT.chave03[0]
 			document.getElementById('trf_tblCtrllb5').innerHTML = getCT.chave04[0]
