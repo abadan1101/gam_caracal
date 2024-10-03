@@ -29,6 +29,12 @@ async function cnfgFormTrf(n){
 		document.getElementById("trf_menu").classList.add('ocultPainel')
 	}
 	
+	//configurar dados da ANV
+	const x = document.getElementById('dadosANV').children
+	x[0].innerHTML = "MGB S/N: " + getLin.snMGB
+	x[1].innerHTML = "GTM #1 S/N: " + getLin.snGTM1
+	x[2].innerHTML = "GTM #2 S/N: " + getLin.snGTM2
+
 	
 	//ocultar paineis dos modulos principais e mostrar somente o painel ativo
 	const mAtv = "tarefas"
@@ -61,7 +67,6 @@ async function cnfgFormTrf(n){
 			//funções chamadas da folha: /tarefas/js/tabela.js
 			
 			await loadTrfTbl()
-			loadTrfTblConf(n)//carrega configurações da tabela principal
 
 			pnlMunu1.remove()
 		}retardar()

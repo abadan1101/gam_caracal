@@ -1,266 +1,133 @@
-//-------------------------MENU SECUNDÁRIO DAS TAREFAS----------------------------------
+//----------------------------CARREGAR CABEÇALHO DA TABELA -----------------------------
 //--------------------------------------------------------------------------------------
-
-//ABRIR E FECHAR MENU SECUNDÁRIO
-const trf_menu = document.getElementById("trf_menu")
-const trf_mn = document.getElementById("trf_mn")
-trf_menu.addEventListener('click', function () {
-	trf_mn.classList.toggle('menuModulos_mst');
-})
-window.addEventListener('click', function (e) {
-	if(e.target !== trf_menu) {
-		if(e.target !== trf_mn) {
-			if(trf_mn.classList.contains('menuModulos_mst')) {
-				trf_mn.classList.remove('menuModulos_mst');
+async function loadTrfTblCabecalho(bdCfg){
+	//buscar indices para criar os filtros das linhas da tabela principal
+	const x = document.getElementsByClassName("trf_tblTbBdy")
+	var y0 = []
+	var y1 = []
+	var y2 = []
+	var y3 = []
+	for(i=0;i < x.length;i++){
+		let a0 = y0.includes(x[i].children[4].firstChild.value)
+		if(a0 == false){
+			y0.push(x[i].children[4].firstChild.value)
+		}
+		let a1 = y1.includes(x[i].children[3].innerHTML)
+		if(a1 == false){
+			y1.push(x[i].children[3].innerHTML)
+		}
+		let a2 = y2.includes(x[i].children[5].innerHTML)
+		if(a2 == false){
+			y2.push(x[i].children[5].innerHTML)
+		}
+		let a3 = y3.includes(x[i].children[6].innerHTML)
+		if(a3 == false){
+			y3.push(x[i].children[6].innerHTML)
+		}	
+	}
+	try{
+		//popular as caixas de seleção dos filtros das linhas da tabela principal
+		const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
+		p[0].innerHTML = ""
+		p[1].innerHTML = ""
+		p[2].innerHTML = ""
+		p[3].innerHTML = ""
+		var c0 = p[0]
+		var c1 = p[1]
+		var c2 = p[2]
+		var c3 = p[3]
+		const d0 = document.createElement("option");
+		const d1 = document.createElement("option");
+		const d2 = document.createElement("option");
+		const d3 = document.createElement("option");
+		d0.innerHTML = bdCfg.chave01[0]
+		d1.innerHTML = bdCfg.chave00[0]
+		d2.innerHTML = bdCfg.chave02[0]
+		d3.innerHTML = bdCfg.chave03[0]
+		c0.appendChild(d0);
+		c1.appendChild(d1);
+		c2.appendChild(d2);
+		c3.appendChild(d3);
+		for(i=0;i<y1.length;i++){
+			const z0 = document.createElement("option");
+			var num = y1[i]
+			if(num != ""){
+				z0.innerHTML = y1[i]
+				c0.appendChild(z0);
 			}
 		}
-	}
-})
-
-//BOTÃO NOVA TAREFA
-const tmAf = document.getElementById("trf_menu_afNew")	
-tmAf.addEventListener("click",(evt)=>{
-	novaTarefa()//função pertence a folha: /tarefas/js/5formulário.js
-})
-
-//BOTÃO IMPORTAR
-let fileInput = document.getElementById('trf_menu_afImp')
-fileInput.addEventListener('change', () => {
-	const file = fileInput.files[0]
-	const reader = new FileReader()
-	const docSelect = file.name;
-	
-	//baixar planilha de ordens de serviço abertas
-	if(docSelect.includes("OSVirtualAbertaAeronave") || docSelect.includes("OSVirtualPendenteAeronave")){
-		reader.onload = (event) => {
-			const data = event.target.result
-			const workbook = XLSX.read(data, {type:'array'})
-			const firstSheetName = workbook.SheetNames[0]
-			const worksheet = workbook.Sheets[firstSheetName]
-			const rows = XLSX.utils.sheet_to_json(worksheet)
-			var tabela = []
-		
-			rows.map((e)=>{
-				//ajustar numero da tarefa
-				if(!e.__EMPTY){
-					e.__EMPTY = ""
-				}
-				
-				//ajustar data da tarefa
-				var timestamp = ((e.__EMPTY_1 - 25569)*86400000)+86400000
-				if(!timestamp){
-					timestamp = ""
-				}
-				
-				//ajustar andamento da tarefa
-				var andamento = ""
-				if(docSelect.includes("OSVirtualAbertaAeronave")){andamento = "Aberto"}else{andamento = "Pendente"}
-				
-				//ajustar tipo da tarefa
-				if(e.__EMPTY_3 == "i" || e.__EMPTY_3 == "I"){
-					e.__EMPTY_3 = "Indisponível"
-				}
-				if(e.__EMPTY_3 == "d" || e.__EMPTY_3 == "D"){
-					e.__EMPTY_3 = "Disponível"
-				}
-				if(e.__EMPTY_3 == "r" || e.__EMPTY_3 == "R"){
-					e.__EMPTY_3 = "Restrito"
-				}
-				if(!e.__EMPTY_3){
-					e.__EMPTY_3 = ""
-				}
-				
-				//ajustar descrição da tarefa
-				var descricao = ""
-				if(docSelect.includes("OSVirtualAbertaAeronave")){descricao = e.__EMPTY_4}else{descricao = e.__EMPTY_5}
-				
-				//ajuste para pular linhas não desejaveis da planilha baixada
-				if(e.__EMPTY == "" || e.__EMPTY == "NÚMERO" || e.__EMPTY == "Ordens de Serviço Pendentes - (Processamento Virtual)"){
-					console.log("linha " + e.__rowNum__ + " da planilha, não adicionada")
-				}else{
-					tabela.push({
-						numero: e.__EMPTY,
-						data: timestamp,
-						chave00: andamento,
-						chave01: e.__EMPTY_3,
-						chave02: "",
-						chave03: "",
-						chave04: "",
-						chave05: "",
-						porcentagem: "0%",
-						tarefa: descricao,
-						serviço: "",
-						pedidos: [],
-						ferramentas: [],
-						produtos: [],
-						equipe: [],
-						atualizacao: new Date().getTime()
-					})
-				}		
-			})		
-			addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
+		for(i=0;i<y0.length;i++){
+			const z1 = document.createElement("option");
+			var num = y0[i]
+			if(num != ""){
+				z1.innerHTML = y0[i]
+				c1.appendChild(z1);
+			}
 		}
-	}
-	
-	//PROVISÓRIO
-	//baixar planilha do backup da planilha antiga
-	if(docSelect.includes("backup planilha antiga")){
-		reader.onload = (event) => {
-			const data = event.target.result
-			const workbook = XLSX.read(data, {type:'array'})
-			const firstSheetName = workbook.SheetNames[0]
-			const worksheet = workbook.Sheets[firstSheetName]
-			const rows = XLSX.utils.sheet_to_json(worksheet)
-			const row = rows[0]
-			var tabela = []
-			
-			rows.map((e)=>{
-				var timestamp = ((e.DATA - 25569)*86400000)+86400000
-				
-				if(!timestamp){
-					try{
-						var hj = e.DATA
-						var array = hj.split('');
-						var dth = array[6] + array[7] + array[8] + array[9] + "/" + array[3] + array[4] + "/" + array[0] + array[1]
-						timestamp = new Date(dth).getTime()
-						if(!timestamp){
-							timestamp = ""
-						}
-					}catch{
-						timestamp = ""
-					}
-					
-				}
+		for(i=0;i<y2.length;i++){
+			const z2 = document.createElement("option");
+			var num = y2[i]
+			if(num != ""){
+				z2.innerHTML = y2[i]
+				c2.appendChild(z2);
+			}
+		}
+		for(i=0;i<y3.length;i++){
+			const z3 = document.createElement("option");
+			var num = y3[i]
+			if(num != ""){
+				z3.innerHTML = y3[i]
+				c3.appendChild(z3);
+			}
+		}
+		const q = document.getElementById('trf_tblTbHd').children
+		q[7].innerHTML = bdCfg.chave04[0]
+		q[8].innerHTML = bdCfg.chave05[0]
+		
+		//nomear checkbox do menu de controles das colunas
+		document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
+		document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
+		document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
+		document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
+		document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
+		document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
 
-				if(e.TP == "i" || e.TP == "I"){
-					e.TP = "Indisponível"
+		//mostrar ou ocultar colunas
+		const chbx = [...document.getElementsByClassName('trf_tblcbs')]
+		chbx.map((e)=>{
+			var x = e.id
+				if(localStorage.getItem(x) == "true"){
+					e.checked = true
+					var y = [...document.getElementsByClassName(x)]
+					y.map((c)=>{
+						c.style.display = ""
+					})
 				}
-				
-				if(e.TP == "d" || e.TP == "D"){
-					e.TP = "Disponível"
+				if(localStorage.getItem(x) == "false"){
+					e.checked = false
+					var y = [...document.getElementsByClassName(x)]
+					y.map((c)=>{
+						c.style.display = "none"
+					})
 				}
-				
-				if(e.TP == "r" || e.TP == "R"){
-					e.TP = "Restrito"
-				}
-				if(!e.TP){
-					e.TP = ""
-				}
+		})
 
-				if(!e["NÚMERO"]){
-					e.NUMERO = ""
-				}
-				
-				if(!e.STATUS){
-					e.STATUS = ""
-				}
-				if(e.STATUS == "AG. ABRIR"){
-					e.STATUS = "Ag. Abrir"
-				}
-				if(e.STATUS == "ABERTA"){
-					e.STATUS = "Aberto"
-				}
-				if(e.STATUS == "PRIORIDADE"){
-					e.STATUS = "Prioridade"
-				}
-				if(e.STATUS == "PENDENTE + 30%" || e.STATUS == "PENDENTE + 60%" || e.STATUS == "PENDENTE + 90%" || e.STATUS == "PENDENTE"){
-					e.STATUS = "Pendente"
-				}
-				if(e.STATUS == "EM EXEC. + 30%" || e.STATUS == "EM EXEC. + 60%" || e.STATUS == "EM EXEC. + 90%"){
-					e.STATUS = "Em Exec."
-				}
-				if(e.STATUS == "AG. TESTE" || e.STATUS == "AG. TESTE FUN."){
-					e.STATUS = "Ag. Teste"
-				}
-				if(e.STATUS == "AG. VIRADA" || e.STATUS == "AG. VIRADA/VOO"){
-					e.STATUS = "Ag. Virada"
-				}
-				if(e.STATUS == "AG. SUP/CQ"){
-					e.STATUS = "Ag. Sup/CQ"
-				}
-				if(e.STATUS == "FECHADA"){
-					e.STATUS = "Fechado"
-				}
-				
-				if(!e["OBSERVAÇÃO"]){
-					e["OBSERVAÇÃO"] = ""
-				}
-				
-				
-				
-				let num = e["NÚMERO"];
-				let date = timestamp;
-				let admt = e.STATUS
-				let tip = e.TP			
-				let desc = e["DESCRIÇÃO DO SERVIÇO"]
-				let serv = e["OBSERVAÇÃO"]
-							
-				
-				tabela.push({
-					numero: num,
-					data: date,
-					chave00: admt,
-					chave01: tip,
-					chave02: "",
-					chave03: "",
-					chave04: "",
-					chave05: "",
-					porcentagem: "0%",
-					tarefa: desc,
-					serviço: serv,
-					pedidos: [],
-					ferramentas: [],
-					produtos: [],
-					equipe: [],
-					atualizacao: new Date().getTime()
-				})
-			})
-			addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js				
-		}				
-	}
-	reader.readAsArrayBuffer(file)	
-})
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
+		//baixar rotina botão excluir linha
+		trf_tblDeletRow()
+		//baixar rotina de mudança no andamento da tarefa
+		altAndamento()
 
-
-
-
-//------------------------------CORES DAS LINHAS DA TABELA------------------------------
-//--------------------------------------------------------------------------------------
-//cores das linhas
-async function trf_tblClr(e, linha){
-	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
-
-	if(e.value == bdCfg.chave00[2]){
-		linha.style.background = "#f77";
-	}
-	if(e.value == bdCfg.chave00[3]){
-		linha.style.background = "#2E8B57";
-	}
-	if(e.value == bdCfg.chave00[4]){
-		linha.style.background = "#FFD700";
-	}
-	if(e.value == bdCfg.chave00[5]){
-		linha.style.background = "#9fcd9f";
-	}
-	if(e.value == bdCfg.chave00[6]){
-		linha.style.background = "#fff";
-	}
-	if(e.value == bdCfg.chave00[7]){
-		linha.style.background = "#C0C0C0";
-	}
-	if(e.value == bdCfg.chave00[8]){
-		linha.style.background = "#B0C4DE";
-	}
-	if(e.value == bdCfg.chave00[9]){
-		linha.style.background = "#b592fd";
-	}
-	if(e.value == bdCfg.chave00[10]){
-		linha.style.background = "#F00";
-	}
-	if(e.value == bdCfg.chave00[11]){
-		linha.style.background = "#BC8F8F";
+		testez()
+		
+	}catch (erro){
+		var icon = "img/imgError.png"
+		var msg = "Erro!"
+		var act = erro
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+		console.log("Erro ao carregar configurações dos controles da tabela principal! " + erro)	
 	}
 }
 //--------------------------------------------------------------------------------------
@@ -269,7 +136,7 @@ async function trf_tblClr(e, linha){
 
 
 
-//-----------------------------CARREGAR TABELA PRINCIPAL--------------------------------
+//-----------------------------CARREGAR CORPO DA TABELA --------------------------------
 //--------------------------------------------------------------------------------------
 //carregar tabela principal
 async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregamento.js
@@ -432,9 +299,8 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				//adicionar cor da linha
 				trf_tblClr(andamento.firstChild, linha)
 			}
-			
-			//provisório
-			document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
+			loadTrfTblCabecalho(bdCfg)
+			loadTrfRodape()
 			
 			resolve()
 		}catch (error){
@@ -455,156 +321,11 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 
 
 
-//---------------------CARREGAR CONFIGURAÇÕES DOS CONTROLES DA TABELA PRINCIPAL---------------
-//--------------------------------------------------------------------------------------------
-
-async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carregamento.js
-
-	//buscar indices para criar os filtros das linhas da tabela principal
-	const x = document.getElementsByClassName("trf_tblTbBdy")
-	var y0 = []
-	var y1 = []
-	var y2 = []
-	var y3 = []
-	for(i=0;i < x.length;i++){
-		let a0 = y0.includes(x[i].children[4].firstChild.value)
-		if(a0 == false){
-			y0.push(x[i].children[4].firstChild.value)
-		}
-		let a1 = y1.includes(x[i].children[3].innerHTML)
-		if(a1 == false){
-			y1.push(x[i].children[3].innerHTML)
-		}
-		let a2 = y2.includes(x[i].children[5].innerHTML)
-		if(a2 == false){
-			y2.push(x[i].children[5].innerHTML)
-		}
-		let a3 = y3.includes(x[i].children[6].innerHTML)
-		if(a3 == false){
-			y3.push(x[i].children[6].innerHTML)
-		}	
-	}
-	try{
-		var transaction = db.transaction('configTaref', "readonly");
-		var store = transaction.objectStore('configTaref');
-		const objectStoreRequest = store.get(1)
-		objectStoreRequest.onsuccess = () => {
-			var getCT = objectStoreRequest.result 
-			
-			//popular as caixas de seleção dos filtros das linhas da tabela principal
-			const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
-			p[0].innerHTML = ""
-			p[1].innerHTML = ""
-			p[2].innerHTML = ""
-			p[3].innerHTML = ""
-			var c0 = p[0]
-			var c1 = p[1]
-			var c2 = p[2]
-			var c3 = p[3]
-			const d0 = document.createElement("option");
-			const d1 = document.createElement("option");
-			const d2 = document.createElement("option");
-			const d3 = document.createElement("option");
-			d0.innerHTML = getCT.chave01[0]
-			d1.innerHTML = getCT.chave00[0]
-			d2.innerHTML = getCT.chave02[0]
-			d3.innerHTML = getCT.chave03[0]
-			c0.appendChild(d0);
-			c1.appendChild(d1);
-			c2.appendChild(d2);
-			c3.appendChild(d3);
-			for(i=0;i<y1.length;i++){
-				const z0 = document.createElement("option");
-				var num = y1[i]
-				if(num != ""){
-					z0.innerHTML = y1[i]
-					c0.appendChild(z0);
-				}
-			}
-			for(i=0;i<y0.length;i++){
-				const z1 = document.createElement("option");
-				var num = y0[i]
-				if(num != ""){
-					z1.innerHTML = y0[i]
-					c1.appendChild(z1);
-				}
-			}
-			for(i=0;i<y2.length;i++){
-				const z2 = document.createElement("option");
-				var num = y2[i]
-				if(num != ""){
-					z2.innerHTML = y2[i]
-					c2.appendChild(z2);
-				}
-			}
-			for(i=0;i<y3.length;i++){
-				const z3 = document.createElement("option");
-				var num = y3[i]
-				if(num != ""){
-					z3.innerHTML = y3[i]
-					c3.appendChild(z3);
-				}
-			}
-			const q = document.getElementById('trf_tblTbHd').children
-			q[7].innerHTML = getCT.chave04[0]
-			q[8].innerHTML = getCT.chave05[0]
-			
-			//nomear checkbox do menu de controles das colunas
-			document.getElementById('trf_tblCtrllb1').innerHTML = getCT.chave01[0]
-			document.getElementById('trf_tblCtrllb2').innerHTML = getCT.chave00[0]
-			document.getElementById('trf_tblCtrllb3').innerHTML = getCT.chave02[0]
-			document.getElementById('trf_tblCtrllb4').innerHTML = getCT.chave03[0]
-			document.getElementById('trf_tblCtrllb5').innerHTML = getCT.chave04[0]
-			document.getElementById('trf_tblCtrllb6').innerHTML = getCT.chave05[0]			
-		}
-		
-		//configurar dados da ANV
-		var objectStoreRequest1 = store.get(n)
-		objectStoreRequest1.onsuccess = () => {
-		    var getLin = objectStoreRequest1.result
-		    const x = document.getElementById('dadosANV').children
-		    x[0].innerHTML = "MGB S/N: " + getLin.snMGB
-		    x[1].innerHTML = "GTM #1 S/N: " + getLin.snGTM1
-		    x[2].innerHTML = "GTM #2 S/N: " + getLin.snGTM2
-		}
-
-		//mostrar ou ocultar colunas
-		const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-		chbx.map((e)=>{
-			var x = e.id
-				if(localStorage.getItem(x) == "true"){
-					e.checked = true
-					var y = [...document.getElementsByClassName(x)]
-					y.map((c)=>{
-						c.style.display = ""
-					})
-				}
-				if(localStorage.getItem(x) == "false"){
-					e.checked = false
-					var y = [...document.getElementsByClassName(x)]
-					y.map((c)=>{
-						c.style.display = "none"
-					})
-				}
-		})
-
-		//baixar rotina botão excluir linha
-		trf_tblDeletRow()
-		//baixar rotina de mudança no andamento da tarefa
-		altAndamento()
-
-		testez()
-		
-	}catch (erro){
-		var icon = "img/imgError.png"
-		var msg = "Erro!"
-		var act = erro
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);
-		console.log("Erro ao carregar configurações dos controles da tabela principal! " + erro)	
-	}
+//-----------------------------CARREGAR RODAPÉ DA TABELA--------------------------------
+//--------------------------------------------------------------------------------------
+async function loadTrfRodape(){
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
 }
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
@@ -612,8 +333,50 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 
 
 
+
+
+
+
+
 //-----------------------ROTINAS DOS CONTROLES DA TABELA PRINCIPAL--------------------------
 //-----------------------------------------------------------------------------------------
+//cores das linhas
+async function trf_tblClr(e, linha){
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+
+	if(e.value == bdCfg.chave00[2]){
+		linha.style.background = "#f77";
+	}
+	if(e.value == bdCfg.chave00[3]){
+		linha.style.background = "#2E8B57";
+	}
+	if(e.value == bdCfg.chave00[4]){
+		linha.style.background = "#FFD700";
+	}
+	if(e.value == bdCfg.chave00[5]){
+		linha.style.background = "#9fcd9f";
+	}
+	if(e.value == bdCfg.chave00[6]){
+		linha.style.background = "#fff";
+	}
+	if(e.value == bdCfg.chave00[7]){
+		linha.style.background = "#C0C0C0";
+	}
+	if(e.value == bdCfg.chave00[8]){
+		linha.style.background = "#B0C4DE";
+	}
+	if(e.value == bdCfg.chave00[9]){
+		linha.style.background = "#b592fd";
+	}
+	if(e.value == bdCfg.chave00[10]){
+		linha.style.background = "#F00";
+	}
+	if(e.value == bdCfg.chave00[11]){
+		linha.style.background = "#BC8F8F";
+	}
+}
+
+
 //ocultar ou mostrar menu dos controles de colunas da tabela			
 const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
 const trf_tblCtrl = document.getElementById('trf_tblCtrl')
@@ -689,7 +452,8 @@ function trf_tblDeletRow(){
 					var func = ""
 					openMSG(icon, msg, act, modo, reload,func);
 				}
-			}excluir()	
+			}excluir()
+			loadTrfRodape()	
 		})
 	})
 }
