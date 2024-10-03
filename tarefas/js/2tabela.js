@@ -279,40 +279,32 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 	return new Promise((resolve)=>{
 		try{
 			for(i=0;i<bdTabela.length;i++){
-
 				//criar linhas da tabela
 				const tb = document.getElementById("trf_tblTbBdy");
 				var qtdLin = tb.rows.length;
 				var linha = tb.insertRow(qtdLin);
+				linha.classList.add('trf_tblTbBdy');
+				
+				//preencher coluna id
 				var id = linha.insertCell(0);
-				var numero = linha.insertCell(1);
-				var data = linha.insertCell(2);
-				var disponibilidade = linha.insertCell(3);
-				var andamento = linha.insertCell(4);
-				var ch01 = linha.insertCell(5);
-				var ch02 = linha.insertCell(6);
-				var ch03 = linha.insertCell(7);
-				var ch04 = linha.insertCell(8);
-				var prct = linha.insertCell(9);
-				var desc = linha.insertCell(10);
-				var serv = linha.insertCell(11);
-				var pend = linha.insertCell(12);
-				var eqp = linha.insertCell(13);
-				var atlz = linha.insertCell(14);
-				var opcs = linha.insertCell(15);
-
-				//preencher id da tarefa
+				id.classList.add('trfTblCol1');
 				id.innerHTML = bdTabela[i].id;
-				
-				//preencher número
+
+				//preencher coluna número
+				var numero = linha.insertCell(1);
 				numero.innerHTML = bdTabela[i].numero;
-				
-				//preencher data da tarefa
+				numero.classList.add('trfTblCol2');
+
+				//preencher coluna data da tarefa
+				var data = linha.insertCell(2);
+				data.classList.add('trfTblCol3');
 				if(bdTabela[i].data != ""){
 					data.innerHTML = new Date(bdTabela[i].data).toLocaleDateString("pt-BR");
 				}
 				
-				//preencher disponibilidade
+				//preencher coluna disponibilidade
+				var disponibilidade = linha.insertCell(3);
+				disponibilidade.classList.add('trfTblCol4');
 				if(bdTabela[i].chave01 == "Indisponível"){
 					bdTabela[i].chave01 = "I"
 				}
@@ -323,8 +315,10 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 					bdTabela[i].chave01 = "R"
 				}
 				disponibilidade.innerHTML = bdTabela[i].chave01;
-
-				//preencher andamento
+				
+				//preencher coluna andamento
+				var andamento = linha.insertCell(4);
+				andamento.classList.add('trfTblCol5');
 				const slct = document.createElement("select")
 				slct.classList.add('trf_tblSlctTbl');
 				slct.classList.add('trf_tblSlctAdmt');
@@ -339,8 +333,10 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				}
 				andamento.appendChild(slct);
 				andamento.firstChild.value = bdTabela[i].chave00
-				
-				//preencher chave 01
+
+				//preencher coluna chave 01
+				var ch01 = linha.insertCell(5);
+				ch01.classList.add('trfTblCol6');
 				const slct1 = document.createElement("select")
 				slct1.classList.add('trf_tblSlctTbl');
 				const n1 = bdCfg.chave02.length
@@ -355,7 +351,9 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				ch01.appendChild(slct1);
 				ch01.firstChild.value = bdTabela[i].chave02
 				
-				//preencher chave 02
+				//preencher coluna chave 02
+				var ch02 = linha.insertCell(6);
+				ch02.classList.add('trfTblCol7');
 				const slct2 = document.createElement("select")
 				slct2.classList.add('trf_tblSlctTbl');
 				const n2 = bdCfg.chave02.length
@@ -369,27 +367,39 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				}
 				ch02.appendChild(slct2);
 				ch02.firstChild.value = bdTabela[i].chave03
-				
+
 				//preencher chave 03
+				var ch03 = linha.insertCell(7);
+				ch03.classList.add('trfTblCol8');
 				ch03.innerHTML = bdTabela[i].chave04;
 				
 				//preencher chave 04
+				var ch04 = linha.insertCell(8);
+				ch04.classList.add('trfTblCol9');
 				ch04.innerHTML = bdTabela[i].chave05;
 				
 				//preencher porcentagem
+				var prct = linha.insertCell(9);
+				prct.classList.add('trfTblCol10');
 				prct.innerHTML = bdTabela[i].porcentagem;
 				
 				//preencher descrição
+				var desc = linha.insertCell(10);
+				desc.classList.add('trfTblCol11');
 				desc.innerHTML = bdTabela[i].tarefa;
 				
 				//preencher serviços executados da tarefa
+				var serv = linha.insertCell(11);
+				serv.classList.add('trfTblCol12');
 				const k = document.createElement("TEXTAREA");
 				k.classList.add('trfTblCol12txa');
 				serv.appendChild(k);
 				serv.firstChild.value = bdTabela[i].serviço;
 				serv.firstChild.style.height = serv.clientHeight + "px"
 				
-				//preencher coluna das pendencias			
+				//preencher coluna das pendencias	
+				var pend = linha.insertCell(12);
+				pend.classList.add('trfTblCol13');		
 				var t="";u="";v=""
 				var vrfPdd = bdTabela[i].pedidos;
 				var vrfFer = bdTabela[i].ferramentas;
@@ -398,41 +408,28 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				vrfFer.map((e)=>{if(e.status == true){u = "ferramentas"}})
 				vrfPrd.map((e)=>{if(e.status == true){v = "produtos"}})
 				pend.innerHTML = t + " " + u + " " + v
-
+				
 				//preencher equipe
+				var eqp = linha.insertCell(13);
+				eqp.classList.add('trfTblCol14');
 				var membros = bdTabela[i].equipe
 				eqp.innerHTML = ""
 				membros.map((e)=>{eqp.innerHTML = eqp.innerHTML + " " + e});
-				
+
 				//preencher data de atualização
+				var atlz = linha.insertCell(14);
+				atlz.classList.add('trfTblCol15');
 				if(bdTabela[i].atualizacao != ""){
 					atlz.innerHTML = new Date(bdTabela[i].atualizacao).toLocaleDateString("pt-BR");
 				}
 
 				//adicionar botões
-				opcs.innerHTML = "opções";
-
-				//adicionar classes
-				linha.classList.add('trf_tblTbBdy');
-				id.classList.add('trfTblCol1');
-				numero.classList.add('trfTblCol2');
-				data.classList.add('trfTblCol3');
-				disponibilidade.classList.add('trfTblCol4');
-				andamento.classList.add('trfTblCol5');
-				ch01.classList.add('trfTblCol6');
-				ch02.classList.add('trfTblCol7');
-				ch03.classList.add('trfTblCol8');
-				ch04.classList.add('trfTblCol9');
-				prct.classList.add('trfTblCol10');
-				desc.classList.add('trfTblCol11');
-				serv.classList.add('trfTblCol12');
-				pend.classList.add('trfTblCol13');
-				eqp.classList.add('trfTblCol14');
-				atlz.classList.add('trfTblCol15');
+				var opcs = linha.insertCell(15);
 				opcs.classList.add('trfTblCol16');
 				opcs.classList.add('btnexcTst');
+				opcs.innerHTML = "opções";
 				
-				//cores das linhas
+				//adicionar cor da linha
 				trf_tblClr(andamento.firstChild, linha)
 			}
 			
@@ -486,10 +483,6 @@ async function loadTrfTblConf(n){//função chamada na folha: /tarefas/js/carreg
 		if(a3 == false){
 			y3.push(x[i].children[6].innerHTML)
 		}	
-		console.log(y0)
-		console.log(y1)
-		console.log(y2)
-		console.log(y3)
 	}
 	try{
 		var transaction = db.transaction('configTaref', "readonly");
