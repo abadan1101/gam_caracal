@@ -1,6 +1,7 @@
 //----------------------------CARREGAR CABEÇALHO DA TABELA -----------------------------
 //--------------------------------------------------------------------------------------
-async function loadTrfTblCabecalho(bdCfg){
+async function loadTrfTblCabecalho(){
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 	//buscar indices para criar os filtros das linhas da tabela principal
 	const x = document.getElementsByClassName("trf_tblTbBdy")
 	var y0 = []
@@ -143,6 +144,17 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 
+	//cabeçalho da tabela
+	const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
+	p[0].innerHTML = '<option>'+bdCfg.chave01[0]+'</option>'
+	p[1].innerHTML = '<option>'+bdCfg.chave00[0]+'</option>'
+	p[2].innerHTML = '<option>'+bdCfg.chave02[0]+'</option>'
+	p[3].innerHTML = '<option>'+bdCfg.chave03[0]+'</option>'
+	const q = document.getElementById('trf_tblTbHd').children
+	q[7].innerHTML = bdCfg.chave04[0]
+	q[8].innerHTML = bdCfg.chave05[0]
+
+	//corpo da tabela
 	return new Promise((resolve)=>{
 		try{
 			for(i=0;i<bdTabela.length;i++){
@@ -299,8 +311,9 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 				//adicionar cor da linha
 				trf_tblClr(andamento.firstChild, linha)
 			}
-			loadTrfTblCabecalho(bdCfg)
-			loadTrfRodape()
+
+			//rodapé da tabela
+			document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
 			
 			resolve()
 		}catch (error){
@@ -317,23 +330,6 @@ async function loadTrfTbl(){//função chamada na folha: /tarefas/js/carregament
 }
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
-
-
-
-
-//-----------------------------CARREGAR RODAPÉ DA TABELA--------------------------------
-//--------------------------------------------------------------------------------------
-async function loadTrfRodape(){
-	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
-	document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
-}
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-
-
-
-
-
 
 
 
