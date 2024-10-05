@@ -66,7 +66,7 @@ async function cnfgFormTrf(n){
 			
 			//funções chamadas da folha: /tarefas/js/tabela.js
 			
-			await loadTrfTbl()
+			await TrfTbl_Load()
 
 			pnlMunu1.remove()
 		}retardar()
