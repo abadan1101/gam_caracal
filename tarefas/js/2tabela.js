@@ -171,7 +171,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				opcs.innerHTML = "opções";
 				
 				//adicionar cor da linha
-				trf_tblClr(andamento.firstChild, linha)
+				trf_tbl_CorLinha(andamento.firstChild, linha)
 			}
 			//-------------------------------------------------------------------------
 
@@ -182,9 +182,10 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 
 			//controles da tabela------------------------------------------------------
 			trfTbl_ctrlColunas(bdCfg)//controle das colunas
-			trf_tblDeletRow()//rotina botão excluir linha
-			altAndamento()//rotina de mudança no andamento da tarefa
-			testez()//teste alterar serviço executado
+			trfTbl_carregarCabecalho()//carrega filtros das colunas
+			trf_tbl_deletarLinhas()//rotina botão excluir linha
+			trf_tbl_altetarAndamento()//rotina de mudança no andamento da tarefa
+			trf_tbl_altetarServiço()//teste alterar serviço executado
 			//--------------------------------------------------------------------------
 
 			resolve()
@@ -208,142 +209,8 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 
 //----------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL----------------------------
 //--------------------------------------------------------------------------------------
-//carregar menu de controle das colunas
-function trfTbl_ctrlColunas(bdCfg){
-	//nomear checkbox do menu de controles das colunas
-	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
-	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
-	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
-	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
-	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
-	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
-
-	//mostrar ou ocultar colunas
-	const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-	chbx.map((e)=>{
-		var x = e.id
-			if(localStorage.getItem(x) == "true"){
-				e.checked = true
-				var y = [...document.getElementsByClassName(x)]
-				y.map((c)=>{
-					c.style.display = ""
-				})
-			}
-			if(localStorage.getItem(x) == "false"){
-				e.checked = false
-				var y = [...document.getElementsByClassName(x)]
-				y.map((c)=>{
-					c.style.display = "none"
-				})
-			}
-	})
-}
-
-
-//----------------------------CARREGAR CABEÇALHO DA TABELA -----------------------------
-//--------------------------------------------------------------------------------------
-async function loadTrfTblCabecalho(){
-	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
-	//buscar indices para criar os filtros das linhas da tabela principal
-	const x = document.getElementsByClassName("trf_tblTbBdy")
-	var y0 = []
-	var y1 = []
-	var y2 = []
-	var y3 = []
-	for(i=0;i < x.length;i++){
-		let a0 = y0.includes(x[i].children[4].firstChild.value)
-		if(a0 == false){
-			y0.push(x[i].children[4].firstChild.value)
-		}
-		let a1 = y1.includes(x[i].children[3].innerHTML)
-		if(a1 == false){
-			y1.push(x[i].children[3].innerHTML)
-		}
-		let a2 = y2.includes(x[i].children[5].innerHTML)
-		if(a2 == false){
-			y2.push(x[i].children[5].innerHTML)
-		}
-		let a3 = y3.includes(x[i].children[6].innerHTML)
-		if(a3 == false){
-			y3.push(x[i].children[6].innerHTML)
-		}	
-	}
-	try{
-		//popular as caixas de seleção dos filtros das linhas da tabela principal
-		const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
-		p[0].innerHTML = ""
-		p[1].innerHTML = ""
-		p[2].innerHTML = ""
-		p[3].innerHTML = ""
-		var c0 = p[0]
-		var c1 = p[1]
-		var c2 = p[2]
-		var c3 = p[3]
-		const d0 = document.createElement("option");
-		const d1 = document.createElement("option");
-		const d2 = document.createElement("option");
-		const d3 = document.createElement("option");
-		d0.innerHTML = bdCfg.chave01[0]
-		d1.innerHTML = bdCfg.chave00[0]
-		d2.innerHTML = bdCfg.chave02[0]
-		d3.innerHTML = bdCfg.chave03[0]
-		c0.appendChild(d0);
-		c1.appendChild(d1);
-		c2.appendChild(d2);
-		c3.appendChild(d3);
-		for(i=0;i<y1.length;i++){
-			const z0 = document.createElement("option");
-			var num = y1[i]
-			if(num != ""){
-				z0.innerHTML = y1[i]
-				c0.appendChild(z0);
-			}
-		}
-		for(i=0;i<y0.length;i++){
-			const z1 = document.createElement("option");
-			var num = y0[i]
-			if(num != ""){
-				z1.innerHTML = y0[i]
-				c1.appendChild(z1);
-			}
-		}
-		for(i=0;i<y2.length;i++){
-			const z2 = document.createElement("option");
-			var num = y2[i]
-			if(num != ""){
-				z2.innerHTML = y2[i]
-				c2.appendChild(z2);
-			}
-		}
-		for(i=0;i<y3.length;i++){
-			const z3 = document.createElement("option");
-			var num = y3[i]
-			if(num != ""){
-				z3.innerHTML = y3[i]
-				c3.appendChild(z3);
-			}
-		}
-		
-	}catch (erro){
-		var icon = "img/imgError.png"
-		var msg = "Erro!"
-		var act = erro
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);
-		console.log("Erro ao carregar configurações dos controles da tabela principal! " + erro)	
-	}
-}
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-
-
-
-//-----------------------ROTINAS DOS CONTROLES DA TABELA PRINCIPAL--------------------------
-//-----------------------------------------------------------------------------------------
-//cores das linhas
-async function trf_tblClr(e, linha){
+//carregar cores das tarefas----------------------------------------------
+async function trf_tbl_CorLinha(e, linha){
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 
 	if(e.value == bdCfg.chave00[2]){
@@ -377,57 +244,118 @@ async function trf_tblClr(e, linha){
 		linha.style.background = "#BC8F8F";
 	}
 }
+//--------------------------------------------------------------
 
+//carregar controle das colunas--------------------------------------
+function trfTbl_ctrlColunas(bdCfg){
+	//nomear checkbox do menu de controles das colunas
+	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
+	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
+	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
+	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
+	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
+	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
 
-//ocultar ou mostrar menu dos controles de colunas da tabela			
-const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
-const trf_tblCtrl = document.getElementById('trf_tblCtrl')
-var trf_tblCtrlClm = false
-trf_tblCtrl.style.display = "none"
-trf_tblCtrlAct.addEventListener('click', ()=>{
-	if(trf_tblCtrl.style.display == "none"){
-		trf_tblCtrlClm = true
-		trf_tblCtrl.style.display = ""
-	}else{
-		trf_tblCtrlClm = false
-		trf_tblCtrl.style.display = "none"
-	}
-})
-window.addEventListener("click", (e)=>{
-	if(trf_tblCtrlClm == true){
-		const x = e.target
-		const y = e.target.parentNode
-		if(!(x.classList.contains("trf_tblCtrl") || y.classList.contains("trf_tblCtrl"))){
-			trf_tblCtrlClm = false
-			trf_tblCtrl.style.display = "none"
-		}
-	}
-})
-
-//ocultar ou mostrar colunas da tabela
-const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-chbx.map((e)=>{
-	e.addEventListener('change', function(){
+	//mostrar ou ocultar colunas
+	const chbx = [...document.getElementsByClassName('trf_tblcbs')]
+	chbx.map((e)=>{
 		var x = e.id
-		if(e.checked == true){
-			var y = [...document.getElementsByClassName(x)]
-			y.map((c)=>{
-				c.style.display = ""
-			})
-			localStorage.setItem(x, true)
-		}else{
-			var y = [...document.getElementsByClassName(x)]
-			y.map((c)=>{
-				c.style.display = "none"
-			})
-			localStorage.setItem(x, false)
-		}
-		
+			if(localStorage.getItem(x) == "true"){
+				e.checked = true
+				var y = [...document.getElementsByClassName(x)]
+				y.map((c)=>{
+					c.style.display = ""
+				})
+			}
+			if(localStorage.getItem(x) == "false"){
+				e.checked = false
+				var y = [...document.getElementsByClassName(x)]
+				y.map((c)=>{
+					c.style.display = "none"
+				})
+			}
 	})
-})
+}
+//----------------------------------------------------------------------
 
-//botão excluir linhas
-function trf_tblDeletRow(){
+//carregar caixas de seleção dos filtros das colunas da tabela principal
+function trfTbl_carregarCabecalho(){
+	//buscar indices para criar os filtros
+	const x = document.getElementsByClassName("trf_tblTbBdy")
+	var y0=[], y1=[], y2=[], y3=[]
+	for(i=0;i < x.length;i++){
+		let a0 = y0.includes(x[i].children[4].firstChild.value)
+		if(a0 == false){
+			y0.push(x[i].children[4].firstChild.value)
+		}
+		let a1 = y1.includes(x[i].children[3].innerHTML)
+		if(a1 == false){
+			y1.push(x[i].children[3].innerHTML)
+		}
+		let a2 = y2.includes(x[i].children[5].firstChild.value)
+		if(a2 == false){
+			y2.push(x[i].children[5].firstChild.value)
+		}
+		let a3 = y3.includes(x[i].children[6].firstChild.value)
+		if(a3 == false){
+			y3.push(x[i].children[6].firstChild.value)
+		}	
+	}
+	//popular a caixa de seleção
+	const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
+	//popular a caixa de seleção tipo
+	const cx0 = p[0].firstChild
+	p[0].innerHTML = ""
+	p[0].appendChild(cx0)
+	for(i=0;i<y1.length;i++){
+		const z0 = document.createElement("option");
+		var num = y1[i]
+		if(num != ""){
+			z0.innerHTML = y1[i]
+			p[0].appendChild(z0);
+		}
+	}
+	//caixa de seleção andamento
+	const cx1 = p[1].firstChild
+	p[1].innerHTML = ""
+	p[1].appendChild(cx1)
+	for(i=0;i<y0.length;i++){
+		const z1 = document.createElement("option");
+		var num = y0[i]
+		if(num != ""){
+			z1.innerHTML = y0[i]
+			p[1].appendChild(z1);
+		}
+	}
+	//popular a caixa de seleção chave 01
+	const cx2 = p[2].firstChild
+	p[2].innerHTML = ""
+	p[2].appendChild(cx2)
+	for(i=0;i<y2.length;i++){
+		const z2 = document.createElement("option");
+		var num = y2[i]
+		if(num != ""){
+			z2.innerHTML = y2[i]
+			p[2].appendChild(z2);
+		}
+	}
+	//popular a caixa de seleção chave 02
+	const cx3 = p[3].firstChild
+	p[3].innerHTML = ""
+	p[3].appendChild(cx3)
+	for(i=0;i<y3.length;i++){
+		const z3 = document.createElement("option");
+		var num = y3[i]
+		if(num != ""){
+			z3.innerHTML = y3[i]
+			p[3].appendChild(z3);
+		}
+	}
+}
+//------------------------------------------------------------------------
+
+//botão excluir linhas-----------------------------------------------
+function trf_tbl_deletarLinhas(){
 	const x = [...document.getElementsByClassName("btnexcTst")]
 	x.map((e)=>{
 		var y = e.parentElement
@@ -454,14 +382,16 @@ function trf_tblDeletRow(){
 					var func = ""
 					openMSG(icon, msg, act, modo, reload,func);
 				}
+				trfTbl_carregarCabecalho()
 			}excluir()
-			loadTrfRodape()	
+			
 		})
 	})
 }
+//---------------------------------------------------------------------
 
-//salvar ao alterar andamento
-function altAndamento(){
+//salvar ao alterar andamento------------------------------------------
+function trf_tbl_altetarAndamento(){
 	const x = [...document.getElementsByClassName("trf_tblSlctAdmt")]
 	x.map((e)=>{
 		const j = e.value
@@ -484,7 +414,7 @@ function altAndamento(){
 						e.value = j
 				}else{
 					//cor da linha
-					trf_tblClr(e, y)
+					trf_tbl_CorLinha(e, y)
 					
 					//mensagem de sucesso!
 					document.getElementById('trf_tblmsgSec').style.display = "flex"
@@ -493,14 +423,14 @@ function altAndamento(){
 					},3000)
 				}	
 			}alterar()
+			trfTbl_carregarCabecalho()
 		})
 	})
 }
+//-----------------------------------------------------------------------------
 
-
-
-//teste alterar serviço executado
-function testez(){
+//teste alterar serviço executado----------------------------------------------
+function trf_tbl_altetarServiço(){
 	
 	//configurar textarea para altura automática
 	(function () {
@@ -570,7 +500,55 @@ function testez(){
 	})
 	
 }
+//--------------------------------------------------------------
 
+//menu do controle de visualização das colunas-------------------
+//ocultar ou mostrar menu		
+const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
+const trf_tblCtrl = document.getElementById('trf_tblCtrl')
+var trf_tblCtrlClm = false
+trf_tblCtrl.style.display = "none"
+trf_tblCtrlAct.addEventListener('click', ()=>{
+	if(trf_tblCtrl.style.display == "none"){
+		trf_tblCtrlClm = true
+		trf_tblCtrl.style.display = ""
+	}else{
+		trf_tblCtrlClm = false
+		trf_tblCtrl.style.display = "none"
+	}
+})
+window.addEventListener("click", (e)=>{
+	if(trf_tblCtrlClm == true){
+		const x = e.target
+		const y = e.target.parentNode
+		if(!(x.classList.contains("trf_tblCtrl") || y.classList.contains("trf_tblCtrl"))){
+			trf_tblCtrlClm = false
+			trf_tblCtrl.style.display = "none"
+		}
+	}
+})
+//ocultar ou mostrar colunas da tabela
+const chbx = [...document.getElementsByClassName('trf_tblcbs')]
+chbx.map((e)=>{
+	e.addEventListener('change', function(){
+		var x = e.id
+		if(e.checked == true){
+			var y = [...document.getElementsByClassName(x)]
+			y.map((c)=>{
+				c.style.display = ""
+			})
+			localStorage.setItem(x, true)
+		}else{
+			var y = [...document.getElementsByClassName(x)]
+			y.map((c)=>{
+				c.style.display = "none"
+			})
+			localStorage.setItem(x, false)
+		}
+		
+	})
+})
+//-------------------------------------------------------------------
 
 
 
