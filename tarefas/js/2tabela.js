@@ -302,55 +302,63 @@ function trfTbl_carregarCabecalho(){
 		}	
 	}
 	//popular a caixa de seleção
-	const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
+	const caixaSlct = [...document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')]
 	//popular a caixa de seleção tipo
-	const cx0 = p[0].firstChild
-	p[0].innerHTML = ""
-	p[0].appendChild(cx0)
-	for(i=0;i<y1.length;i++){
-		const z0 = document.createElement("option");
-		var num = y1[i]
-		if(num != ""){
-			z0.innerHTML = y1[i]
-			p[0].appendChild(z0);
+	caixaSlct[0].addEventListener('focus',(e)=>{
+		const cx0 = caixaSlct[0].firstChild
+		caixaSlct[0].innerHTML = ""
+		caixaSlct[0].appendChild(cx0)
+		for(i=0;i<y1.length;i++){
+			const z0 = document.createElement("option");
+			var num = y1[i]
+			if(num != ""){
+				z0.innerHTML = y1[i]
+				caixaSlct[0].appendChild(z0);
+			}
 		}
-	}
-	//caixa de seleção andamento
-	const cx1 = p[1].firstChild
-	p[1].innerHTML = ""
-	p[1].appendChild(cx1)
-	for(i=0;i<y0.length;i++){
-		const z1 = document.createElement("option");
-		var num = y0[i]
-		if(num != ""){
-			z1.innerHTML = y0[i]
-			p[1].appendChild(z1);
+	})
+	//popular a caixa de seleção andamento
+	caixaSlct[1].addEventListener('focus',(e)=>{
+		const cx0 = caixaSlct[1].firstChild
+		caixaSlct[1].innerHTML = ""
+		caixaSlct[1].appendChild(cx0)
+		for(i=0;i<y0.length;i++){
+			const z0 = document.createElement("option");
+			var num = y0[i]
+			if(num != ""){
+				z0.innerHTML = y0[i]
+				caixaSlct[1].appendChild(z0);
+			}
 		}
-	}
+	})
 	//popular a caixa de seleção chave 01
-	const cx2 = p[2].firstChild
-	p[2].innerHTML = ""
-	p[2].appendChild(cx2)
-	for(i=0;i<y2.length;i++){
-		const z2 = document.createElement("option");
-		var num = y2[i]
-		if(num != ""){
-			z2.innerHTML = y2[i]
-			p[2].appendChild(z2);
+	caixaSlct[2].addEventListener('focus',(e)=>{
+		const cx0 = caixaSlct[2].firstChild
+		caixaSlct[2].innerHTML = ""
+		caixaSlct[2].appendChild(cx0)
+		for(i=0;i<y2.length;i++){
+			const z0 = document.createElement("option");
+			var num = y2[i]
+			if(num != ""){
+				z0.innerHTML = y2[i]
+				caixaSlct[2].appendChild(z0);
+			}
 		}
-	}
+	})
 	//popular a caixa de seleção chave 02
-	const cx3 = p[3].firstChild
-	p[3].innerHTML = ""
-	p[3].appendChild(cx3)
-	for(i=0;i<y3.length;i++){
-		const z3 = document.createElement("option");
-		var num = y3[i]
-		if(num != ""){
-			z3.innerHTML = y3[i]
-			p[3].appendChild(z3);
+	caixaSlct[3].addEventListener('focus',(e)=>{
+		const cx0 = caixaSlct[3].firstChild
+		caixaSlct[3].innerHTML = ""
+		caixaSlct[3].appendChild(cx0)
+		for(i=0;i<y3.length;i++){
+			const z0 = document.createElement("option");
+			var num = y3[i]
+			if(num != ""){
+				z0.innerHTML = y3[i]
+				caixaSlct[3].appendChild(z0);
+			}
 		}
-	}
+	})
 }
 //------------------------------------------------------------------------
 
