@@ -167,8 +167,8 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				//adicionar botões
 				var opcs = linha.insertCell(15);
 				opcs.classList.add('trfTblCol16');
-				opcs.classList.add('btnexcTst');
-				opcs.innerHTML = "opções";
+				opcs.innerHTML = "<div><i class='bx bx-edit-alt'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
+				
 				
 				//adicionar cor da linha
 				trf_tbl_CorLinha(andamento.firstChild, linha)
@@ -366,35 +366,41 @@ function trfTbl_carregarCabecalho(){
 function trf_tbl_deletarLinhas(){
 	const x = [...document.getElementsByClassName("btnexcTst")]
 	x.map((e)=>{
-		var y = e.parentElement
+		var y = e.parentElement.parentElement.parentElement
 		var z = parseInt(y.firstChild.innerHTML)
 		e.addEventListener("click", ()=>{
-			async function excluir(){
-				await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
-				const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
-				if(verificar == "null"){
-					y.remove()
-					var icon = "img/imgOK.png"
-					var msg = "Confirmação " + dbLinha + "!"
-					var act = "Tarefa excluída com sucesso!"
-					var modo = "conf"
-					var reload = "false"
-					var func = ""
-					openMSG(icon, msg, act, modo, reload,func)
-				}else{
-					var icon = "img/imgError.png"
-					var msg = "Erro"
-					var act = "Erro ao excluir tarefa"
-					var modo = "conf"
-					var reload = "false"
-					var func = ""
-					openMSG(icon, msg, act, modo, reload,func);
-				}
-				trfTbl_carregarCabecalho()
-			}excluir()
-			
+			var icon = "img/imginter.png"
+			var msg = "Excluir"
+			var act = "Deseja realmente excluir esta tarefa?"
+			var modo = "yn"
+			var reload = "false"
+			var func = () => {trfTbl_exclTarefa(z,y)}
+			openMSG(icon, msg, act, modo, reload,func);
 		})
 	})
+}
+async function trfTbl_exclTarefa(z,y){
+	await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
+	const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
+	if(verificar == "null"){
+		y.remove()
+		var icon = "img/imgOK.png"
+		var msg = "Confirmação " + dbLinha + "!"
+		var act = "Tarefa excluída com sucesso!"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func)
+	}else{
+		var icon = "img/imgError.png"
+		var msg = "Erro"
+		var act = "Erro ao excluir tarefa"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+	}
+	trfTbl_carregarCabecalho()
 }
 //---------------------------------------------------------------------
 
@@ -437,7 +443,7 @@ function trf_tbl_altetarAndamento(){
 }
 //-----------------------------------------------------------------------------
 
-//teste alterar serviço executado----------------------------------------------
+//alterar serviço executado----------------------------------------------
 function trf_tbl_altetarServiço(){
 	
 	//configurar textarea para altura automática

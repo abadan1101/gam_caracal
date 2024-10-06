@@ -123,10 +123,23 @@
 .trfTblCol1{
 	display: none;
 }
-.trfTblCol1, .trfTblCol2, .trfTblCol3, .trfTblCol8, .trfTblCol9, .trfTblCol15, .trfTblCol16{
+.trfTblCol1, .trfTblCol2, .trfTblCol3, .trfTblCol8, .trfTblCol9, .trfTblCol15{
 	width: 120px;
 	max-width: 120px;
 	text-align: center;
+}
+.trfTblCol16{
+	width: 80px;
+	min-width: 80px;
+	max-width: 80px;
+}
+.trfTblCol16 div{
+	display: flex;
+	justify-content: space-around;
+}
+.trfTblCol16 i{	
+	font-size: 20px;
+	cursor: pointer;
 }
 .trfTblCol4, .trfTblCol10{
 	width: 80px;
