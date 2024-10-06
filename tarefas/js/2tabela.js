@@ -480,7 +480,11 @@ function trf_tbl_altetarServiço(){
 		const elmnt = e.parentElement.clientHeight
 		e.addEventListener("focusout",()=>{
 			const u = e.value
-			e.style.height = elmnt + "px"
+			if(elmnt != 0){
+				e.style.height = elmnt + "px"
+			}else{
+				e.style.height = "45px"
+			}
 			
 			if(u != p){
 				var y = e.parentElement.parentElement
