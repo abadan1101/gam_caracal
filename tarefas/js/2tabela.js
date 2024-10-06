@@ -369,7 +369,7 @@ function trf_tbl_deletarLinhas(){
 		var y = e.parentElement.parentElement.parentElement
 		var z = parseInt(y.firstChild.innerHTML)
 		e.addEventListener("click", ()=>{
-			var icon = "img/imginter.png"
+			var icon = "img/imgInter.png"
 			var msg = "Excluir"
 			var act = "Deseja realmente excluir esta tarefa?"
 			var modo = "yn"
