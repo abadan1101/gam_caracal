@@ -128,10 +128,11 @@
 	max-width: 120px;
 	text-align: center;
 }
-.trfTblCol16{
+
+.trfTblCol4, .trfTblCol10, .trfTblCol16{
 	width: 80px;
-	min-width: 80px;
 	max-width: 80px;
+	text-align: center;
 }
 .trfTblCol16 div{
 	display: flex;
@@ -140,11 +141,7 @@
 .trfTblCol16 i{	
 	font-size: 20px;
 	cursor: pointer;
-}
-.trfTblCol4, .trfTblCol10{
-	width: 80px;
-	max-width: 80px;
-	text-align: center;
+	margin-right: 15px;
 }
 .trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol13, .trfTblCol14{
 	width: 140px;

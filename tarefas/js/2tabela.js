@@ -8,14 +8,13 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 	return new Promise((resolve)=>{
 		try{
 			//cabeçalho da tabela-------------------------------------------
-			const p = document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')
-			p[0].innerHTML = '<option>'+bdCfg.chave01[0]+'</option>'
-			p[1].innerHTML = '<option>'+bdCfg.chave00[0]+'</option>'
-			p[2].innerHTML = '<option>'+bdCfg.chave02[0]+'</option>'
-			p[3].innerHTML = '<option>'+bdCfg.chave03[0]+'</option>'
-			const q = document.getElementById('trf_tblTbHd').children
-			q[7].innerHTML = bdCfg.chave04[0]
-			q[8].innerHTML = bdCfg.chave05[0]
+			const cabecalho = document.getElementById('trf_tblTbHd').children
+			cabecalho[3].innerHTML = bdCfg.chave01[0]
+			cabecalho[4].innerHTML = bdCfg.chave00[0]
+			cabecalho[5].innerHTML = bdCfg.chave02[0]
+			cabecalho[6].innerHTML = bdCfg.chave03[0]
+			cabecalho[7].innerHTML = bdCfg.chave04[0]
+			cabecalho[8].innerHTML = bdCfg.chave05[0]
 			//--------------------------------------------------------------
 
 			//corpo da tabela-----------------------------------------------
@@ -169,7 +168,6 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				opcs.classList.add('trfTblCol16');
 				opcs.innerHTML = "<div><i class='bx bx-edit-alt'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
 				
-				
 				//adicionar cor da linha
 				trf_tbl_CorLinha(andamento.firstChild, linha)
 			}
@@ -180,8 +178,28 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 			document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
 			//-------------------------------------------------------------------------
 
+			//mostrar ou ocultar colunas na inicialização------------------------------
+			const chbx = [...document.getElementsByClassName('trf_tblcbs')]
+			chbx.map((e)=>{
+				var x = e.id
+					if(localStorage.getItem(x) == "true"){
+						e.checked = true
+						var y = [...document.getElementsByClassName(x)]
+						y.map((c)=>{
+							c.style.display = ""
+						})
+					}
+					if(localStorage.getItem(x) == "false"){
+						e.checked = false
+						var y = [...document.getElementsByClassName(x)]
+						y.map((c)=>{
+							c.style.display = "none"
+						})
+					}
+			})
+			//------------------------------------------------------------------------
+
 			//controles da tabela------------------------------------------------------
-			trfTbl_ctrlColunas(bdCfg)//controle das colunas
 			trfTbl_carregarCabecalho()//carrega filtros das colunas
 			trf_tbl_deletarLinhas()//rotina botão excluir linha
 			trf_tbl_altetarAndamento()//rotina de mudança no andamento da tarefa
@@ -246,119 +264,87 @@ async function trf_tbl_CorLinha(e, linha){
 }
 //--------------------------------------------------------------
 
-//carregar controle das colunas--------------------------------------
-function trfTbl_ctrlColunas(bdCfg){
-	//nomear checkbox do menu de controles das colunas
-	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
-	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
-	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
-	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
-	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
-	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
-
-	//mostrar ou ocultar colunas
-	const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-	chbx.map((e)=>{
-		var x = e.id
-			if(localStorage.getItem(x) == "true"){
-				e.checked = true
-				var y = [...document.getElementsByClassName(x)]
-				y.map((c)=>{
-					c.style.display = ""
-				})
-			}
-			if(localStorage.getItem(x) == "false"){
-				e.checked = false
-				var y = [...document.getElementsByClassName(x)]
-				y.map((c)=>{
-					c.style.display = "none"
-				})
-			}
-	})
-}
-//----------------------------------------------------------------------
-
 //carregar caixas de seleção dos filtros das colunas da tabela principal
 function trfTbl_carregarCabecalho(){
-	//buscar indices para criar os filtros
-	const x = document.getElementsByClassName("trf_tblTbBdy")
-	var y0=[], y1=[], y2=[], y3=[]
-	for(i=0;i < x.length;i++){
-		let a0 = y0.includes(x[i].children[4].firstChild.value)
-		if(a0 == false){
-			y0.push(x[i].children[4].firstChild.value)
-		}
-		let a1 = y1.includes(x[i].children[3].innerHTML)
-		if(a1 == false){
-			y1.push(x[i].children[3].innerHTML)
-		}
-		let a2 = y2.includes(x[i].children[5].firstChild.value)
-		if(a2 == false){
-			y2.push(x[i].children[5].firstChild.value)
-		}
-		let a3 = y3.includes(x[i].children[6].firstChild.value)
-		if(a3 == false){
-			y3.push(x[i].children[6].firstChild.value)
-		}	
-	}
-	//popular a caixa de seleção
-	const caixaSlct = [...document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')]
-	//popular a caixa de seleção tipo
-	caixaSlct[0].addEventListener('focus',(e)=>{
-		const cx0 = caixaSlct[0].firstChild
-		caixaSlct[0].innerHTML = ""
-		caixaSlct[0].appendChild(cx0)
-		for(i=0;i<y1.length;i++){
-			const z0 = document.createElement("option");
-			var num = y1[i]
-			if(num != ""){
-				z0.innerHTML = y1[i]
-				caixaSlct[0].appendChild(z0);
-			}
-		}
-	})
-	//popular a caixa de seleção andamento
-	caixaSlct[1].addEventListener('focus',(e)=>{
-		const cx0 = caixaSlct[1].firstChild
-		caixaSlct[1].innerHTML = ""
-		caixaSlct[1].appendChild(cx0)
-		for(i=0;i<y0.length;i++){
-			const z0 = document.createElement("option");
-			var num = y0[i]
-			if(num != ""){
-				z0.innerHTML = y0[i]
-				caixaSlct[1].appendChild(z0);
-			}
-		}
-	})
-	//popular a caixa de seleção chave 01
-	caixaSlct[2].addEventListener('focus',(e)=>{
-		const cx0 = caixaSlct[2].firstChild
-		caixaSlct[2].innerHTML = ""
-		caixaSlct[2].appendChild(cx0)
-		for(i=0;i<y2.length;i++){
-			const z0 = document.createElement("option");
-			var num = y2[i]
-			if(num != ""){
-				z0.innerHTML = y2[i]
-				caixaSlct[2].appendChild(z0);
-			}
-		}
-	})
-	//popular a caixa de seleção chave 02
-	caixaSlct[3].addEventListener('focus',(e)=>{
-		const cx0 = caixaSlct[3].firstChild
-		caixaSlct[3].innerHTML = ""
-		caixaSlct[3].appendChild(cx0)
-		for(i=0;i<y3.length;i++){
-			const z0 = document.createElement("option");
-			var num = y3[i]
-			if(num != ""){
-				z0.innerHTML = y3[i]
-				caixaSlct[3].appendChild(z0);
-			}
-		}
-	})
+	// //buscar indices para criar os filtros
+	// const x = document.getElementsByClassName("trf_tblTbBdy")
+	// var y0=[], y1=[], y2=[], y3=[]
+	// for(i=0;i < x.length;i++){
+	// 	let a0 = y0.includes(x[i].children[4].firstChild.value)
+	// 	if(a0 == false){
+	// 		y0.push(x[i].children[4].firstChild.value)
+	// 	}
+	// 	let a1 = y1.includes(x[i].children[3].innerHTML)
+	// 	if(a1 == false){
+	// 		y1.push(x[i].children[3].innerHTML)
+	// 	}
+	// 	let a2 = y2.includes(x[i].children[5].firstChild.value)
+	// 	if(a2 == false){
+	// 		y2.push(x[i].children[5].firstChild.value)
+	// 	}
+	// 	let a3 = y3.includes(x[i].children[6].firstChild.value)
+	// 	if(a3 == false){
+	// 		y3.push(x[i].children[6].firstChild.value)
+	// 	}	
+	// }
+	// //popular a caixa de seleção
+	// const caixaSlct = [...document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')]
+	// //popular a caixa de seleção tipo
+	// caixaSlct[0].addEventListener('focus',(e)=>{
+	// 	const cx0 = caixaSlct[0].firstChild
+	// 	caixaSlct[0].innerHTML = ""
+	// 	caixaSlct[0].appendChild(cx0)
+	// 	for(i=0;i<y1.length;i++){
+	// 		const z0 = document.createElement("option");
+	// 		var num = y1[i]
+	// 		if(num != ""){
+	// 			z0.innerHTML = y1[i]
+	// 			caixaSlct[0].appendChild(z0);
+	// 		}
+	// 	}
+	// })
+	// //popular a caixa de seleção andamento
+	// caixaSlct[1].addEventListener('focus',(e)=>{
+	// 	const cx0 = caixaSlct[1].firstChild
+	// 	caixaSlct[1].innerHTML = ""
+	// 	caixaSlct[1].appendChild(cx0)
+	// 	for(i=0;i<y0.length;i++){
+	// 		const z0 = document.createElement("option");
+	// 		var num = y0[i]
+	// 		if(num != ""){
+	// 			z0.innerHTML = y0[i]
+	// 			caixaSlct[1].appendChild(z0);
+	// 		}
+	// 	}
+	// })
+	// //popular a caixa de seleção chave 01
+	// caixaSlct[2].addEventListener('focus',(e)=>{
+	// 	const cx0 = caixaSlct[2].firstChild
+	// 	caixaSlct[2].innerHTML = ""
+	// 	caixaSlct[2].appendChild(cx0)
+	// 	for(i=0;i<y2.length;i++){
+	// 		const z0 = document.createElement("option");
+	// 		var num = y2[i]
+	// 		if(num != ""){
+	// 			z0.innerHTML = y2[i]
+	// 			caixaSlct[2].appendChild(z0);
+	// 		}
+	// 	}
+	// })
+	// //popular a caixa de seleção chave 02
+	// caixaSlct[3].addEventListener('focus',(e)=>{
+	// 	const cx0 = caixaSlct[3].firstChild
+	// 	caixaSlct[3].innerHTML = ""
+	// 	caixaSlct[3].appendChild(cx0)
+	// 	for(i=0;i<y3.length;i++){
+	// 		const z0 = document.createElement("option");
+	// 		var num = y3[i]
+	// 		if(num != ""){
+	// 			z0.innerHTML = y3[i]
+	// 			caixaSlct[3].appendChild(z0);
+	// 		}
+	// 	}
+	// })
 }
 //------------------------------------------------------------------------
 
@@ -445,7 +431,6 @@ function trf_tbl_altetarAndamento(){
 
 //alterar serviço executado----------------------------------------------
 function trf_tbl_altetarServiço(){
-	
 	//configurar textarea para altura automática
 	(function () {
 		"use strict";
@@ -482,8 +467,6 @@ function trf_tbl_altetarServiço(){
 			const u = e.value
 			if(elmnt != 0){
 				e.style.height = elmnt + "px"
-			}else{
-				e.style.height = "45px"
 			}
 			
 			if(u != p){
@@ -521,6 +504,16 @@ function trf_tbl_altetarServiço(){
 //--------------------------------------------------------------
 
 //menu do controle de visualização das colunas-------------------
+//nomear checkbox do menu de controles das colunas
+async function xt(){
+	var bdCfg = await loadTBCfgLin(0)
+	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
+	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
+	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
+	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
+	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
+	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
+}xt()
 //ocultar ou mostrar menu		
 const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
 const trf_tblCtrl = document.getElementById('trf_tblCtrl')
