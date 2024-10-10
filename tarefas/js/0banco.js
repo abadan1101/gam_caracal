@@ -287,9 +287,12 @@ function AltTarefasBd(n, col, val){
 //--------------------------------------------------------------------------------------------
 //excluir tarefas das linhas
 function excluirTarefa(z){
-	var transaction = db.transaction(dbLinha, "readwrite");
-	var store = transaction.objectStore(dbLinha);
-	var request = store.delete(z)	
+	return new Promise((resolve)=>{
+		var transaction = db.transaction(dbLinha, "readwrite");
+		var store = transaction.objectStore(dbLinha);
+		var request = store.delete(z)
+		resolve()
+	})
 }
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------

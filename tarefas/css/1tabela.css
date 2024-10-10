@@ -36,6 +36,7 @@
 	cursor: pointer;
 	background: #ddd;
 	margin-top: 3px;
+	margin-bottom: 3px;
 }
 #trf_tblCtrlAct label{
 	cursor: pointer;
@@ -123,12 +124,16 @@
 .trfTblCol1{
 	display: none;
 }
-.trfTblCol1, .trfTblCol2, .trfTblCol3, .trfTblCol8, .trfTblCol9, .trfTblCol15{
-	width: 120px;
-	max-width: 120px;
+.trfTblCol2, .trfTblCol3, .trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol8, .trfTblCol9, .trfTblCol13, .trfTblCol14, .trfTblCol15{
+	width: 140px;
+	max-width: 140px;
 	text-align: center;
 }
-
+.trfTblCol11, .trfTblCol12{
+	width: 500px;
+	max-width: 1000;
+	text-align: start;
+}
 .trfTblCol4, .trfTblCol10, .trfTblCol16{
 	width: 80px;
 	max-width: 80px;
@@ -142,16 +147,6 @@
 	font-size: 20px;
 	cursor: pointer;
 	margin-right: 15px;
-}
-.trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol13, .trfTblCol14{
-	width: 140px;
-	max-width: 140px;
-	text-align: center;
-}
-.trfTblCol11, .trfTblCol12{
-	width: 500px;
-	max-width: 1000;
-	text-align: start;
 }
 .trf_tblSlct{
 	width: auto;
@@ -182,7 +177,8 @@
 	background: transparent;
 	width: 100%;
 	border: none;
-	font-size: 15px;
+	font-size: 16px;
 	height: 45px;
+	margin: 2px 0 2px 0;
 }
 

@@ -166,10 +166,10 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				//adicionar botões
 				var opcs = linha.insertCell(15);
 				opcs.classList.add('trfTblCol16');
-				opcs.innerHTML = "<div><i class='bx bx-edit-alt'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
+				opcs.innerHTML = "<div><i class='bx bx-edit-alt btnEditTst'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
 				
 				//adicionar cor da linha
-				trf_tbl_CorLinha(andamento.firstChild, linha)
+				trfTbl_CorLinha(andamento.firstChild, linha)
 			}
 			//-------------------------------------------------------------------------
 
@@ -200,10 +200,10 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 			//------------------------------------------------------------------------
 
 			//controles da tabela------------------------------------------------------
-			trfTbl_carregarCabecalho()//carrega filtros das colunas
-			trf_tbl_deletarLinhas()//rotina botão excluir linha
-			trf_tbl_altetarAndamento()//rotina de mudança no andamento da tarefa
-			trf_tbl_altetarServiço()//teste alterar serviço executado
+			TrfTbl_EditarTarefas()//editar tarefas
+			trfTbl_deletarLinhas()//rotina botão excluir tarefa
+			trfTbl_altetarAndamento()//rotina de mudança no andamento da tarefa
+			trfTbl_altetarServiço()//teste alterar serviço executado
 			//--------------------------------------------------------------------------
 
 			resolve()
@@ -228,7 +228,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 //----------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL----------------------------
 //--------------------------------------------------------------------------------------
 //carregar cores das tarefas----------------------------------------------
-async function trf_tbl_CorLinha(e, linha){
+async function trfTbl_CorLinha(e, linha){
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 
 	if(e.value == bdCfg.chave00[2]){
@@ -263,6 +263,232 @@ async function trf_tbl_CorLinha(e, linha){
 	}
 }
 //--------------------------------------------------------------
+
+//botão editar tarefas-----------------------------------------------
+function TrfTbl_EditarTarefas(){
+	const x = [...document.getElementsByClassName("btnEditTst")]
+	x.map((e)=>{
+		var y = e.parentElement.parentElement.parentElement
+		var z = parseInt(y.firstChild.innerHTML)
+		e.addEventListener("click", ()=>{
+			var icon = "img/imgOK.png"
+			var msg = "Em Desenvolvimento"
+			var act = "Aguardando desenvolvimento!"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func)
+		})
+	})
+	
+}
+//------------------------------------------------------------------------
+
+//botão excluir tarefas-----------------------------------------------
+function trfTbl_deletarLinhas(){
+	const x = [...document.getElementsByClassName("btnexcTst")]
+	x.map((e)=>{
+		var y = e.parentElement.parentElement.parentElement
+		var z = parseInt(y.firstChild.innerHTML)
+		e.addEventListener("click", ()=>{
+			var icon = "img/imgInter.png"
+			var msg = "Excluir"
+			var act = "Deseja realmente excluir esta tarefa?"
+			var modo = "yn"
+			var reload = "false"
+			var func = () => {trfTbl_exclTarefa(z,y)}
+			openMSG(icon, msg, act, modo, reload,func);
+		})
+	})
+}
+async function trfTbl_exclTarefa(z,y){
+	await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
+	const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
+	if(verificar == "null"){
+		y.remove()
+		var icon = "img/imgOK.png"
+		var msg = "Confirmação " + dbLinha + "!"
+		var act = "Tarefa excluída com sucesso!"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func)
+	}else{
+		var icon = "img/imgError.png"
+		var msg = "Erro"
+		var act = "Erro ao excluir tarefa"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+	}
+	trfTbl_carregarCabecalho()
+}
+//---------------------------------------------------------------------
+
+//salvar ao alterar andamento------------------------------------------
+function trfTbl_altetarAndamento(){
+	const x = [...document.getElementsByClassName("trf_tblSlctAdmt")]
+	x.map((e)=>{
+		const j = e.value
+		var y = e.parentElement.parentElement
+		var z = parseInt(y.children[0].innerHTML)
+		e.addEventListener("change", ()=>{
+			async function alterar(){
+				await AltTarefasBd(z, "chave00", e.value)
+				const vlAlt = await obterDados(z, "chave00")
+				
+				//mensagem de erro!
+				if(vlAlt != e.value){
+						var icon = "img/imgError.png"
+						var msg = "Erro"
+						var act = "Erro ao alterar andamento"
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+						e.value = j
+				}else{
+					//cor da linha
+					trfTbl_CorLinha(e, y)
+					
+					//mensagem de sucesso!
+					document.getElementById('trf_tblmsgSec').style.display = "flex"
+					setTimeout(()=>{
+						document.getElementById('trf_tblmsgSec').style.display = "none"
+					},3000)
+				}	
+			}alterar()
+		})
+	})
+}
+//-----------------------------------------------------------------------------
+
+//alterar serviço executado----------------------------------------------
+function trfTbl_altetarServiço(){
+	//configurar textarea para altura automática
+	(function () {
+		"use strict";
+
+		function addEvent(textarea) {
+			textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
+			function updateHeight() {
+				var offset = textarea.offsetHeight - textarea.clientHeight;
+				textarea.style.height = "auto";
+				textarea.style.height = textarea.scrollHeight + offset + "px";
+			}
+			textarea.addEventListener("keyup", updateHeight);
+			textarea.addEventListener("input", updateHeight);
+		}
+
+		document
+		.querySelectorAll(".trfTblCol12txa")
+		.forEach(addEvent);
+	})();
+	//alterar serviço executado
+	const z = [...document.getElementsByClassName('trfTblCol12txa')]
+	z.map((e)=>{
+		
+		var p = ""
+		e.addEventListener("focus",()=>{
+			p = e.value
+			if (e.scrollHeight > e.offsetHeight){
+				e.style.height = e.scrollHeight + "px"	
+			}
+		})
+		
+		const elmnt = e.parentElement.clientHeight
+		e.addEventListener("focusout",()=>{
+			const u = e.value
+			if(elmnt != 0){
+				e.style.height = elmnt + "px"
+			}
+			
+			if(u != p){
+				var y = e.parentElement.parentElement
+				var z = parseInt(y.children[0].innerHTML)
+				async function alterar(){
+					await AltTarefasBd(z, "serviço", e.value)
+					const vlAlt = await obterDados(z, "serviço")
+					if(vlAlt != e.value){
+						var icon = "img/imgError.png"
+						var msg = "Erro"
+						var act = "Erro ao alterar andamento"
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+					}else{
+						document.getElementById('trf_tblmsgSec').style.display = "flex"
+						setTimeout(()=>{
+							document.getElementById('trf_tblmsgSec').style.display = "none"
+						},3000)
+					}
+				}alterar()
+			}
+		})
+	})	
+}
+//--------------------------------------------------------------
+
+//menu do controle de visualização das colunas-------------------
+//nomear checkbox do menu de controles das colunas
+async function xt(){
+	var bdCfg = await loadTBCfgLin(0)
+	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
+	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
+	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
+	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
+	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
+	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
+}xt()
+//ocultar ou mostrar menu		
+const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
+const trf_tblCtrl = document.getElementById('trf_tblCtrl')
+var trf_tblCtrlClm = false
+trf_tblCtrl.style.display = "none"
+trf_tblCtrlAct.addEventListener('click', ()=>{
+	if(trf_tblCtrl.style.display == "none"){
+		trf_tblCtrlClm = true
+		trf_tblCtrl.style.display = ""
+	}else{
+		trf_tblCtrlClm = false
+		trf_tblCtrl.style.display = "none"
+	}
+})
+window.addEventListener("click", (e)=>{
+	if(trf_tblCtrlClm == true){
+		const x = e.target
+		const y = e.target.parentNode
+		if(!(x.classList.contains("trf_tblCtrl") || y.classList.contains("trf_tblCtrl"))){
+			trf_tblCtrlClm = false
+			trf_tblCtrl.style.display = "none"
+		}
+	}
+})
+//ocultar ou mostrar colunas da tabela
+const chbx = [...document.getElementsByClassName('trf_tblcbs')]
+chbx.map((e)=>{
+	e.addEventListener('change', function(){
+		var x = e.id
+		if(e.checked == true){
+			var y = [...document.getElementsByClassName(x)]
+			y.map((c)=>{
+				c.style.display = ""
+			})
+			localStorage.setItem(x, true)
+		}else{
+			var y = [...document.getElementsByClassName(x)]
+			y.map((c)=>{
+				c.style.display = "none"
+			})
+			localStorage.setItem(x, false)
+		}
+		
+	})
+})
+//-------------------------------------------------------------------
+
 
 //carregar caixas de seleção dos filtros das colunas da tabela principal
 function trfTbl_carregarCabecalho(){
@@ -347,221 +573,6 @@ function trfTbl_carregarCabecalho(){
 	// })
 }
 //------------------------------------------------------------------------
-
-//botão excluir linhas-----------------------------------------------
-function trf_tbl_deletarLinhas(){
-	const x = [...document.getElementsByClassName("btnexcTst")]
-	x.map((e)=>{
-		var y = e.parentElement.parentElement.parentElement
-		var z = parseInt(y.firstChild.innerHTML)
-		e.addEventListener("click", ()=>{
-			var icon = "img/imgInter.png"
-			var msg = "Excluir"
-			var act = "Deseja realmente excluir esta tarefa?"
-			var modo = "yn"
-			var reload = "false"
-			var func = () => {trfTbl_exclTarefa(z,y)}
-			openMSG(icon, msg, act, modo, reload,func);
-		})
-	})
-}
-async function trfTbl_exclTarefa(z,y){
-	await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
-	const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
-	if(verificar == "null"){
-		y.remove()
-		var icon = "img/imgOK.png"
-		var msg = "Confirmação " + dbLinha + "!"
-		var act = "Tarefa excluída com sucesso!"
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func)
-	}else{
-		var icon = "img/imgError.png"
-		var msg = "Erro"
-		var act = "Erro ao excluir tarefa"
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);
-	}
-	trfTbl_carregarCabecalho()
-}
-//---------------------------------------------------------------------
-
-//salvar ao alterar andamento------------------------------------------
-function trf_tbl_altetarAndamento(){
-	const x = [...document.getElementsByClassName("trf_tblSlctAdmt")]
-	x.map((e)=>{
-		const j = e.value
-		var y = e.parentElement.parentElement
-		var z = parseInt(y.children[0].innerHTML)
-		e.addEventListener("change", ()=>{
-			async function alterar(){
-				await AltTarefasBd(z, "chave00", e.value)
-				const vlAlt = await obterDados(z, "chave00")
-				
-				//mensagem de erro!
-				if(vlAlt != e.value){
-						var icon = "img/imgError.png"
-						var msg = "Erro"
-						var act = "Erro ao alterar andamento"
-						var modo = "conf"
-						var reload = "false"
-						var func = ""
-						openMSG(icon, msg, act, modo, reload,func);
-						e.value = j
-				}else{
-					//cor da linha
-					trf_tbl_CorLinha(e, y)
-					
-					//mensagem de sucesso!
-					document.getElementById('trf_tblmsgSec').style.display = "flex"
-					setTimeout(()=>{
-						document.getElementById('trf_tblmsgSec').style.display = "none"
-					},3000)
-				}	
-			}alterar()
-			trfTbl_carregarCabecalho()
-		})
-	})
-}
-//-----------------------------------------------------------------------------
-
-//alterar serviço executado----------------------------------------------
-function trf_tbl_altetarServiço(){
-	//configurar textarea para altura automática
-	(function () {
-		"use strict";
-
-		function addEvent(textarea) {
-			textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
-			function updateHeight() {
-				var offset = textarea.offsetHeight - textarea.clientHeight;
-				textarea.style.height = "auto";
-				textarea.style.height = textarea.scrollHeight + offset + "px";
-			}
-			textarea.addEventListener("keyup", updateHeight);
-			textarea.addEventListener("input", updateHeight);
-		}
-
-		document
-		.querySelectorAll(".trfTblCol12txa")
-		.forEach(addEvent);
-	})();
-	
-	const z = [...document.getElementsByClassName('trfTblCol12txa')]
-	z.map((e)=>{
-		
-		var p = ""
-		e.addEventListener("focus",()=>{
-			p = e.value
-			if (e.scrollHeight > e.offsetHeight){
-				e.style.height = e.scrollHeight + "px"	
-			}
-		})
-		
-		const elmnt = e.parentElement.clientHeight
-		e.addEventListener("focusout",()=>{
-			const u = e.value
-			if(elmnt != 0){
-				e.style.height = elmnt + "px"
-			}
-			
-			if(u != p){
-				var y = e.parentElement.parentElement
-				var z = parseInt(y.children[0].innerHTML)
-				var transaction = db.transaction(dbLinha,"readwrite");
-				var objectStore = transaction.objectStore(dbLinha);
-				var request = objectStore.get(z);
-				request.onsuccess = function(){
-					request.result.serviço = e.value;
-					objectStore.put(request.result);
-					request = objectStore.get(z);
-					request.onsuccess = function(){
-						if(request.result.serviço != e.value){
-							var icon = "img/imgError.png"
-							var msg = "Erro"
-							var act = "Erro ao alterar andamento"
-							var modo = "conf"
-							var reload = "false"
-							var func = ""
-							openMSG(icon, msg, act, modo, reload,func);
-						}else{
-							document.getElementById('trf_tblmsgSec').style.display = "flex"
-							setTimeout(()=>{
-								document.getElementById('trf_tblmsgSec').style.display = "none"
-							},3000)
-						}
-					}
-				}
-			}
-		})
-	})
-	
-}
-//--------------------------------------------------------------
-
-//menu do controle de visualização das colunas-------------------
-//nomear checkbox do menu de controles das colunas
-async function xt(){
-	var bdCfg = await loadTBCfgLin(0)
-	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
-	document.getElementById('trf_tblCtrllb2').innerHTML = bdCfg.chave00[0]
-	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
-	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
-	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
-	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
-}xt()
-//ocultar ou mostrar menu		
-const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
-const trf_tblCtrl = document.getElementById('trf_tblCtrl')
-var trf_tblCtrlClm = false
-trf_tblCtrl.style.display = "none"
-trf_tblCtrlAct.addEventListener('click', ()=>{
-	if(trf_tblCtrl.style.display == "none"){
-		trf_tblCtrlClm = true
-		trf_tblCtrl.style.display = ""
-	}else{
-		trf_tblCtrlClm = false
-		trf_tblCtrl.style.display = "none"
-	}
-})
-window.addEventListener("click", (e)=>{
-	if(trf_tblCtrlClm == true){
-		const x = e.target
-		const y = e.target.parentNode
-		if(!(x.classList.contains("trf_tblCtrl") || y.classList.contains("trf_tblCtrl"))){
-			trf_tblCtrlClm = false
-			trf_tblCtrl.style.display = "none"
-		}
-	}
-})
-//ocultar ou mostrar colunas da tabela
-const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-chbx.map((e)=>{
-	e.addEventListener('change', function(){
-		var x = e.id
-		if(e.checked == true){
-			var y = [...document.getElementsByClassName(x)]
-			y.map((c)=>{
-				c.style.display = ""
-			})
-			localStorage.setItem(x, true)
-		}else{
-			var y = [...document.getElementsByClassName(x)]
-			y.map((c)=>{
-				c.style.display = "none"
-			})
-			localStorage.setItem(x, false)
-		}
-		
-	})
-})
-//-------------------------------------------------------------------
-
-
 
 
 
