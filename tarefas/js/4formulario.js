@@ -156,7 +156,7 @@ function LimpTaref(){
 
 
 
-//ABRIR FORMULÁRIO ----------------------------------------------------
+//ABRIR FORMULÁRIO PARA NOVA TAREFA----------------------------------------------------
 function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
 	configForm().then(()=>{
 		//variáveis
@@ -181,6 +181,49 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 		tc.style.display = "none";
 		tf.style.display = "block";
 		})
+}
+//ABRIR FORMULÁRIO PARA EDITAR TAREFA----------------------------------------------------
+function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
+	console.log(tarefa)
+	configForm().then(()=>{
+		//limpar formulário
+		LimpTaref();
+		
+		//carregar número
+		document.getElementById('trf_form_num').value = tarefa.numero
+		
+		//configuração da data
+		const tfd = document.getElementById("trf_form_dat");
+		const data = new Date(tarefa.data);
+		const ano = data.getFullYear();
+		const mes = (data.getMonth() +1).toString().padStart(2, "0");
+		const dia = data.getDate().toString().padStart(2, "0");
+		const dtTarefa = tfd.value = ano + "-" + mes + "-" + dia;
+		
+		//baixar dados das caixas de seleção
+		document.getElementById('trf_form_Ch00').value = tarefa.chave00;
+		document.getElementById('trf_form_Ch01').value = tarefa.chave01;
+		document.getElementById('trf_form_Ch02').value = tarefa.chave02;
+		document.getElementById('trf_form_Ch03').value = tarefa.chave03;
+		document.getElementById('trf_form_Ch04').value = tarefa.chave04;
+		document.getElementById('trf_form_Ch05').value = tarefa.chave05;
+		
+		//configurar caixa de baixar cartão
+		const bxr = document.getElementById('trf_form_bxr');
+		bxr.value = $(bxr).val("selecione um cartão").select2();
+		
+		//caixas com textarea
+		document.getElementById('trf_form_txa1').value = tarefa.tarefa;
+		document.getElementById('trf_form_txa2').value = tarefa.serviço;
+		
+		//mostrar formulário
+		const tf = document.getElementById("trf_form")
+		const tt= document.getElementById("trf_tbl")
+		const tc = document.getElementById("trf_conf")
+		tt.style.display = "none";
+		tc.style.display = "none";
+		tf.style.display = "block";
+	})
 }
 //---------------------------------------------------------------------
 

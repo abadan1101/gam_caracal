@@ -271,16 +271,12 @@ function TrfTbl_EditarTarefas(){
 		var y = e.parentElement.parentElement.parentElement
 		var z = parseInt(y.firstChild.innerHTML)
 		e.addEventListener("click", ()=>{
-			var icon = "img/imgOK.png"
-			var msg = "Em Desenvolvimento"
-			var act = "Aguardando desenvolvimento!"
-			var modo = "conf"
-			var reload = "false"
-			var func = ""
-			openMSG(icon, msg, act, modo, reload,func)
+			async function editar(){
+				const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
+				editarTarefa(verificar)
+			}editar()
 		})
 	})
-	
 }
 //------------------------------------------------------------------------
 
