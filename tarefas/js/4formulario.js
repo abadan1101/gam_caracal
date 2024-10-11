@@ -622,7 +622,7 @@ const salvTaref = document.querySelectorAll('.trf_form_btn');
 salvTaref.forEach(function(e){
 	e.addEventListener('click', function(){
 		const fb = e.id;
-		if(fb != "trf_form_cnc" && trf_form_dat.value != "" && trf_form_num.value != "" && trf_form_txa1.value != ""){
+		if(fb != "trf_form_cnc" && trf_form_dat.value != "" && trf_form_num.value != "" && trf_form_txa1.value != "" && trfForm_vlPorcentagem.value != ""){
 		
 			//inserir tarefa no banco de dados
 			
@@ -739,14 +739,18 @@ salvTaref.forEach(function(e){
 			
 		}else{
 			if(fb != "trf_form_cnc"){
-				//mensagem de rejeitado
-				var icon = "img/imgAlert.png"
-				var msg = "formulário incompleto!"
-				var act = "Preencha os campos Obrigatórios"
-				var modo = "conf"
-				var reload = "false"
-				var func = ""
-				openMSG(icon, msg, act, modo, reload,func);
+				if(trf_form_dat.value == "" || trf_form_num.value == "" || trf_form_txa1.value == ""){
+					//mensagem de rejeitado
+					var icon = "img/imgAlert.png"
+					var msg = "formulário incompleto!"
+					var act = "Preencha os campos Obrigatórios"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					trfForm_vlPorcentagem.reportValidity()
+				}
 			}
 		}
     })
