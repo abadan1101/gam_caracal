@@ -121,7 +121,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				//preencher porcentagem
 				var prct = linha.insertCell(9);
 				prct.classList.add('trfTblCol10');
-				prct.innerHTML = bdTabela[i].porcentagem;
+				prct.innerHTML = bdTabela[i].porcentagem + "%";
 				
 				//preencher descrição
 				var desc = linha.insertCell(10);

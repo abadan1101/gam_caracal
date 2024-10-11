@@ -364,6 +364,28 @@
 
 
 
+/* -----------------------PERCENTUAL-------------------- */
+#trfForm_Percentual{
+	display: flex;
+	width: 100%;
+	padding: 4px 20px 4px 20px;
+	justify-content: right;
+}
+#trfForm_Percentual label{
+	margin: 0 10px 0 4px;
+}
+#trfForm_Percentual input{
+	width: 40px;
+	border-radius: 5px;
+	border: solid 1px #ccc;
+	font-size: 16px;
+	padding-left: 8px;
+}
+/*_______________________________________________________*/
+
+
+
+
 /* -----------------------INFO------------------------ */
 #trf_form_inf{
 	display:flex;

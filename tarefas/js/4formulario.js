@@ -147,6 +147,10 @@ function LimpTaref(){
 	tfProv.map((el)=>{
 		el.remove();
 	})
+	
+	//limpar percentual
+	document.getElementById('trfForm_Percentual').style.display = "flex"
+	document.getElementById('trfForm_vlPorcentagem').value = "";
 }
 //---------------------------------------------------------------------
 
@@ -180,6 +184,21 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 }
 //---------------------------------------------------------------------
 
+
+
+//MOSTRAR OU OCULTAR CAIXA DE ATUALIZAÇÃO DO PERCENTUAL ----------------------------------------------------
+const tf = document.getElementById("trf_form_Ch00")
+tf.addEventListener('change', function () {
+	if(tf.value == "Fechado" || tf.value == "Ag. Virada" || tf.value == "Ag. Abrir"){
+		trfForm_vlPorcentagem.disabled = "true"
+		if(tf.value == "Fechado" || tf.value == "Ag. Virada"){trfForm_vlPorcentagem.value = "100"}
+		if(tf.value == "Ag. Abrir"){trfForm_vlPorcentagem.value = "0"}
+	}else{
+		trfForm_vlPorcentagem.disabled = ""
+		trfForm_vlPorcentagem.value = ""
+	}
+})
+//---------------------------------------------------------------------
 
 
 
@@ -685,6 +704,9 @@ salvTaref.forEach(function(e){
 				eqp.push(eq1)
 			}
 			
+			//porcentagem
+			var porcentagem = percentualVL = document.getElementById('trfForm_vlPorcentagem').value
+			
 			//transação na tabela do banco
 			var tabela = []
 			
@@ -704,7 +726,7 @@ salvTaref.forEach(function(e){
 				produtos: prd,
 				equipe: eqp,
 				atualizacao: new Date().getTime(),
-				porcentagem: "0%"
+				porcentagem: porcentagem
 			})
 			//reabrir formulário em caso de reload
 			if(fb == "trf_form_slN"){

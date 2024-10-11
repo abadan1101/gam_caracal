@@ -80,7 +80,7 @@ $('.selectonfocus').mask("00/00/0000", {selectOnFocus: true});
 
 //mascaras criadas
 $('.maskNumeros').mask('0000000000'); //somente numeros até 10 caracteres
-
+$('.maskNum02').mask('00'); //somente numeros até 02 caracteres
 
 
 

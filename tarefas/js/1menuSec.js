@@ -70,6 +70,14 @@ fileInput.addEventListener('change', () => {
 					e.__EMPTY_3 = ""
 				}
 				
+				//ajustar porcentagem
+				var porcentagem = ""
+				if(andamento == "Pendente"){
+					porcentagem = "50"
+				}else{
+					porcentagem = "0"
+				}
+				
 				//ajustar descrição da tarefa
 				var descricao = ""
 				if(docSelect.includes("OSVirtualAbertaAeronave")){descricao = e.__EMPTY_4}else{descricao = e.__EMPTY_5}
@@ -87,7 +95,7 @@ fileInput.addEventListener('change', () => {
 						chave03: "",
 						chave04: "",
 						chave05: "",
-						porcentagem: "0%",
+						porcentagem: porcentagem,
 						tarefa: descricao,
 						serviço: "",
 						pedidos: [],
@@ -205,7 +213,7 @@ fileInput.addEventListener('change', () => {
 					chave03: "",
 					chave04: "",
 					chave05: "",
-					porcentagem: "0%",
+					porcentagem: "0",
 					tarefa: desc,
 					serviço: serv,
 					pedidos: [],
