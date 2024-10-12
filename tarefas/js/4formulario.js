@@ -184,7 +184,6 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 }
 //ABRIR FORMULÁRIO PARA EDITAR TAREFA----------------------------------------------------
 function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
-	console.log(tarefa)
 	configForm().then(()=>{
 		//limpar formulário
 		LimpTaref();
@@ -215,6 +214,20 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.
 		//caixas com textarea
 		document.getElementById('trf_form_txa1').value = tarefa.tarefa;
 		document.getElementById('trf_form_txa2').value = tarefa.serviço;
+
+		//caixa dos pedidos
+		
+		//caixa das ferramentas
+
+		//caixa dos produtos
+
+		//caixa da equipe
+
+		//dados do rodapé
+		const dadosRdp = [...document.getElementById("trf_form_inf").children]
+		dadosRdp[1].innerHTML = tarefa.id
+		dadosRdp[3].innerHTML = new Date(tarefa.atualizacao).toLocaleDateString("pt-BR");
+		dadosRdp[5].innerHTML = tarefa.porcentagem + "%"
 		
 		//mostrar formulário
 		const tf = document.getElementById("trf_form")
