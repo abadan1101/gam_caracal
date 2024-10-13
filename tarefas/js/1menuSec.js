@@ -53,8 +53,7 @@ fileInput.addEventListener('change', () => {
 				}
 				
 				//ajustar andamento da tarefa
-				var andamento = ""
-				if(docSelect.includes("OSVirtualAbertaAeronave")){andamento = "Aberto"}else{andamento = "Pendente"}
+				var andamento = "Aberto"
 				
 				//ajustar tipo da tarefa
 				if(e.__EMPTY_3 == "i" || e.__EMPTY_3 == "I"){

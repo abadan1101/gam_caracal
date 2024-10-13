@@ -429,6 +429,12 @@ function trfFrm_adicionarPedidos(array){
 		obs.classList.add('tfpOcult');
 		status.classList.add('tftcenter');
 
+		//alterar andamento da tarefa
+		if(array[8] == true){
+			document.getElementById("trf_form_Ch00").value = "Pendente"
+			trfFrm_autoPorcentagem()
+		}
+		
 		resolve()
 	})
 }
@@ -473,6 +479,23 @@ const tfdca6Ex = document.getElementById("tfdca6Ex");
 tfdca6Ex.addEventListener("click", ()=>{
 	tfpNlin.remove()
 	tfPlimp ()
+
+	//alterar andamento da tarefa
+	const verificarPendencias = trfFrm_verificarPendencias()
+	if(verificarPendencias == true){
+		document.getElementById("trf_form_Ch00").value = "Pendente"
+		trfFrm_autoPorcentagem()
+	}else{
+		if(trfFrm_andamentoAtv == "Pendente"){
+			if(document.getElementById("trf_form_txa2").value == ""){
+				trfFrm_andamentoAtv = "Aberto"
+			}else{
+				trfFrm_andamentoAtv = "Em Exec."
+			}
+		}
+		document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
+		trfFrm_autoPorcentagem()
+	}
 
 	//mensagem
 	const img = "img/imgExc.png"
@@ -576,6 +599,12 @@ function trfFrm_adicionarFerramentas(array){
 		chb.classList.add('tftcenter');
 		saveBtn.classList.add('tftbtn')
 
+		//alterar andamento da tarefa
+		if(array[1] == true){
+			document.getElementById("trf_form_Ch00").value = "Pendente"
+			trfFrm_autoPorcentagem()
+		}
+
 		resolve()
 	})
 }
@@ -587,6 +616,23 @@ tftf.addEventListener('click', function (e) {
 	const v = r.parentElement
 	if( e.target.classList.contains("tftbtn")){
 		v.remove()
+
+		//alterar andamento da tarefa
+		const verificarPendencias = trfFrm_verificarPendencias()
+		if(verificarPendencias == true){
+			document.getElementById("trf_form_Ch00").value = "Pendente"
+			trfFrm_autoPorcentagem()
+		}else{
+			if(trfFrm_andamentoAtv == "Pendente"){
+				if(document.getElementById("trf_form_txa2").value == ""){
+					trfFrm_andamentoAtv = "Aberto"
+				}else{
+					trfFrm_andamentoAtv = "Em Exec."
+				}
+			}
+			document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
+			trfFrm_autoPorcentagem()
+		}
 
 		//mensagem
 		const img = "img/imgExc.png"
@@ -669,6 +715,12 @@ function trfFrm_adicionarProdutos(array){
 		chb.classList.add('tftcenter');
 		saveBtn.classList.add('tftbtn')
 
+		//alterar andamento da tarefa
+		if(array[1] == true){
+			document.getElementById("trf_form_Ch00").value = "Pendente"
+			trfFrm_autoPorcentagem()
+		}
+
 		resolve()
 	})
 }
@@ -680,6 +732,23 @@ tftpr.addEventListener('click', function (e) {
 	const v = r.parentElement
 	if( e.target.classList.contains("tftbtn")){
 		v.remove()
+
+		//alterar andamento da tarefa
+		const verificarPendencias = trfFrm_verificarPendencias()
+		if(verificarPendencias == true){
+			document.getElementById("trf_form_Ch00").value = "Pendente"
+			trfFrm_autoPorcentagem()
+		}else{
+			if(trfFrm_andamentoAtv == "Pendente"){
+				if(document.getElementById("trf_form_txa2").value == ""){
+					trfFrm_andamentoAtv = "Aberto"
+				}else{
+					trfFrm_andamentoAtv = "Em Exec."
+				}
+			}
+			document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
+			trfFrm_autoPorcentagem()
+		}
 
 		//mensagem
 		const img = "img/imgExc.png"
@@ -1011,6 +1080,17 @@ trfFrm_tabelaPedidos.map((e)=>{
 			}else{
 				const pendente = trfFrm_verificarPendencias()
 				if(pendente == false){
+					if(trfFrm_andamentoAtv == "Pendente"){
+						if(document.getElementById("trf_form_txa2").value == ""){
+							trfFrm_andamentoAtv = "Aberto"
+						}else{
+							trfFrm_andamentoAtv = "Em Exec."
+						}
+					}else{
+						if(document.getElementById("trf_form_txa2").value == ""){
+							trfFrm_andamentoAtv = "Aberto"
+						}
+					}
 					trfFrm_selectAndamento.value = trfFrm_andamentoAtv
 				}
 			}
@@ -1028,7 +1108,7 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 	if(pendente == true){
 		for(i=0;i<opcoes.length;i++){
 			opcoes[i].disabled = true
-			opcoes[i].style.color = "#ccc"
+			opcoes[i].style.color = "#ddd"
 		}
 	}else{
 		//caso caixa de serviço vazia
@@ -1036,28 +1116,39 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 		if(Servico.value == ""){
 			for(i=0;i<opcoes.length;i++){
 				opcoes[i].disabled = true
-				opcoes[i].style.color = "#000"
+				opcoes[i].style.color = "#ddd"
+				opcoes[0].disabled = false
+				opcoes[0].style.color = "#000"
+				opcoes[4].disabled = false
+				opcoes[4].style.color = "#000"
 			}
 		}else{
 			for(i=0;i<opcoes.length;i++){
 				opcoes[i].disabled = false
 				opcoes[i].style.color = "#000"
 				opcoes[0].disabled = true
+				opcoes[0].style.color = "#ddd"
 				opcoes[2].disabled = true
+				opcoes[2].style.color = "#ddd"
 			}
 		}
 	}	
-	
 })
 
 //configurar alterações no serviço
 const servico = document.getElementById("trf_form_txa2")
 servico.addEventListener("focusout",()=>{
-	if(servico.value == ""){
-		trfFrm_selectAndamento.value = "Aberto"
-	}else{
-		trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+	const pendente = trfFrm_verificarPendencias()
+	if(pendente != true){
+		if(servico.value == "" && trfFrm_selectAndamento.value != "Ag. Abrir"){
+			trfFrm_selectAndamento.value = "Aberto"
+		}else{
+			if(trfFrm_andamentoAtv == "Aberto"){trfFrm_andamentoAtv = "Em Exec."}
+			trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+		}
+		trfFrm_autoPorcentagem()
 	}
+	
 })
 //--------------------------------------------------------------------
 

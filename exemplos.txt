@@ -117,3 +117,8 @@ alterar valor
 const tfe = document.getElementById('trf_form_EquMem');
 tfe.value = $(tfe).val("selecione um membro").select2();
 ----------------------------------------
+
+
+
+//verificar se a palavra está sa string
+//if(variavel.includes("palavraProcurada")){console.log("true")}
