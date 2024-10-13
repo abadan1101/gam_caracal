@@ -166,6 +166,7 @@ function LimpTaref(){
 //ABRIR FORMULÁRIO----------------------------------------------------
 //variavel que define se nova tarefa ou editar tarefa
 var idTarefa = ""
+var trfFrm_andamentoAtv = ""
 
 //ABRIR NOVA TAREFA
 function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
@@ -198,6 +199,9 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 
 		//id para inserir nova tarefa
 		idTarefa = "novo"
+
+		//variavel andamento ativo
+		trfFrm_andamentoAtv = "Aberto"
 }
 
 //ABRIR FORMULÁRIO PARA EDITAR TAREFA----------------------------------------------------
@@ -294,29 +298,13 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.
 
 		//id para editar tarefa
 		idTarefa = tarefa.id
+
+		//variavel andamento ativo
+		trfFrm_andamentoAtv = tarefa.chave00
 	})
 }
 //---------------------------------------------------------------------
 
-
-
-//MOSTRAR OU OCULTAR CAIXA DE ATUALIZAÇÃO DO PERCENTUAL ----------------------------------------------------
-const tf = document.getElementById("trf_form_Ch00")
-tf.addEventListener('change', function () {
-	trfFrm_autoPorcentagem()
-})
-function trfFrm_autoPorcentagem(){
-	if(tf.value == "Fechado" || tf.value == "Ag. Virada" || tf.value == "Ag. Abrir"){
-		trfForm_vlPorcentagem.disabled = "true"
-		if(tf.value == "Fechado" || tf.value == "Ag. Virada"){trfForm_vlPorcentagem.value = "100"}
-		if(tf.value == "Ag. Abrir"){trfForm_vlPorcentagem.value = "0"}
-	}else{
-		trfForm_vlPorcentagem.disabled = ""
-		trfForm_vlPorcentagem.value = ""
-	}
-
-}
-//---------------------------------------------------------------------
 
 
 
@@ -427,6 +415,7 @@ function trfFrm_adicionarPedidos(array){
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
 		checkB.setAttribute("checked","false")
+		checkB.classList.add('tfChecked');
 		checkB.checked = array[8];
 		status.appendChild(checkB);
 
@@ -571,6 +560,7 @@ function trfFrm_adicionarFerramentas(array){
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
 		checkB.setAttribute("checked","false")
+		checkB.classList.add('tfChecked');
 		checkB.checked = array[1];
 		chb.appendChild(checkB);
 		
@@ -662,6 +652,7 @@ function trfFrm_adicionarProdutos(array){
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
 		checkB.setAttribute("checked","true")
+		checkB.classList.add('tfChecked');
 		checkB.checked = array[1];	
 		chb.appendChild(checkB);	
 			
@@ -954,8 +945,125 @@ salvTaref.forEach(function(e){
     })
 });
 //-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
+//-------------------------------------CONTROLES DO FORMULÁRIO-------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//ativar ou desativar caixa de atualização do percentual------------------
+const tf = document.getElementById("trf_form_Ch00")
+tf.addEventListener('change', function () {
+	trfFrm_autoPorcentagem()
+})
+function trfFrm_autoPorcentagem(){
+	const porcentagem = document.getElementById("trfForm_vlPorcentagem")
+	if(tf.value == "Fechado" || tf.value == "Ag. Virada" || tf.value == "Ag. Abrir" || tf.value == "Aberto"){
+		porcentagem.disabled = "true"
+		if(tf.value == "Fechado" || tf.value == "Ag. Virada"){porcentagem.value = "100"}
+		if(tf.value == "Ag. Abrir" || tf.value == "Aberto"){porcentagem.value = "0"}
+	}else{
+		porcentagem.disabled = ""
+		porcentagem.value = ""
+	}
+
+}//---------------------------------------------------------------------
+
+//configurações do select "andamento"-----------------------------------
+const trfFrm_selectAndamento = document.getElementById("trf_form_Ch00")
+
+//procurar pendências
+function trfFrm_verificarPendencias(){
+	var pendenciasAtivas = false
+	const tbPed = document.getElementById('trf_form_tblPed').rows
+	for(let contador = 1; contador < tbPed.length; contador++) {
+		var p1 = tbPed[contador].cells[8].firstChild	
+		if(p1.checked == true){pendenciasAtivas = true}
+	}
+	const tbFer = document.getElementById('trf_form_tblFer').rows
+	for(let contador = 1; contador < tbFer.length; contador++) {
+		var p1 = tbFer[contador].cells[1].firstChild	
+		if(p1.checked == true){pendenciasAtivas = true}
+	}
+	const tbPrd = document.getElementById('trf_form_tblPrd').rows
+	for(let contador = 1; contador < tbPrd.length; contador++) {
+		var p1 = tbPrd[contador].cells[1].firstChild	
+		if(p1.checked == true){pendenciasAtivas = true}
+	}
+	return(pendenciasAtivas)
+	
+}
+
+//rotinas ao alterar o select andamento manualmente
+trfFrm_selectAndamento.addEventListener("change",()=>{
+	trfFrm_andamentoAtv = trfFrm_selectAndamento.value
+})
+
+//tornar pendente ao mudar checkbox das caixas
+const trfFrm_tabelaPedidos = [...document.getElementsByClassName('trf_form_tbl')]
+trfFrm_tabelaPedidos.map((e)=>{
+	e.addEventListener('click', function (e) {
+		const r = e.target.parentElement
+		if(r.firstChild.classList.contains("tfChecked")){
+			if(r.firstChild.checked == true){
+				trfFrm_selectAndamento.value = "Pendente"
+			}else{
+				const pendente = trfFrm_verificarPendencias()
+				if(pendente == false){
+					trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+				}
+			}
+		}
+		trfFrm_autoPorcentagem()
+	})
+})
+
+//configurar select do andamento
+trfFrm_selectAndamento.addEventListener("focus",()=>{
+	const opcoes = [...trfFrm_selectAndamento.children]
+
+	//caso alguma pendência
+	const pendente = trfFrm_verificarPendencias()
+	if(pendente == true){
+		for(i=0;i<opcoes.length;i++){
+			opcoes[i].disabled = true
+			opcoes[i].style.color = "#ccc"
+		}
+	}else{
+		//caso caixa de serviço vazia
+		const Servico = document.getElementById("trf_form_txa2")
+		if(Servico.value == ""){
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = true
+				opcoes[i].style.color = "#000"
+			}
+		}else{
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = false
+				opcoes[i].style.color = "#000"
+				opcoes[0].disabled = true
+				opcoes[2].disabled = true
+			}
+		}
+	}	
+	
+})
+
+//configurar alterações no serviço
+const servico = document.getElementById("trf_form_txa2")
+servico.addEventListener("focusout",()=>{
+	if(servico.value == ""){
+		trfFrm_selectAndamento.value = "Aberto"
+	}else{
+		trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+	}
+})
+//--------------------------------------------------------------------
 
 
 
 
 
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------

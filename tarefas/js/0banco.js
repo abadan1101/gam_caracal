@@ -62,7 +62,7 @@ DBRequest.onupgradeneeded = function(event) {
 		.objectStore("configTaref");
 		//tabela das configurações gerais das tarefas
 		objectStore.put({
-			chave00: ["Andamento",true,"Aberto","Fechado","Pendente","Ag. Virada","Ag. Abrir","","","","",""],
+			chave00: ["Andamento",true,"Aberto","Fechado","Pendente","Ag. Virada","Ag. Abrir","Em Exec.","","","",""],
 			chave01: ["Disp.",true,"Indisponível","Disponível","Restrito","","","","","","",""],
 			chave02: ["Chave 01",false,"","","","","","","","","",""],
 			chave03: ["Chave 02",false,"","","","","","","","","",""],
@@ -270,7 +270,6 @@ function editarTarefasBD(n,tabela){
 	var objectStore = transaction.objectStore(dbLinha);
 	var request = objectStore.get(n);
 	request.onsuccess = function(){
-		console.log(tabela[0].data)
 		request.result.numero = tabela[0].numero,
 		request.result.data = tabela[0].data
 		request.result.chave00 = tabela[0].chave00,
