@@ -273,7 +273,7 @@ function TrfTbl_EditarTarefas(){
 		e.addEventListener("click", ()=>{
 			async function editar(){
 				const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
-				editarTarefa(verificar)
+				editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
 			}editar()
 		})
 	})
@@ -400,13 +400,14 @@ function trfTbl_altetarServiço(){
 				e.style.height = elmnt + "px"
 			}
 			
-			if(u != p){
+			async function alterar(){
 				var y = e.parentElement.parentElement
 				var z = parseInt(y.children[0].innerHTML)
-				async function alterar(){
+				const vlAlt = await obterDados(z, "serviço")
+				if(u != vlAlt){
 					await AltTarefasBd(z, "serviço", e.value)
-					const vlAlt = await obterDados(z, "serviço")
-					if(vlAlt != e.value){
+					const vlAltx = await obterDados(z, "serviço")
+					if(vlAltx != e.value){
 						var icon = "img/imgError.png"
 						var msg = "Erro"
 						var act = "Erro ao alterar andamento"
@@ -420,8 +421,12 @@ function trfTbl_altetarServiço(){
 							document.getElementById('trf_tblmsgSec').style.display = "none"
 						},3000)
 					}
-				}alterar()
-			}
+				}
+				
+				
+				
+			}alterar()
+			
 		})
 	})	
 }

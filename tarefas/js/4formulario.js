@@ -90,6 +90,7 @@ async function configForm(){
 			if(!bdCfg.baixar[1] == true){
 				document.getElementById("trf_form_bxrDv").classList.add("ocultPainel")
 			}
+
 			resolve()
 		}catch (erro){
 			var icon = "img/imgError.png"
@@ -151,12 +152,22 @@ function LimpTaref(){
 	//limpar percentual
 	document.getElementById('trfForm_Percentual').style.display = "flex"
 	document.getElementById('trfForm_vlPorcentagem').value = "";
+
+	//limpar dados do rodapé
+	const dadosRdp = [...document.getElementById("trf_form_inf").children]
+	dadosRdp[0].children[1].innerHTML = "novo"
+	dadosRdp[1].children[1].innerHTML = "..."
+	dadosRdp[2].children[1].innerHTML = "0%"
 }
 //---------------------------------------------------------------------
 
 
 
-//ABRIR FORMULÁRIO PARA NOVA TAREFA----------------------------------------------------
+//ABRIR FORMULÁRIO----------------------------------------------------
+//variavel que define se nova tarefa ou editar tarefa
+var idTarefa = ""
+
+//ABRIR NOVA TAREFA
 function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
 	configForm().then(()=>{
 		//variáveis
@@ -174,6 +185,9 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 
 		//limpar folrmulário
 		LimpTaref();
+
+		//configurar porcentagem do andamento
+		trfFrm_autoPorcentagem()
 		
 		//mostrar formulário
 		if(tfd.value == "" || tfd.value == "dd/mm/aaaa"){dtHoje}
@@ -181,7 +195,11 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 		tc.style.display = "none";
 		tf.style.display = "block";
 		})
+
+		//id para inserir nova tarefa
+		idTarefa = "novo"
 }
+
 //ABRIR FORMULÁRIO PARA EDITAR TAREFA----------------------------------------------------
 function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
 	configForm().then(()=>{
@@ -216,18 +234,55 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.
 		document.getElementById('trf_form_txa2').value = tarefa.serviço;
 
 		//caixa dos pedidos
+		const popularPedidos = tarefa.pedidos
+		popularPedidos.map((e)=>{
+			var pedidos = []
+			pedidos.push(e.pim)
+			pedidos.push(e.nome)
+			pedidos.push(e.tipo)
+			pedidos.push(e.quantidade)
+			pedidos.push(e.PN)
+			pedidos.push(e.PNA)
+			pedidos.push(e.manual)
+			pedidos.push(e.observacao)
+			pedidos.push(e.status)
+			trfFrm_adicionarPedidos(pedidos)
+		})
 		
 		//caixa das ferramentas
+		const popularFerramentas = tarefa.ferramentas
+		popularFerramentas.map((e)=>{
+			var ferramentas = []
+			ferramentas.push(e.ferramenta)
+			ferramentas.push(e.status)
+			trfFrm_adicionarFerramentas(ferramentas)
+		})
 
 		//caixa dos produtos
+		const popularProdutos = tarefa.produtos
+		popularProdutos.map((e)=>{
+			var produtos = []
+			produtos.push(e.produto)
+			produtos.push(e.status)
+			trfFrm_adicionarProdutos(produtos)
+		})
 
 		//caixa da equipe
+		const popularEquipe = tarefa.equipe
+		popularEquipe.map((e)=>{
+			var equipe = []
+			equipe.push(e)
+			trfFrm_adicionarEquipe(equipe)
+		})
+
+		//configurar porcentagem do andamento
+		trfFrm_autoPorcentagem()
 
 		//dados do rodapé
 		const dadosRdp = [...document.getElementById("trf_form_inf").children]
-		dadosRdp[1].innerHTML = tarefa.id
-		dadosRdp[3].innerHTML = new Date(tarefa.atualizacao).toLocaleDateString("pt-BR");
-		dadosRdp[5].innerHTML = tarefa.porcentagem + "%"
+		dadosRdp[0].children[1].innerHTML = tarefa.id
+		dadosRdp[1].children[1].innerHTML = new Date(tarefa.atualizacao).toLocaleDateString("pt-BR");
+		dadosRdp[2].children[1].innerHTML = tarefa.porcentagem + "%"
 		
 		//mostrar formulário
 		const tf = document.getElementById("trf_form")
@@ -236,6 +291,9 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.
 		tt.style.display = "none";
 		tc.style.display = "none";
 		tf.style.display = "block";
+
+		//id para editar tarefa
+		idTarefa = tarefa.id
 	})
 }
 //---------------------------------------------------------------------
@@ -245,6 +303,9 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/menuSec.
 //MOSTRAR OU OCULTAR CAIXA DE ATUALIZAÇÃO DO PERCENTUAL ----------------------------------------------------
 const tf = document.getElementById("trf_form_Ch00")
 tf.addEventListener('change', function () {
+	trfFrm_autoPorcentagem()
+})
+function trfFrm_autoPorcentagem(){
 	if(tf.value == "Fechado" || tf.value == "Ag. Virada" || tf.value == "Ag. Abrir"){
 		trfForm_vlPorcentagem.disabled = "true"
 		if(tf.value == "Fechado" || tf.value == "Ag. Virada"){trfForm_vlPorcentagem.value = "100"}
@@ -253,7 +314,8 @@ tf.addEventListener('change', function () {
 		trfForm_vlPorcentagem.disabled = ""
 		trfForm_vlPorcentagem.value = ""
 	}
-})
+
+}
 //---------------------------------------------------------------------
 
 
@@ -309,6 +371,35 @@ trf_form_pedAdd.addEventListener('click', function () {
 		pedNom.reportValidity()
 		pedPim.reportValidity()
 	}else{
+		
+		//criar array
+		var arrayPedidos = []
+		arrayPedidos.push(pedPim.value)
+		arrayPedidos.push(pedNom.value)
+		arrayPedidos.push(pedTip.value)
+		arrayPedidos.push(pedQtd.value)
+		arrayPedidos.push(pedPn.value)
+		arrayPedidos.push(pedPna.value)
+		arrayPedidos.push(pedMan.value)
+		arrayPedidos.push(pedObs.value)
+		arrayPedidos.push(true)
+
+		//adicionar o pedido
+		trfFrm_adicionarPedidos(arrayPedidos).then(()=>{
+			//limpar formulário
+			tfPlimp ()
+
+			//mensagem
+			const img = "img/imgOK.png"
+			const tx = "pedido adicionado com sucesso!"
+			tfp_msg(img, tx)
+		})
+	}
+})
+function trfFrm_adicionarPedidos(array){
+	return new Promise((resolve)=>{
+
+		//criar tabela
 		const tb = document.getElementById("tftpB");
 		var qtdLin = tb.rows.length;
 		var linha = tb.insertRow(qtdLin);
@@ -321,23 +412,25 @@ trf_form_pedAdd.addEventListener('click', function () {
 		var man = linha.insertCell(6);
 		var obs = linha.insertCell(7);
 		var status = linha.insertCell(8);
-		
-		pim.innerHTML = pedPim.value;
-		nome.innerHTML = pedNom.value;
-		tipo.innerHTML = pedTip.value;
-		qtd.innerHTML = pedQtd.value;
-		pn.innerHTML = pedPn.value;
-		pna.innerHTML = pedPna.value;
-		man.innerHTML = pedMan.value;
-		obs.innerHTML = pedObs.value;
 
-		
+		//popular tabela
+		pim.innerHTML = array[0];
+		nome.innerHTML = array[1];
+		tipo.innerHTML = array[2];
+		qtd.innerHTML = array[3];
+		pn.innerHTML = array[4];
+		pna.innerHTML = array[5];
+		man.innerHTML = array[6];
+		obs.innerHTML = array[7];
+
+		//configurar checkbox
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
-		checkB.setAttribute("checked","true")
+		checkB.setAttribute("checked","false")
+		checkB.checked = array[8];
 		status.appendChild(checkB);
-		
-		
+
+		//adicionar classes
 		linha.classList.add('tfProv');
 		tipo.classList.add('geralOcultTD')
 		qtd.classList.add('tfpOcult');
@@ -346,14 +439,10 @@ trf_form_pedAdd.addEventListener('click', function () {
 		man.classList.add('tfpOcult');
 		obs.classList.add('tfpOcult');
 		status.classList.add('tftcenter');
-		tfPlimp ()
 
-		//mensagem
-		const img = "img/imgOK.png"
-		const tx = "pedido adicionado com sucesso!"
-		tfp_msg(img, tx)
-	}
-})
+		resolve()
+	})
+}
 
 //editar ou excluir itens da tabela de pedidos
 var tfpNlin = "";
@@ -453,6 +542,24 @@ function tfp_msg(img, tx){
 $('.pesq_formFer').on('select2:select', function (e){
 	const tipFer = document.getElementById('trf_form_Fer');
 	if(tipFer.value != "selecione uma ferramenta"){
+		const ferramenta = []
+		ferramenta.push(tipFer.value)
+		ferramenta.push(true)
+		
+		trfFrm_adicionarFerramentas(ferramenta).then(()=>{
+			tipFer.value = $(tipFer).val("selecione uma ferramenta").select2();
+			//mensagem
+			const img = "img/imgOK.png"
+			const tx = "ferramenta adicionada com sucesso!"
+			tff_msg(img, tx)
+		})
+		
+	}
+})
+function trfFrm_adicionarFerramentas(array){
+	return new Promise((resolve)=>{
+
+		//criar tabela
 		const tb = document.getElementById("tftfB");
 		var qtdLin = tb.rows.length;
 		var linha = tb.insertRow(qtdLin);
@@ -463,26 +570,25 @@ $('.pesq_formFer').on('select2:select', function (e){
 		
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
-		checkB.setAttribute("checked","true")
+		checkB.setAttribute("checked","false")
+		checkB.checked = array[1];
+		chb.appendChild(checkB);
 		
 		const saveBtn = document.createElement("BUTTON");
 		saveBtn.textContent = "excluir";
-		
-		fer.innerHTML = tipFer.value;
-		chb.appendChild(checkB);
 		btn.appendChild(saveBtn);
 		
+		//popular tabela
+		fer.innerHTML = array[0];
+
+		//adicionar classes
 		linha.classList.add('tfProv');
 		chb.classList.add('tftcenter');
 		saveBtn.classList.add('tftbtn')
-		tipFer.value = $(tipFer).val("selecione uma ferramenta").select2();
-	
-		//mensagem
-		const img = "img/imgOK.png"
-		const tx = "ferramenta adicionada com sucesso!"
-		tff_msg(img, tx)
-	}
-})
+
+		resolve()
+	})
+}
 
 //botão excluir itens da tabela de ferramentas
 const tftf = document.getElementById('tftfB')
@@ -528,6 +634,23 @@ function tff_msg(img, tx){
 $('.pesq_formProd').on('select2:select', function (e){
 	const tipProd = document.getElementById('trf_form_Prd');
 	if(tipProd.value != "selecione um produto"){
+		const produtos = []
+		produtos.push(tipProd.value)
+		produtos.push(true)
+
+		trfFrm_adicionarProdutos(produtos).then(()=>{
+		tipProd.value = $(tipProd).val("selecione um produto").select2();
+		//mensagem
+		const img = "img/imgOK.png"
+		const tx = "produto adicionado com sucesso!"
+		tfpr_msg(img, tx)
+		})
+	}
+
+})
+function trfFrm_adicionarProdutos(array){
+	return new Promise((resolve)=>{
+		//criar tabela
 		const tb = document.getElementById("tftprB");
 		var qtdLin = tb.rows.length;
 		var linha = tb.insertRow(qtdLin);
@@ -538,27 +661,26 @@ $('.pesq_formProd').on('select2:select', function (e){
 
 		const checkB = document.createElement("INPUT");
 		checkB.type = "checkbox";
-		checkB.setAttribute("checked","true")		
+		checkB.setAttribute("checked","true")
+		checkB.checked = array[1];	
+		chb.appendChild(checkB);	
 			
 		const saveBtn = document.createElement("BUTTON");
 		saveBtn.textContent = "excluir";
-		
-		prod.innerHTML = tipProd.value;
-		chb.appendChild(checkB);
 		btn.appendChild(saveBtn);
 		
+		//popular tabela
+		prod.innerHTML = array[0];
+		
+		
+		//adicionar classes
 		linha.classList.add('tfProv');
 		chb.classList.add('tftcenter');
 		saveBtn.classList.add('tftbtn')
-		tipProd.value = $(tipProd).val("selecione um produto").select2();
-	
-		//mensagem
-		const img = "img/imgOK.png"
-		const tx = "produto adicionado com sucesso!"
-		tfpr_msg(img, tx)
-	}
 
-})
+		resolve()
+	})
+}
 
 //botão excluir itens da tabela de produtos
 const tftpr = document.getElementById('tftprB')
@@ -604,6 +726,22 @@ function tfpr_msg(img, tx){
 $('.pesq_formEqu').on('select2:select', function (e){
 	const tipEqp = document.getElementById('trf_form_EquMem');
 	if(tipEqp.value != "selecione um membro"){
+		const equipe = []
+		equipe.push(tipEqp.value)
+
+		trfFrm_adicionarEquipe(equipe).then(()=>{
+			tipEqp.value = $(tipEqp).val("selecione um membro").select2();
+			//mensagem
+			const img = "img/imgOK.png"
+			const tx = "membro adicionado com sucesso!"
+			tfe_msg(img, tx)
+		})
+		
+	}
+})
+function trfFrm_adicionarEquipe(array){
+	return new Promise((resolve)=>{
+		//criar tabela
 		const tb = document.getElementById("tdteB");
 		var qtdLin = tb.rows.length;
 		var linha = tb.insertRow(qtdLin);
@@ -611,18 +749,18 @@ $('.pesq_formEqu').on('select2:select', function (e){
 		var btn = linha.insertCell(1);
 		const saveBtn = document.createElement("BUTTON");
 		saveBtn.textContent = "excluir";
-		eqp.innerHTML = tipEqp.value;
 		btn.appendChild(saveBtn);
+
+		//popular tabela
+		eqp.innerHTML = array[0];
+		
+		//adicionar classes
 		linha.classList.add('tfProv');
 		saveBtn.classList.add('tftbtn')
-		tipEqp.value = $(tipEqp).val("selecione um membro").select2();
-	
-		//mensagem
-		const img = "img/imgOK.png"
-		const tx = "membro adicionado com sucesso!"
-		tfe_msg(img, tx)
-	}
-})
+
+		resolve()
+	})
+}
 
 //botão excluir itens da tabela de equipe
 const tfte = document.getElementById('tdteB')
@@ -673,7 +811,7 @@ tfc.addEventListener("click",(evt)=>{
 
 
 
-//SALVAR FORMULÁRIO ------------------------------------------------
+//SALVAR FORMULÁRIO------------------------------------------------
 const salvTaref = document.querySelectorAll('.trf_form_btn');
 salvTaref.forEach(function(e){
 	e.addEventListener('click', function(){
@@ -791,7 +929,11 @@ salvTaref.forEach(function(e){
 				sessionStorage.setItem("index_frm",0)
 			}
 			
-			addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
+			if(idTarefa == "novo"){
+				addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
+			}else{
+				editarTarefasBD(idTarefa,tabela)
+			}
 			
 		}else{
 			if(fb != "trf_form_cnc"){

@@ -264,7 +264,60 @@ function addTarefasBd(tabela){
 
 //------------------------FUNÇÕES PARA ALTERAR DADOS NO BANCO---------------------------------
 //--------------------------------------------------------------------------------------------
-//alterar tarefas das linhas
+//editar a tarefa completa--------------------------------
+function editarTarefasBD(n,tabela){
+	var transaction = db.transaction(dbLinha,"readwrite");
+	var objectStore = transaction.objectStore(dbLinha);
+	var request = objectStore.get(n);
+	request.onsuccess = function(){
+		console.log(tabela[0].data)
+		request.result.numero = tabela[0].numero,
+		request.result.data = tabela[0].data
+		request.result.chave00 = tabela[0].chave00,
+		request.result.chave01 = tabela[0].chave01,
+		request.result.chave02 = tabela[0].chave02,
+		request.result.chave03 = tabela[0].chave03,
+		request.result.chave04 = tabela[0].chave04,
+		request.result.chave05 = tabela[0].chave05,
+		request.result.tarefa = tabela[0].tarefa,
+		request.result.serviço = tabela[0].serviço,
+		request.result.pedidos = tabela[0].pedidos,
+		request.result.ferramentas = tabela[0].ferramentas,
+		request.result.produtos = tabela[0].produtos,
+		request.result.equipe = tabela[0].equipe,
+		request.result.atualizacao = tabela[0].atualizacao,
+		request.result.porcentagem = tabela[0].porcentagem
+
+		objectStore.put(request.result);
+		
+	}
+	//se a transação for concluída
+	transaction.oncomplete = (event) => {
+		//mensagem de corfirmado
+		var icon = "img/imgOK.png"
+		var msg = "Confirmação " + dbLinha + "!"
+		var act = "Tarefa alterada com sucesso!"
+		var modo = "conf"
+		var reload = "true"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+	}
+	
+	//se hover erro na transação
+	transaction.onerror = (event) => {
+		//mensagem de rejeitado
+		var icon = "img/imgAlert.png"
+		var msg = "Erro!"
+		var act = event
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+		console.log("Erro ao alterar tarefa na " + dbLinha);
+	}	
+}//----------------------------------------------------
+
+//alterar algum valor da tarefa------------------------
 function AltTarefasBd(n, col, val){
 	return new Promise((resolve)=>{
 		var transaction = db.transaction(dbLinha,"readwrite");

@@ -388,14 +388,14 @@
 
 /* -----------------------INFO------------------------ */
 #trf_form_inf{
+    width: 100%;
 	display:flex;
 	color:#999;
+    flex-wrap: wrap;
+    justify-content: space-between;
 }
 #trf_form_inf label{
 	margin-right: 5px;
-}
-#trf_form_inf span{
-	margin-right: 30px;
 }
 /*_______________________________________________________*/
 
