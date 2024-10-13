@@ -1039,6 +1039,7 @@ function trfFrm_autoPorcentagem(){
 
 }//---------------------------------------------------------------------
 
+
 //configurações do select "andamento"-----------------------------------
 const trfFrm_selectAndamento = document.getElementById("trf_form_Ch00")
 
