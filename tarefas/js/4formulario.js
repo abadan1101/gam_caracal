@@ -166,7 +166,6 @@ function LimpTaref(){
 //ABRIR FORMULÁRIO----------------------------------------------------
 //variavel que define se nova tarefa ou editar tarefa
 var idTarefa = ""
-var trfFrm_andamentoAtv = ""
 
 //ABRIR NOVA TAREFA
 function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/carregamento
@@ -486,15 +485,7 @@ tfdca6Ex.addEventListener("click", ()=>{
 		document.getElementById("trf_form_Ch00").value = "Pendente"
 		trfFrm_autoPorcentagem()
 	}else{
-		if(trfFrm_andamentoAtv == "Pendente"){
-			if(document.getElementById("trf_form_txa2").value == ""){
-				trfFrm_andamentoAtv = "Aberto"
-			}else{
-				trfFrm_andamentoAtv = "Em Exec."
-			}
-		}
-		document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
-		trfFrm_autoPorcentagem()
+		trfFrm_altAndamentoCB()
 	}
 
 	//mensagem
@@ -623,15 +614,7 @@ tftf.addEventListener('click', function (e) {
 			document.getElementById("trf_form_Ch00").value = "Pendente"
 			trfFrm_autoPorcentagem()
 		}else{
-			if(trfFrm_andamentoAtv == "Pendente"){
-				if(document.getElementById("trf_form_txa2").value == ""){
-					trfFrm_andamentoAtv = "Aberto"
-				}else{
-					trfFrm_andamentoAtv = "Em Exec."
-				}
-			}
-			document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
-			trfFrm_autoPorcentagem()
+			trfFrm_altAndamentoCB()
 		}
 
 		//mensagem
@@ -739,15 +722,7 @@ tftpr.addEventListener('click', function (e) {
 			document.getElementById("trf_form_Ch00").value = "Pendente"
 			trfFrm_autoPorcentagem()
 		}else{
-			if(trfFrm_andamentoAtv == "Pendente"){
-				if(document.getElementById("trf_form_txa2").value == ""){
-					trfFrm_andamentoAtv = "Aberto"
-				}else{
-					trfFrm_andamentoAtv = "Em Exec."
-				}
-			}
-			document.getElementById("trf_form_Ch00").value = trfFrm_andamentoAtv
-			trfFrm_autoPorcentagem()
+			trfFrm_altAndamentoCB()
 		}
 
 		//mensagem
@@ -1019,7 +994,7 @@ salvTaref.forEach(function(e){
 
 
 
-//-------------------------------------CONTROLES DO FORMULÁRIO-------------------------------------------
+//-------------------------------CAIXA DE ATUALIZAÇÃO DO PERCENTUAL--------------------------------------
 //-------------------------------------------------------------------------------------------------------
 //ativar ou desativar caixa de atualização do percentual------------------
 const tf = document.getElementById("trf_form_Ch00")
@@ -1037,11 +1012,23 @@ function trfFrm_autoPorcentagem(){
 		porcentagem.value = ""
 	}
 
-}//---------------------------------------------------------------------
+}
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
 
 
-//configurações do select "andamento"-----------------------------------
+
+
+//-------------------------------CONFIGURAÇÕES ANDAMENTO AUTOMÁTICO--------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//variáveis
 const trfFrm_selectAndamento = document.getElementById("trf_form_Ch00")
+var trfFrm_andamentoAtv = ""
+
+//rotinas ao alterar o select andamento manualmente
+trfFrm_selectAndamento.addEventListener("change",()=>{
+	trfFrm_andamentoAtv = trfFrm_selectAndamento.value
+})
 
 //procurar pendências
 function trfFrm_verificarPendencias(){
@@ -1062,48 +1049,83 @@ function trfFrm_verificarPendencias(){
 		if(p1.checked == true){pendenciasAtivas = true}
 	}
 	return(pendenciasAtivas)
-	
 }
 
-//rotinas ao alterar o select andamento manualmente
-trfFrm_selectAndamento.addEventListener("change",()=>{
-	trfFrm_andamentoAtv = trfFrm_selectAndamento.value
-})
-
-//tornar pendente ao mudar checkbox das caixas
+//alterar andamento da tarefa ao mudar checkbox dos pedidos, ferramentas ou produtos
 const trfFrm_tabelaPedidos = [...document.getElementsByClassName('trf_form_tbl')]
 trfFrm_tabelaPedidos.map((e)=>{
 	e.addEventListener('click', function (e) {
 		const r = e.target.parentElement
-		if(r.firstChild.classList.contains("tfChecked")){
-			if(r.firstChild.checked == true){
+		const x = r.firstChild
+		if(x.classList.contains("tfChecked")){
+			if(x.checked == true){
 				trfFrm_selectAndamento.value = "Pendente"
+				trfFrm_autoPorcentagem()
 			}else{
-				const pendente = trfFrm_verificarPendencias()
-				if(pendente == false){
-					if(trfFrm_andamentoAtv == "Pendente"){
-						if(document.getElementById("trf_form_txa2").value == ""){
-							trfFrm_andamentoAtv = "Aberto"
-						}else{
-							trfFrm_andamentoAtv = "Em Exec."
-						}
+				trfFrm_altAndamentoCB()
+			}
+		}
+	})
+})
+function trfFrm_altAndamentoCB(){
+	const pendente = trfFrm_verificarPendencias()
+		if(pendente == false){
+			if(trfFrm_andamentoAtv == "Pendente"){
+				if(document.getElementById("trf_form_txa2").value == ""){
+					trfFrm_selectAndamento.value = "Aberto"
+				}else{
+					trfFrm_selectAndamento.value = "Em Exec."
+				}
+			}else{
+				if(document.getElementById("trf_form_txa2").value == ""){
+					if(trfFrm_andamentoAtv != "Ag. Abrir"){
+						trfFrm_selectAndamento.value = "Aberto"
 					}else{
-						if(document.getElementById("trf_form_txa2").value == ""){
-							trfFrm_andamentoAtv = "Aberto"
-						}
+						trfFrm_selectAndamento.value = "Ag. Abrir"
 					}
-					trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+				}else{
+					if(trfFrm_andamentoAtv == "Aberto" || trfFrm_andamentoAtv == "Ag. Abrir"){
+						trfFrm_selectAndamento.value = "Em Exec."
+					}else{
+						trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+					}
+					
 				}
 			}
 		}
+	trfFrm_autoPorcentagem()
+}
+
+//alterar andamento da tarefa ao mudar o serviço executado
+var servico = document.getElementById("trf_form_txa2")
+servico.addEventListener("focusout",()=>{
+	const pendente = trfFrm_verificarPendencias()
+	if(pendente != true){
+		if(servico.value == ""){
+			if(trfFrm_andamentoAtv != "Ag. Abrir"){
+				trfFrm_selectAndamento.value = "Aberto"
+			}else{
+				trfFrm_selectAndamento.value = "Ag. Abrir"
+			}
+		}else{
+			if(trfFrm_andamentoAtv == "Aberto" || trfFrm_andamentoAtv == "Ag. Abrir"){
+				trfFrm_selectAndamento.value = "Em Exec."
+			}else{
+				if(trfFrm_andamentoAtv == "Pendente"){
+					trfFrm_selectAndamento.value = "Em Exec."
+				}else{
+					trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+				}
+				
+			}
+		}
 		trfFrm_autoPorcentagem()
-	})
+	}
 })
 
-//configurar select do andamento
+//configurar lista de opções do select andamento
 trfFrm_selectAndamento.addEventListener("focus",()=>{
 	const opcoes = [...trfFrm_selectAndamento.children]
-
 	//caso alguma pendência
 	const pendente = trfFrm_verificarPendencias()
 	if(pendente == true){
@@ -1131,31 +1153,11 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 				opcoes[0].style.color = "#ddd"
 				opcoes[2].disabled = true
 				opcoes[2].style.color = "#ddd"
+				opcoes[4].disabled = true
+				opcoes[4].style.color = "#ddd"
 			}
 		}
 	}	
 })
-
-//configurar alterações no serviço
-const servico = document.getElementById("trf_form_txa2")
-servico.addEventListener("focusout",()=>{
-	const pendente = trfFrm_verificarPendencias()
-	if(pendente != true){
-		if(servico.value == "" && trfFrm_selectAndamento.value != "Ag. Abrir"){
-			trfFrm_selectAndamento.value = "Aberto"
-		}else{
-			if(trfFrm_andamentoAtv == "Aberto"){trfFrm_andamentoAtv = "Em Exec."}
-			trfFrm_selectAndamento.value = trfFrm_andamentoAtv
-		}
-		trfFrm_autoPorcentagem()
-	}
-	
-})
-//--------------------------------------------------------------------
-
-
-
-
-
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------

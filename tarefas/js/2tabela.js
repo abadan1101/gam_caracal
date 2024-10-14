@@ -247,13 +247,13 @@ async function trfTbl_CorLinha(e, linha){
 		linha.style.background = "#fff";
 	}
 	if(e.value == bdCfg.chave00[7]){
-		linha.style.background = "#C0C0C0";
+		linha.style.background = "#e2e1e1";
 	}
 	if(e.value == bdCfg.chave00[8]){
-		linha.style.background = "#B0C4DE";
+		linha.style.background = "#599cf3";
 	}
 	if(e.value == bdCfg.chave00[9]){
-		linha.style.background = "#b592fd";
+		linha.style.background = "#a175f8";
 	}
 	if(e.value == bdCfg.chave00[10]){
 		linha.style.background = "#F00";
