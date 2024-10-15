@@ -855,7 +855,9 @@ function tfe_msg(img, tx){
 //--------------------------------------------------------------------------------------------
 const tfc = document.getElementById("trf_form_cnc")
 tfc.addEventListener("click",(evt)=>{
-	location.reload();
+	document.getElementById("trf_conf").style.display = "none";
+	document.getElementById("trf_tbl").style.display = "block";
+	document.getElementById("trf_form").style.display = "none";
 })
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
@@ -985,7 +987,7 @@ salvTaref.forEach(function(e){
 			if(idTarefa == "novo"){
 				addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
 			}else{
-				editarTarefasBD(idTarefa,tabela)
+				editarTarefasBD(idTarefa,tabela)//função pertence a folha: /tarefas/js/banco.js
 			}
 			
 		}else{
@@ -1000,7 +1002,7 @@ salvTaref.forEach(function(e){
 					var func = ""
 					openMSG(icon, msg, act, modo, reload,func);
 				}else{
-					trfForm_vlPorcentagem.reportValidity()
+					document.getElementById("trfForm_vlPorcentagem").reportValidity()
 				}
 			}
 		}
