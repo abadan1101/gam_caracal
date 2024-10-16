@@ -1,0 +1,3 @@
+proximo passo
+
+1- configurar formulário para não reiniciar após editar uma tarefa;
