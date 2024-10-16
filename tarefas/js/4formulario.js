@@ -1118,7 +1118,6 @@ function trfFrm_altAndamentoCB(){
 					}else{
 						trfFrm_selectAndamento.value = trfFrm_andamentoAtv
 					}
-					
 				}
 			}
 		}
@@ -1182,8 +1181,6 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 				opcoes[0].style.color = "#ddd"
 				opcoes[2].disabled = true
 				opcoes[2].style.color = "#ddd"
-				opcoes[4].disabled = true
-				opcoes[4].style.color = "#ddd"
 			}
 		}
 	}	
