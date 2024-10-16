@@ -1113,7 +1113,7 @@ function trfFrm_altAndamentoCB(){
 						trfFrm_selectAndamento.value = "Ag. Abrir"
 					}
 				}else{
-					if(trfFrm_andamentoAtv == "Aberto" || trfFrm_andamentoAtv == "Ag. Abrir"){
+					if(trfFrm_andamentoAtv == "Aberto"){
 						trfFrm_selectAndamento.value = "Em Exec."
 					}else{
 						trfFrm_selectAndamento.value = trfFrm_andamentoAtv
@@ -1137,7 +1137,7 @@ servico.addEventListener("focusout",()=>{
 				trfFrm_selectAndamento.value = "Ag. Abrir"
 			}
 		}else{
-			if(trfFrm_andamentoAtv == "Aberto" || trfFrm_andamentoAtv == "Ag. Abrir"){
+			if(trfFrm_andamentoAtv == "Aberto"){
 				trfFrm_selectAndamento.value = "Em Exec."
 			}else{
 				if(trfFrm_andamentoAtv == "Pendente"){
