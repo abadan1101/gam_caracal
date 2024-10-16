@@ -283,7 +283,7 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/tabela
 			trfFrm_adicionarEquipe(equipe)
 		})
 
-		//oculta colunas em tabelas em telas pequenas
+		//oculta colunas na tabela dos pedidos em telas pequenas
 		OcultColm()//função pertence a folha "geral/js/inicializacao
 
 		//configurar porcentagem do andamento
@@ -338,7 +338,7 @@ function tfPlimp (){
 		el.classList.remove("tftClin")
 
 	})
-	//oculta colunas em tabelas em telas pequenas
+	//oculta colunas na tabela dos pedidos em telas pequenas
 	OcultColm()//função pertence a folha "geral/js/inicializacao
 }
 
