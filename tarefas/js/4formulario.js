@@ -201,6 +201,9 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 		tf.style.display = "block";
 		})
 
+		//habilitar botão "salvar e novo"
+		document.getElementById("trf_form_slN").style.display = ""
+
 		//id para inserir nova tarefa
 		idTarefa = "novo"
 
@@ -302,6 +305,9 @@ function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/tabela
 		tt.style.display = "none";
 		tc.style.display = "none";
 		tf.style.display = "block";
+
+		//desabilitar botão "salvar e novo"
+		document.getElementById("trf_form_slN").style.display = "none"
 
 		//id para editar tarefa
 		idTarefa = tarefa.id
