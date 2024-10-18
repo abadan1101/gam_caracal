@@ -994,9 +994,101 @@ salvTaref.forEach(function(e){
 			}
 			
 			if(idTarefa == "novo"){
+				//gravar nova tarefa no banco de dados
 				addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
 			}else{
-				editarTarefasBD(idTarefa,tabela)//função pertence a folha: /tarefas/js/banco.js
+				//gravar alterações da tarefa no banco de dados
+				(async ()=>{
+					//grava as alterações
+					await editarTarefasBD(idTarefa,tabela)//função pertence a folha: /tarefas/js/banco.js
+					//verifica se foi alterado com sucesso
+					const tarefaBD = []
+					tarefaBD.push(await obterTarefas(idTarefa))
+					if(tarefaBD[0].atualizacao == tabela[0].atualizacao){
+						//modifica a linha editada na tabela
+						//a variável "trfTbl_EditarLinha" pertence a folha: /tarefas/js/tabela.js
+						
+						//preencher coluna numero
+						trfTbl_EditarLinha.children[1].innerHTML = tarefaBD[0].numero
+						//preencher coluna data
+						trfTbl_EditarLinha.children[2].innerHTML = new Date(tarefaBD[0].data).toLocaleDateString("pt-BR");
+						//preencher coluna disponibilidade
+						if(tarefaBD[0].chave01 == "Indisponível"){
+							tarefaBD[0].chave01 = "I"
+						}
+						if(tarefaBD[0].chave01 == "Disponível"){
+							tarefaBD[0].chave01 = "D"
+						}
+						if(tarefaBD[0].chave01 == "Restrito"){
+							tarefaBD[0].chave01 = "R"
+						}
+						trfTbl_EditarLinha.children[3].innerHTML = tarefaBD[0].chave01;
+						//preencher coluna andamento
+						trfTbl_EditarLinha.children[4].firstChild.value = tarefaBD[0].chave00;
+						//preencher coluna chave 01
+						trfTbl_EditarLinha.children[5].firstChild.value = tarefaBD[0].chave02;
+						//preencher coluna chave 02
+						trfTbl_EditarLinha.children[6].firstChild.value = tarefaBD[0].chave03;
+						//preencher coluna chave 03
+						trfTbl_EditarLinha.children[7].innerHTML = tarefaBD[0].chave04;
+						//preencher coluna chave 04
+						trfTbl_EditarLinha.children[8].innerHTML = tarefaBD[0].chave05;
+						//preencher coluna porcentagem
+						trfTbl_EditarLinha.children[9].innerHTML = tarefaBD[0].porcentagem + "%";
+						//preencher coluna tarefa
+						trfTbl_EditarLinha.children[10].innerHTML = tarefaBD[0].tarefa;
+						//preencher coluna serviço
+						trfTbl_EditarLinha.children[11].firstChild.value = tarefaBD[0].serviço;
+						trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
+						//preencher coluna das pendencias			
+						var t="";u="";v=""
+						var vrfPdd = tarefaBD[0].pedidos;
+						var vrfFer = tarefaBD[0].ferramentas;
+						var vrfPrd = tarefaBD[0].produtos;
+						vrfPdd.map((e)=>{if(e.status == true){t = "pedidos"}})
+						vrfFer.map((e)=>{if(e.status == true){u = "ferramentas"}})
+						vrfPrd.map((e)=>{if(e.status == true){v = "produtos"}})
+						trfTbl_EditarLinha.children[12].innerHTML = t + " " + u + " " + v
+						//preencher equipe
+						var membros = tarefaBD[0].equipe
+						trfTbl_EditarLinha.children[13].innerHTML = ""
+						membros.map((e)=>{trfTbl_EditarLinha.children[13].innerHTML = trfTbl_EditarLinha.children[13].innerHTML + " " + e});
+						//preencher data de atualização
+						if(tarefaBD[0].atualizacao != ""){
+							trfTbl_EditarLinha.children[14].innerHTML = new Date(tarefaBD[0].atualizacao).toLocaleDateString("pt-BR");
+						}
+
+						//adicionar cor da linha
+						trfTbl_CorLinha(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+
+						//reiniciar a variável que define qual linha será editada na tabela
+						trfTbl_EditarLinha = "" //variável pertence a folha: /tarefas/js/tabela.js
+						
+						//configura sub-painel ativo
+						document.getElementById("trf_conf").style.display = "none";
+						document.getElementById("trf_tbl").style.display = "block";
+						document.getElementById("trf_form").style.display = "none";
+
+						//mensagem de corfirmado
+						var icon = "img/imgOK.png"
+						var msg = "Confirmação " + dbLinha + "!"
+						var act = "Tarefa alterada com sucesso!"
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+					}else{
+						//mensagem de erro na alteração
+						var icon = "img/imgAlert.png"
+						var msg = "Erro!"
+						var act = ""
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+						console.log("Erro ao alterar tarefa na " + dbLinha);
+					}
+				})()
 			}
 			
 		}else{

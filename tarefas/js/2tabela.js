@@ -265,6 +265,9 @@ async function trfTbl_CorLinha(e, linha){
 //--------------------------------------------------------------
 
 //botão editar tarefas-----------------------------------------------
+//variavel que define qual linha será editada na tabela
+var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
+
 function TrfTbl_EditarTarefas(){
 	const x = [...document.getElementsByClassName("btnEditTst")]
 	x.map((e)=>{
@@ -274,6 +277,7 @@ function TrfTbl_EditarTarefas(){
 			async function editar(){
 				const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
 				editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
+				trfTbl_EditarLinha = y
 			}editar()
 		})
 	})
