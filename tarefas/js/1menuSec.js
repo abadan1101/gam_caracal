@@ -21,6 +21,8 @@ window.addEventListener('click', function (e) {
 const tmAf = document.getElementById("trf_menu_afNew")	
 tmAf.addEventListener("click",(evt)=>{
 	novaTarefa()//função pertence a folha: /tarefas/js/5formulário.js
+	//id para inserir nova tarefa
+	idTarefa = "novo"//variável pertence a folha: /tarefas/js/tabela.js
 })
 
 //BOTÃO IMPORTAR

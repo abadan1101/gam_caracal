@@ -265,15 +265,19 @@ async function trfTbl_CorLinha(e, linha){
 //--------------------------------------------------------------
 
 //botão editar tarefas-----------------------------------------------
+//variavel que define se nova tarefa ou id da tarefa que será editada
+var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
-
+//adicionar função no botão
 function TrfTbl_EditarTarefas(){
 	const x = [...document.getElementsByClassName("btnEditTst")]
 	x.map((e)=>{
 		var y = e.parentElement.parentElement.parentElement
 		var z = parseInt(y.firstChild.innerHTML)
 		e.addEventListener("click", ()=>{
+			//id para editar tarefa
+			idTarefa = z
 			async function editar(){
 				const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
 				editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
@@ -281,6 +285,98 @@ function TrfTbl_EditarTarefas(){
 			}editar()
 		})
 	})
+}
+//função para alterar a tarefa na tabela atual
+async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefas/js/formulário.js
+	(async ()=>{
+		//verifica se foi alterado com sucesso
+		const tarefaBD = []
+		tarefaBD.push(await obterTarefas(idTarefa))
+		if(tarefaBD[0].atualizacao == tabela[0].atualizacao){
+			//modifica a linha editada na tabela
+			
+			//preencher coluna numero
+			trfTbl_EditarLinha.children[1].innerHTML = tarefaBD[0].numero
+			//preencher coluna data
+			trfTbl_EditarLinha.children[2].innerHTML = new Date(tarefaBD[0].data).toLocaleDateString("pt-BR");
+			//preencher coluna disponibilidade
+			if(tarefaBD[0].chave01 == "Indisponível"){
+				tarefaBD[0].chave01 = "I"
+			}
+			if(tarefaBD[0].chave01 == "Disponível"){
+				tarefaBD[0].chave01 = "D"
+			}
+			if(tarefaBD[0].chave01 == "Restrito"){
+				tarefaBD[0].chave01 = "R"
+			}
+			trfTbl_EditarLinha.children[3].innerHTML = tarefaBD[0].chave01;
+			//preencher coluna andamento
+			trfTbl_EditarLinha.children[4].firstChild.value = tarefaBD[0].chave00;
+			//preencher coluna chave 01
+			trfTbl_EditarLinha.children[5].firstChild.value = tarefaBD[0].chave02;
+			//preencher coluna chave 02
+			trfTbl_EditarLinha.children[6].firstChild.value = tarefaBD[0].chave03;
+			//preencher coluna chave 03
+			trfTbl_EditarLinha.children[7].innerHTML = tarefaBD[0].chave04;
+			//preencher coluna chave 04
+			trfTbl_EditarLinha.children[8].innerHTML = tarefaBD[0].chave05;
+			//preencher coluna porcentagem
+			trfTbl_EditarLinha.children[9].innerHTML = tarefaBD[0].porcentagem + "%";
+			//preencher coluna tarefa
+			trfTbl_EditarLinha.children[10].innerHTML = tarefaBD[0].tarefa;
+			//preencher coluna serviço
+			trfTbl_EditarLinha.children[11].firstChild.value = tarefaBD[0].serviço;
+			trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
+			//preencher coluna das pendencias			
+			var t="";u="";v=""
+			var vrfPdd = tarefaBD[0].pedidos;
+			var vrfFer = tarefaBD[0].ferramentas;
+			var vrfPrd = tarefaBD[0].produtos;
+			vrfPdd.map((e)=>{if(e.status == true){t = "pedidos"}})
+			vrfFer.map((e)=>{if(e.status == true){u = "ferramentas"}})
+			vrfPrd.map((e)=>{if(e.status == true){v = "produtos"}})
+			trfTbl_EditarLinha.children[12].innerHTML = t + " " + u + " " + v
+			//preencher equipe
+			var membros = tarefaBD[0].equipe
+			trfTbl_EditarLinha.children[13].innerHTML = ""
+			membros.map((e)=>{trfTbl_EditarLinha.children[13].innerHTML = trfTbl_EditarLinha.children[13].innerHTML + " " + e});
+			//preencher data de atualização
+			if(tarefaBD[0].atualizacao != ""){
+				trfTbl_EditarLinha.children[14].innerHTML = new Date(tarefaBD[0].atualizacao).toLocaleDateString("pt-BR");
+			}
+
+			//adicionar cor da linha
+			trfTbl_CorLinha(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+
+			//reiniciar variáveis
+			idTarefa = ""
+			trfTbl_EditarLinha = ""
+			
+			//configura sub-painel ativo
+			document.getElementById("trf_conf").style.display = "none";
+			document.getElementById("trf_tbl").style.display = "block";
+			document.getElementById("trf_form").style.display = "none";
+
+			//mensagem de corfirmado
+			var icon = "img/imgOK.png"
+			var msg = "Confirmação " + dbLinha + "!"
+			var act = "Tarefa alterada com sucesso!"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+		}else{
+			//mensagem de erro na alteração
+			var icon = "img/imgAlert.png"
+			var msg = "Erro!"
+			var act = ""
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro ao alterar tarefa na " + dbLinha);
+		}
+	})()
 }
 //------------------------------------------------------------------------
 

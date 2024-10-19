@@ -202,7 +202,7 @@ function obterDados(n, col){
 //------------------------FUNÇÕES PARA INSERIR DADOS NO BANCO---------------------------------
 //--------------------------------------------------------------------------------------------
 
-//inserir tarefas
+//inserir nova tarefa
 function addTarefasBd(tabela){
 	const qtd = tabela.length
 	var transaction = db.transaction(dbLinha, "readwrite"); 
@@ -299,14 +299,7 @@ function editarTarefasBD(n,tabela){
 		//se hover erro na transação
 		transaction.onerror = (event) => {
 			//mensagem de rejeitado
-			var icon = "img/imgAlert.png"
-			var msg = "Erro!"
-			var act = event
-			var modo = "conf"
-			var reload = "false"
-			var func = ""
-			openMSG(icon, msg, act, modo, reload,func);
-			console.log("Erro ao alterar tarefa na " + dbLinha);
+			console.log("Erro na transação com o banco de dados alterar tarefa na " + dbLinha);
 		}	
 	})
 }//----------------------------------------------------
