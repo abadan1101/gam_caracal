@@ -266,7 +266,7 @@ async function trfTbl_CorLinha(e, linha){
 
 //botão editar tarefas-----------------------------------------------
 //variavel que define se nova tarefa ou id da tarefa que será editada
-var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js
+var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js ; também é utilizada na folha /tarefas/js/formulário.js
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
 //adicionar função no botão

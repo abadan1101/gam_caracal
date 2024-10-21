@@ -986,9 +986,7 @@ salvTaref.forEach(function(e){
 			}
 			
 			//verificar se "nova tarefa" ou "editar tarefa"
-			const dadosRdp = [...document.getElementById("trf_form_inf").children]
-			const vrfID = dadosRdp[0].children[1].innerHTML
-			if(vrfID == "novo"){
+			if(idTarefa == "novo"){//variável pertence a folha: /tarefas/js/tabela.js
 				//gravar nova tarefa no banco de dados
 				addTarefasBd(tabela)//função pertence a folha: /tarefas/js/banco.js
 			}else{
