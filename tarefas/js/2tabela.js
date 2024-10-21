@@ -541,15 +541,7 @@ async function xt(){
 	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
 	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
 	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
-	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]
-
-	//ativar ou desativar checkbox
-	const chbx = [...document.getElementsByClassName('trf_tblcbs')]
-	if(bdCfg.chave02[1] == true){chbx[3].disabled = false}else{chbx[3].disabled = true}
-	if(bdCfg.chave03[1] == true){chbx[4].disabled = false}else{chbx[4].disabled = true}
-	if(bdCfg.chave04[1] == true){chbx[5].disabled = false}else{chbx[5].disabled = true}
-	if(bdCfg.chave05[1] == true){chbx[6].disabled = false}else{chbx[6].disabled = true}
-		
+	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]		
 }xt()
 //ocultar ou mostrar menu		
 const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
