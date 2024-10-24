@@ -113,7 +113,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				ch03.classList.add('trfTblCol8');
 				const cxText1 = document.createElement("INPUT");
 				cxText1.type = "text";
-				cxText1.setAttribute("maxLength","30")
+				cxText1.setAttribute("maxLength","18")
 				cxText1.classList.add('trfTbl_inputTxt');
 				ch03.appendChild(cxText1);
 				ch03.firstChild.value = bdTabela[i].chave04
@@ -123,7 +123,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				ch04.classList.add('trfTblCol9');
 				const cxText2 = document.createElement("INPUT");
 				cxText2.type = "text";
-				cxText2.setAttribute("maxLength","30")
+				cxText2.setAttribute("maxLength","18")
 				cxText2.classList.add('trfTbl_inputTxt');
 				ch04.appendChild(cxText2);
 				ch04.firstChild.value = bdTabela[i].chave05

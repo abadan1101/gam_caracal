@@ -124,9 +124,14 @@
 .trfTblCol1{
 	display: none;
 }
-.trfTblCol2, .trfTblCol3, .trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol8, .trfTblCol9, .trfTblCol13, .trfTblCol14, .trfTblCol15{
+.trfTblCol2, .trfTblCol3, .trfTblCol5, .trfTblCol6, .trfTblCol7, .trfTblCol13, .trfTblCol14, .trfTblCol15{
 	width: 140px;
 	max-width: 140px;
+	text-align: center;
+}
+.trfTblCol8, .trfTblCol9,{
+	width: 185px;
+	max-width: 185px;
 	text-align: center;
 }
 .trfTblCol11, .trfTblCol12{
@@ -186,8 +191,8 @@
 	background: transparent;
 	border: none;
 	font-size: 17px;
-	width: 120px;
-	max-width: 120px;
+	width: 185px;
+	max-width: 185px;
 	text-align: center;
 	padding-left: 3px;
 }
