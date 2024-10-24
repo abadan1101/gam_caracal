@@ -111,12 +111,22 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				//preencher chave 03
 				var ch03 = linha.insertCell(7);
 				ch03.classList.add('trfTblCol8');
-				ch03.innerHTML = bdTabela[i].chave04;
+				const cxText1 = document.createElement("INPUT");
+				cxText1.type = "text";
+				cxText1.setAttribute("maxLength","30")
+				cxText1.classList.add('trfTbl_inputTxt');
+				ch03.appendChild(cxText1);
+				ch03.firstChild.value = bdTabela[i].chave04
 				
 				//preencher chave 04
 				var ch04 = linha.insertCell(8);
 				ch04.classList.add('trfTblCol9');
-				ch04.innerHTML = bdTabela[i].chave05;
+				const cxText2 = document.createElement("INPUT");
+				cxText2.type = "text";
+				cxText2.setAttribute("maxLength","30")
+				cxText2.classList.add('trfTbl_inputTxt');
+				ch04.appendChild(cxText2);
+				ch04.firstChild.value = bdTabela[i].chave05
 				
 				//preencher porcentagem
 				var prct = linha.insertCell(9);
@@ -135,7 +145,6 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				k.classList.add('trfTblCol12txa');
 				serv.appendChild(k);
 				serv.firstChild.value = bdTabela[i].serviço;
-				serv.firstChild.style.height = serv.clientHeight + "px"
 				
 				//preencher coluna das pendencias	
 				var pend = linha.insertCell(12);
@@ -168,14 +177,14 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 				opcs.classList.add('trfTblCol16');
 				opcs.innerHTML = "<div><i class='bx bx-edit-alt btnEditTst'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
 				
+				//altura automática das caixas de texto
+				ch03.firstChild.style.height = ch03.clientHeight + "px"
+				ch04.firstChild.style.height = ch03.clientHeight + "px"
+				serv.firstChild.style.height = serv.clientHeight + "px"
+
 				//adicionar cor da linha
 				trfTbl_CorLinha(andamento.firstChild, linha)
 			}
-			//-------------------------------------------------------------------------
-
-			//rodapé da tabela---------------------------------------------------------
-			//PROVISÓRIO
-			document.getElementById("trfTblQtd").innerText = bdTabela.length + " tarefas cadastradas";
 			//-------------------------------------------------------------------------
 
 			//mostrar ou ocultar colunas na inicialização------------------------------
@@ -204,6 +213,7 @@ async function TrfTbl_Load(){//função chamada na folha: /tarefas/js/carregamen
 			trfTbl_deletarLinhas()//rotina botão excluir tarefa
 			trfTbl_altetarAndamento()//rotina de mudança no andamento da tarefa
 			trfTbl_altetarServiço()//teste alterar serviço executado
+			trfTbl_quantidadesRodapé()//rodapé da tabela
 			//--------------------------------------------------------------------------
 
 			resolve()
@@ -317,9 +327,9 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 			//preencher coluna chave 02
 			trfTbl_EditarLinha.children[6].firstChild.value = tarefaBD[0].chave03;
 			//preencher coluna chave 03
-			trfTbl_EditarLinha.children[7].innerHTML = tarefaBD[0].chave04;
+			trfTbl_EditarLinha.children[7].firstChild.value= tarefaBD[0].chave04;
 			//preencher coluna chave 04
-			trfTbl_EditarLinha.children[8].innerHTML = tarefaBD[0].chave05;
+			trfTbl_EditarLinha.children[8].firstChild.value = tarefaBD[0].chave05;
 			//preencher coluna porcentagem
 			trfTbl_EditarLinha.children[9].innerHTML = tarefaBD[0].porcentagem + "%";
 			//preencher coluna tarefa
@@ -418,7 +428,7 @@ async function trfTbl_exclTarefa(z,y){
 		var func = ""
 		openMSG(icon, msg, act, modo, reload,func);
 	}
-	trfTbl_carregarCabecalho()
+	trfTbl_quantidadesRodapé()//rodapé da tabela
 }
 //---------------------------------------------------------------------
 
@@ -590,6 +600,15 @@ chbx.map((e)=>{
 })
 //-------------------------------------------------------------------
 
+//quantidade de tarefas mostradas no rodapé-------------------------------
+async function trfTbl_quantidadesRodapé(){
+	const texto = document.getElementById("trfTblQtd")
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	var qtdTabela = document.getElementById("trf_tblTbBdy").children.length
+	//PROVISÓRIO
+	texto.innerText = "mostrando " + qtdTabela + " de " + bdTabela.length + " tarefas cadastradas";
+}
+//------------------------------------------------------------------------
 
 //carregar caixas de seleção dos filtros das colunas da tabela principal
 function trfTbl_carregarCabecalho(){

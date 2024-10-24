@@ -182,3 +182,13 @@
 	margin: 2px 0 2px 0;
 }
 
+.trfTbl_inputTxt{
+	background: transparent;
+	border: none;
+	font-size: 15px;
+	width: 120px;
+	max-width: 120px;
+	text-align: center;
+	padding-left: 3px;
+}
+

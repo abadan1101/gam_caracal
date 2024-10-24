@@ -178,6 +178,10 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 		const tt= document.getElementById("trf_tbl")
 		const tc = document.getElementById("trf_conf")
 		const tfd = document.getElementById("trf_form_dat");
+		const tft = document.getElementById("trf_form_tit");
+
+		//nomear formulário para "Adicionar nova tarefa"
+		tft.innerHTML = "Adicionar nova tarefa"
 		
 		//configuração da data
 		const data = new Date();
@@ -209,6 +213,11 @@ function novaTarefa(){//funcção chamada na folha: /tarefas/js/menuSec.js & js/
 //ABRIR FORMULÁRIO PARA EDITAR TAREFA
 function editarTarefa(tarefa){//funcção chamada na folha: /tarefas/js/tabela
 	configForm().then(()=>{
+
+		//nomear formulário para "Editar tarefa"
+		const tft = document.getElementById("trf_form_tit");
+		tft.innerHTML = "Editar tarefa"
+
 		//limpar formulário
 		LimpTaref();
 		
