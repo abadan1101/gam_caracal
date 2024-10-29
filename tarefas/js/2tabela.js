@@ -214,7 +214,6 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 			//-------------------------------------------------------------------------
 
 			//controles da tabela------------------------------------------------------
-			trfTbl_deletarLinhas()//rotina botão excluir tarefa
 			trfTbl_altetarAndamento()//rotina de mudança no andamento da tarefa
 			trfTbl_altetarServiço()//teste alterar serviço executado
 			trfTbl_menuColunas()//configuração do menu de contole das colunas
@@ -393,22 +392,20 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 //------------------------------------------------------------------------
 
 //botão excluir tarefas-----------------------------------------------
-function trfTbl_deletarLinhas(){
-	const x = [...document.getElementsByClassName("btnexcTst")]
-	x.map((e)=>{
-		var y = e.parentElement.parentElement.parentElement
+document.getElementById("trf_tblTbBdy").addEventListener("click", (event)=>{
+	if(event.target.classList.contains("btnexcTst")){
+		var y = event.target.parentElement.parentElement.parentElement
 		var z = parseInt(y.firstChild.innerHTML)
-		e.addEventListener("click", ()=>{
-			var icon = "img/imgInter.png"
+		var icon = "img/imgInter.png"
 			var msg = "Excluir"
 			var act = "Deseja realmente excluir esta tarefa?"
 			var modo = "yn"
 			var reload = "false"
 			var func = () => {trfTbl_exclTarefa(z,y)}
 			openMSG(icon, msg, act, modo, reload,func);
-		})
-	})
-}
+	}
+})
+//função para excluir tarefa
 async function trfTbl_exclTarefa(z,y){
 	await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
 	const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
