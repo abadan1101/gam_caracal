@@ -241,7 +241,7 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 
 //----------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL----------------------------
 //--------------------------------------------------------------------------------------
-//carregar cores das tarefas----------------------------------------------
+//CARREGAR CORES----------------------------------------------
 async function trfTbl_CorLinha(e, linha){
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 
@@ -278,12 +278,14 @@ async function trfTbl_CorLinha(e, linha){
 }
 //--------------------------------------------------------------
 
-//botão editar tarefas-----------------------------------------------
+
+
+//BOTÃO EDITAR TAREFA-----------------------------------------------
 //variavel que define se nova tarefa ou id da tarefa que será editada
 var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js ; também é utilizada na folha /tarefas/js/formulário.js
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
-//funcção do botão editar tarefa
+//função do botão editar tarefa
 document.getElementById("trf_tblTbBdy").addEventListener("click", (event)=>{
 	if(event.target.classList.contains("btnEditTst")){
 		var y = event.target.parentElement.parentElement.parentElement
@@ -337,6 +339,7 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 			trfTbl_EditarLinha.children[10].innerHTML = tarefaBD[0].tarefa;
 			//preencher coluna serviço
 			trfTbl_EditarLinha.children[11].firstChild.value = tarefaBD[0].serviço;
+			trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
 			
 			//preencher coluna das pendencias			
 			var t="";u="";v=""
@@ -391,7 +394,9 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 }
 //------------------------------------------------------------------------
 
-//botão excluir tarefas-----------------------------------------------
+
+
+//BOTÃO EXCLUIR TAREFA----------------------------------------------------
 document.getElementById("trf_tblTbBdy").addEventListener("click", (event)=>{
 	if(event.target.classList.contains("btnexcTst")){
 		var y = event.target.parentElement.parentElement.parentElement
@@ -431,10 +436,12 @@ async function trfTbl_exclTarefa(z,y){
 }
 //---------------------------------------------------------------------
 
-//salvar ao alterar andamento------------------------------------------
+
+
+
+//SALVAR AO ALTERAR ANDAMENTO------------------------------------------
 //variável que define andamento
 var trfTbl_andamentoAtv = ""
-
 function trfTbl_altetarAndamento(){
 	const x = [...document.getElementsByClassName("trf_tblSlctAdmt")]
 	x.map((e)=>{
@@ -519,6 +526,9 @@ function trTbl_verificarPendencias(tarefa){
 	return(pendenciasAtivas)
 }
 //-----------------------------------------------------------------------------
+
+
+
 
 //alterar serviço executado----------------------------------------------
 function trfTbl_altetarServiço(){
@@ -630,9 +640,12 @@ function trfTbl_altetarServiço(){
 }
 //--------------------------------------------------------------
 
-//rotinas para alterar percentual-----------------------------------------
+
+
+
+//FUNÇÕES PARA ALTERAÇÃO DO PERCENTUAL-----------------------------------------
+//funcção que define se porcentagem automática ou manual
 function trfTbl_autoPorcentagem(andamento, tarefa){
-	var porcentagem = ""
 	if(andamento == "Fechado" || andamento == "Ag. Virada" || andamento == "Ag. Abrir" || andamento == "Aberto"){
 		if(andamento == "Fechado" || andamento == "Ag. Virada"){porcentagem = "100"}
 		if(andamento == "Ag. Abrir" || andamento == "Aberto"){porcentagem = "0"}
@@ -644,6 +657,7 @@ function trfTbl_autoPorcentagem(andamento, tarefa){
 			document.getElementById('trf_tblmsgSec').style.display = "none"
 		},3000)
 	}else{
+		trfTbl_tarefaPCT = tarefa
 		//chama ca caixa de mensagens de atualização de percentual
 		document.getElementById('trfTbl_pnlPercentual').style.display = "flex"
 		document.getElementById('trfTbl_novoPercentual').value = ""
@@ -653,24 +667,27 @@ function trfTbl_autoPorcentagem(andamento, tarefa){
 		const id = parseInt(tarefa.children[0].innerHTML)
 		AltTarefasBd(id, "porcentagem", "50")
 	}
-	document.getElementById('trfTbl_confirmarPercentual').addEventListener('click', ()=>{
-		if(document.getElementById("trfTbl_novoPercentual").value != ""){
-			porcentagem = document.getElementById('trfTbl_novoPercentual').value
-			trfTbl_autoPorcentagemDb(porcentagem, tarefa)
-			document.getElementById('trfTbl_pnlPercentual').style.display = "none"
-			
-			//mensagem de confirmação
-			document.getElementById('trf_tblmsgSec').style.display = "flex"
-			setTimeout(()=>{
-				document.getElementById('trf_tblmsgSec').style.display = "none"
-			},3000)
-			
-			
-		}else{
-			document.getElementById("trfTbl_novoPercentual").reportValidity()
-		}
-	})
 }
+//botão de confirmar atualização da porcentagem
+var trfTbl_tarefaPCT = ""
+document.getElementById('trfTbl_confirmarPercentual').addEventListener('click', ()=>{
+	if(document.getElementById("trfTbl_novoPercentual").value != ""){
+		var porcentagem = document.getElementById('trfTbl_novoPercentual').value
+		trfTbl_autoPorcentagemDb(porcentagem, trfTbl_tarefaPCT)
+		document.getElementById('trfTbl_pnlPercentual').style.display = "none"
+		
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+		
+		
+	}else{
+		document.getElementById("trfTbl_novoPercentual").reportValidity()
+	}
+})
+//funcção para atualizar a porcentagem
 async function trfTbl_autoPorcentagemDb(porcentagem, tarefa){
 	const id = parseInt(tarefa.children[0].innerHTML)
 	await AltTarefasBd(id, "porcentagem", porcentagem)
@@ -688,6 +705,10 @@ async function trfTbl_autoPorcentagemDb(porcentagem, tarefa){
 	}
 }
 //------------------------------------------------------------------------
+
+
+
+
 
 //menu do controle de visualização das colunas-------------------
 async function trfTbl_menuColunas(){
