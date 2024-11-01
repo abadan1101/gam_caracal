@@ -119,6 +119,32 @@ tfe.value = $(tfe).val("selecione um membro").select2();
 ----------------------------------------
 
 
-
+----------------STRING--------------------
 //verificar se a palavra está sa string
 //if(variavel.includes("palavraProcurada")){console.log("true")}
+----------------------------------------
+
+
+
+----------------TEXTAREA AUTOMÁTICO--------------------
+//configurar textarea para altura automática
+(function () {
+	"use strict";
+
+	function addEvent(textarea) {
+		textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
+		function updateHeight() {
+			var offset = textarea.offsetHeight - textarea.clientHeight;
+			textarea.style.height = "auto";
+			textarea.style.height = textarea.scrollHeight + offset + "px";
+		}
+		textarea.addEventListener("keyup", updateHeight);
+		textarea.addEventListener("input", updateHeight);
+	}
+
+	document
+	.querySelectorAll(".trfTblCol12txa")
+	.forEach(addEvent);
+})();
+	
+----------------------------------------

@@ -1055,6 +1055,15 @@ salvTaref.forEach(function(e){
 
 //-------------------------------CAIXA DE ATUALIZAÇÃO DO PERCENTUAL--------------------------------------
 //-------------------------------------------------------------------------------------------------------
+//caixa de texto de atualização do percentual
+document.getElementById("trfForm_vlPorcentagem").addEventListener("input", (e)=>{
+	if(e.target.value.substring(0,1) == 0){
+		e.target.value = ""
+	}
+	if(e.target.value.length == 2){
+		document.getElementById('trf_form_slv').focus()
+	}
+})
 //ativar ou desativar caixa de atualização do percentual------------------
 const tf = document.getElementById("trf_form_Ch00")
 tf.addEventListener('change', function () {
@@ -1070,7 +1079,6 @@ function trfFrm_autoPorcentagem(){
 		porcentagem.disabled = ""
 		porcentagem.value = ""
 	}
-
 }
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
@@ -1091,18 +1099,18 @@ trfFrm_selectAndamento.addEventListener("change",()=>{
 
 //procurar pendências
 function trfFrm_verificarPendencias(){
-	var pendenciasAtivas = false
-	const tbPed = document.getElementById('trf_form_tblPed').rows
+	var pendenciasAtivas = false;
+	const tbPed = document.getElementById('trf_form_tblPed').rows;
 	for(let contador = 1; contador < tbPed.length; contador++) {
 		var p1 = tbPed[contador].cells[8].firstChild	
 		if(p1.checked == true){pendenciasAtivas = true}
 	}
-	const tbFer = document.getElementById('trf_form_tblFer').rows
+	const tbFer = document.getElementById('trf_form_tblFer').rows;
 	for(let contador = 1; contador < tbFer.length; contador++) {
 		var p1 = tbFer[contador].cells[1].firstChild	
 		if(p1.checked == true){pendenciasAtivas = true}
 	}
-	const tbPrd = document.getElementById('trf_form_tblPrd').rows
+	const tbPrd = document.getElementById('trf_form_tblPrd').rows;
 	for(let contador = 1; contador < tbPrd.length; contador++) {
 		var p1 = tbPrd[contador].cells[1].firstChild	
 		if(p1.checked == true){pendenciasAtivas = true}

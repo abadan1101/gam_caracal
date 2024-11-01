@@ -1,12 +1,24 @@
-//-----------------------------CARREGAR TABELA PRINCIPAL--------------------------------
-//--------------------------------------------------------------------------------------
-async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/carregamento.js
-	//carregar banco de dados------------------------------------------------
-	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 
+
+
+
+//--------------------------------------CARREGAR TABELA PRINCIPAL--------------------------------------
+//-----------------------------------------------------------------------------------------------------
+
+
+async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/carregamento.js
+
+
+	//carregar configurações-------------------------------------------------
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	//-----------------------------------------------------------------------
+	
+	
+	//preencher tabela-----------------------------------------------------------------------------
 	return new Promise((resolve)=>{
 		try{
-			//cabeçalho da tabela-------------------------------------------
+		
+			//cabeçalho da tabela--------------------------------------------
 			const cabecalho = document.getElementById('trf_tblTbHd').children
 			cabecalho[3].innerHTML = bdCfg.chave01[0]
 			cabecalho[4].innerHTML = bdCfg.chave00[0]
@@ -14,34 +26,40 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 			cabecalho[6].innerHTML = bdCfg.chave03[0]
 			cabecalho[7].innerHTML = bdCfg.chave04[0]
 			cabecalho[8].innerHTML = bdCfg.chave05[0]
-			//--------------------------------------------------------------
+			//---------------------------------------------------------------
+			
 
-			//corpo da tabela-----------------------------------------------
+			//corpo da tabela------------------------------------------------
 			for(i=0;i<bdTabela.length;i++){
-				//criar linhas da tabela
+			
+				//criar linhas da tabela---------------------------
 				const tb = document.getElementById("trf_tblTbBdy");
 				var qtdLin = tb.rows.length;
 				var linha = tb.insertRow(qtdLin);
 				linha.classList.add('trf_tblTbBdy');
+				//-------------------------------------------------
 				
-				//preencher coluna id
+				//preencher coluna id------------------------------
 				var id = linha.insertCell(0);
 				id.classList.add('trfTblCol1');
 				id.innerHTML = bdTabela[i].id;
-
-				//preencher coluna número
+				//-------------------------------------------------
+				
+				//preencher coluna número--------------------------
 				var numero = linha.insertCell(1);
 				numero.innerHTML = bdTabela[i].numero;
 				numero.classList.add('trfTblCol2');
+				//-------------------------------------------------
 
-				//preencher coluna data da tarefa
+				//preencher coluna data da tarefa------------------
 				var data = linha.insertCell(2);
 				data.classList.add('trfTblCol3');
 				if(bdTabela[i].data != ""){
 					data.innerHTML = new Date(bdTabela[i].data).toLocaleDateString("pt-BR");
 				}
+				//-------------------------------------------------
 				
-				//preencher coluna disponibilidade
+				//preencher coluna disponibilidade-----------------
 				var disponibilidade = linha.insertCell(3);
 				disponibilidade.classList.add('trfTblCol4');
 				if(bdTabela[i].chave01 == "Indisponível"){
@@ -54,8 +72,9 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 					bdTabela[i].chave01 = "R"
 				}
 				disponibilidade.innerHTML = bdTabela[i].chave01;
+				//-------------------------------------------------
 				
-				//preencher coluna andamento
+				//preencher coluna andamento-----------------------
 				var andamento = linha.insertCell(4);
 				andamento.classList.add('trfTblCol5');
 				const slct = document.createElement("select")
@@ -73,20 +92,11 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				andamento.appendChild(slct);
 				andamento.firstChild.value = bdTabela[i].chave00
 				//eventos do select andamento
-				slct.addEventListener("focus", (e)=>{
-					const select = e.target;
-					const tarefa = select.parentElement.parentElement;
-					trfTbl_configAndamento(select, tarefa)
-				})
-				slct.addEventListener("change", (e)=>{
-					const select = e.target
-					const valor = e.target.value
-					var tarefa = e.target.parentElement.parentElement
-					var id = parseInt(tarefa.children[0].innerHTML)
-					trfTbl_altetarAndamento(select, valor, tarefa, id)
-				})
+				slct.addEventListener("focus", (e)=>{trfTbl_configAndamento(e.target)})
+				slct.addEventListener("change", (e)=>{trfTbl_altetarAndamento(e.target)})
+				//-------------------------------------------------
 
-				//preencher coluna chave 01
+				//preencher coluna chave 01------------------------
 				var ch01 = linha.insertCell(5);
 				ch01.classList.add('trfTblCol6');
 				const slct1 = document.createElement("select")
@@ -105,8 +115,9 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				}
 				ch01.appendChild(slct1);
 				ch01.firstChild.value = bdTabela[i].chave02
+				//-------------------------------------------------
 				
-				//preencher coluna chave 02
+				//preencher coluna chave 02------------------------
 				var ch02 = linha.insertCell(6);
 				ch02.classList.add('trfTblCol7');
 				const slct2 = document.createElement("select")
@@ -125,8 +136,9 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				}
 				ch02.appendChild(slct2);
 				ch02.firstChild.value = bdTabela[i].chave03
+				//-------------------------------------------------
 
-				//preencher chave 03
+				//preencher chave 03-------------------------------
 				var ch03 = linha.insertCell(7);
 				ch03.classList.add('trfTblCol8');
 				const cxText1 = document.createElement("INPUT");
@@ -135,8 +147,9 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				cxText1.classList.add('trfTbl_inputTxt');
 				ch03.appendChild(cxText1);
 				ch03.firstChild.value = bdTabela[i].chave04
+				//-------------------------------------------------
 				
-				//preencher chave 04
+				//preencher chave 04-------------------------------
 				var ch04 = linha.insertCell(8);
 				ch04.classList.add('trfTblCol9');
 				const cxText2 = document.createElement("INPUT");
@@ -145,26 +158,32 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				cxText2.classList.add('trfTbl_inputTxt');
 				ch04.appendChild(cxText2);
 				ch04.firstChild.value = bdTabela[i].chave05
+				//-------------------------------------------------
 				
-				//preencher porcentagem
+				//preencher porcentagem----------------------------
 				var prct = linha.insertCell(9);
 				prct.classList.add('trfTblCol10');
 				prct.innerHTML = bdTabela[i].porcentagem + "%";
+				//-------------------------------------------------
 				
-				//preencher descrição
+				//preencher descrição------------------------------
 				var desc = linha.insertCell(10);
 				desc.classList.add('trfTblCol11');
 				desc.innerHTML = bdTabela[i].tarefa;
+				//-------------------------------------------------
 				
-				//preencher serviços executados da tarefa
+				//preencher serviços executados da tarefa----------
 				var serv = linha.insertCell(11);
 				serv.classList.add('trfTblCol12');
 				const k = document.createElement("TEXTAREA");
 				k.classList.add('trfTblCol12txa');
 				serv.appendChild(k);
 				serv.firstChild.value = bdTabela[i].serviço;
+				//altura automática
+				trfTbl_auturaAutomaticaTXA(serv.firstChild)
+				//-------------------------------------------------
 				
-				//preencher coluna das pendencias	
+				//preencher coluna das pendencias------------------	
 				var pend = linha.insertCell(12);
 				pend.classList.add('trfTblCol13');		
 				var t="";u="";v=""
@@ -175,49 +194,48 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				vrfFer.map((e)=>{if(e.status == true){u = "ferramentas"}})
 				vrfPrd.map((e)=>{if(e.status == true){v = "produtos"}})
 				pend.innerHTML = t + " " + u + " " + v
+				//-------------------------------------------------
 				
-				//preencher equipe
+				//preencher equipe---------------------------------
 				var eqp = linha.insertCell(13);
 				eqp.classList.add('trfTblCol14');
 				var membros = bdTabela[i].equipe
 				eqp.innerHTML = ""
 				membros.map((e)=>{eqp.innerHTML = eqp.innerHTML + " " + e});
+				//-------------------------------------------------
 
-				//preencher data de atualização
+				//preencher data de atualização--------------------
 				var atlz = linha.insertCell(14);
 				atlz.classList.add('trfTblCol15');
 				if(bdTabela[i].atualizacao != ""){
 					atlz.innerHTML = new Date(bdTabela[i].atualizacao).toLocaleDateString("pt-BR");
 				}
+				//-------------------------------------------------
 
-				//adicionar botões
+				//adicionar botões---------------------------------
 				var opcs = linha.insertCell(15);
 				opcs.classList.add('trfTblCol16');
 				opcs.innerHTML = "<div><i class='bx bx-edit-alt btnEditTst'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
 				//eventos do botão editar
-				opcs.firstChild.children[0].addEventListener("click", (e)=>{
-					var tarefa = e.target.parentElement.parentElement.parentElement
-					var id = parseInt(tarefa.firstChild.innerHTML)
-					trfTbl_alterarTarefas(id, tarefa)
-				})
+				opcs.firstChild.children[0].addEventListener("click", (e)=>{trfTbl_alterarTarefas(e.target)})
 				//eventos do botão excluir
-				opcs.firstChild.children[1].addEventListener("click", (e)=>{
-					var tarefa = e.target.parentElement.parentElement.parentElement
-					var id = parseInt(tarefa.firstChild.innerHTML)
-					trfTbl_excluirTarefas(id, tarefa)
-				})
+				opcs.firstChild.children[1].addEventListener("click", (e)=>{trfTbl_excluirTarefas(e.target)})
+				//-------------------------------------------------
 
-				//altura automática das caixas de texto
+				//altura automática das caixas de texto------------
 				ch03.firstChild.style.height = linha.clientHeight + "px"
 				ch04.firstChild.style.height = linha.clientHeight + "px"
 				serv.firstChild.style.height = linha.clientHeight + "px"
+				//-------------------------------------------------
 
-				//adicionar cor da linha
+				//adicionar cor da linha---------------------------
 				trfTbl_CorLinha(andamento.firstChild, linha)
+				//-------------------------------------------------
 			}
-			//-------------------------------------------------------------------------
+			//---------------------------------------------------------------
 
-			//mostrar ou ocultar colunas na inicialização
+
+			//mostrar ou ocultar colunas na inicialização--------------------
 			const chbx = [...document.getElementsByClassName('trf_tblcbs')]
 			chbx.map((e)=>{
 				var x = e.id
@@ -236,16 +254,23 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 						})
 					}
 			})
-			//-------------------------------------------------------------------------
+			//---------------------------------------------------------------
 
-			//controles da tabela------------------------------------------------------
+
+			//controles da tabela--------------------------------------------
 			trfTbl_altetarServiço()//teste alterar serviço executado
 			trfTbl_menuColunas()//configuração do menu de contole das colunas
 			trfTbl_quantidadesRodapé()//rodapé da tabela
-			//--------------------------------------------------------------------------
-
+			//---------------------------------------------------------------
+			
+			
+			//fim da promisse------------------------------------------------
 			resolve()
+			//---------------------------------------------------------------
+			
+			
 		}catch (error){
+			//mensagem em caso de erro---------------------------------------
 			var icon = "img/imgError.png"
 			var msg = "Erro ao carregar tabela principal!"
 			var act = error
@@ -254,8 +279,10 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 			var func = ""
 			openMSG(icon, msg, act, modo, reload,func);
 			console.log("Erro ao carregar tabela principal! " + error)
+			//---------------------------------------------------------------
 		}
 	})
+	//---------------------------------------------------------------------------------------------
 }
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
@@ -263,8 +290,8 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 
 
 
-//----------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL----------------------------
-//--------------------------------------------------------------------------------------
+//---------------------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL--------------------------------
+//-----------------------------------------------------------------------------------------------------
 //CARREGAR CORES----------------------------------------------
 async function trfTbl_CorLinha(e, linha){
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
@@ -310,7 +337,9 @@ var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js ; 
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
 //função editar tarefa
-async function trfTbl_alterarTarefas(id, tarefa){
+async function trfTbl_alterarTarefas(elemento){
+	var tarefa = elemento.parentElement.parentElement.parentElement
+	var id = parseInt(tarefa.firstChild.innerHTML)
 	idTarefa = id //id para editar tarefa
 	const verificar = await obterTarefas(id)//pertence a folha: /tarefas/js/banco.js
 	editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
@@ -356,7 +385,7 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 			trfTbl_EditarLinha.children[10].innerHTML = tarefaBD[0].tarefa;
 			//preencher coluna serviço
 			trfTbl_EditarLinha.children[11].firstChild.value = tarefaBD[0].serviço;
-			trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
+			//trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
 			
 			//preencher coluna das pendencias			
 			var t="";u="";v=""
@@ -414,7 +443,9 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 
 
 //EXCLUIR TAREFA----------------------------------------------------
-function trfTbl_excluirTarefas(id, tarefa){
+function trfTbl_excluirTarefas(elemento){
+	var tarefa = elemento.parentElement.parentElement.parentElement
+	var id = parseInt(tarefa.firstChild.innerHTML)
 	var icon = "img/imgInter.png"
 	var msg = "Excluir"
 	var act = "Deseja realmente excluir esta tarefa?"
@@ -457,7 +488,8 @@ async function trfTbl_exclTarefa(z,y){
 //variável que define andamento
 var trfTbl_andamentoAtv = ""
 //função para configurar opções de andamento
-function trfTbl_configAndamento(select, tarefa){
+function trfTbl_configAndamento(select){
+	const tarefa = select.parentElement.parentElement;
 	const opcoes = select.children
 	const pendente = trTbl_verificarPendencias(tarefa)
 	//caso alguma pendência
@@ -491,8 +523,12 @@ function trfTbl_configAndamento(select, tarefa){
 	}
 }
 //alterar andamento no banco
-async function trfTbl_altetarAndamento(e, j, y, z){
+async function trfTbl_altetarAndamento(e){
 
+	const j = e.value
+	var y = e.parentElement.parentElement
+	var z = parseInt(y.children[0].innerHTML)
+	
 	await AltTarefasBd(z, "chave00", e.value)
 	const vlAlt = await obterDados(z, "chave00")
 	
@@ -510,12 +546,6 @@ async function trfTbl_altetarAndamento(e, j, y, z){
 		//cor da linha
 		trfTbl_CorLinha(e, y)
 		trfTbl_autoPorcentagem(e.value, y)
-		
-		//mensagem de sucesso!
-		document.getElementById('trf_tblmsgSec').style.display = "flex"
-		setTimeout(()=>{
-			document.getElementById('trf_tblmsgSec').style.display = "none"
-		},3000)
 	}
 }
 //procurar pendências
@@ -533,27 +563,21 @@ function trTbl_verificarPendencias(tarefa){
 
 
 
-//alterar serviço executado----------------------------------------------
+//funções para caixa de serviço executado----------------------------------------------
+//altura automática do textarea
+function trfTbl_auturaAutomaticaTXA(textarea){
+	textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
+	function updateHeight(){
+		var offset = textarea.offsetHeight - textarea.clientHeight;
+		textarea.style.height = "auto";
+		textarea.style.height = textarea.scrollHeight + offset + "px";
+	}
+	textarea.addEventListener("keyup", updateHeight);
+	textarea.addEventListener("input", updateHeight);
+}
+
+//alterar serviço executado
 function trfTbl_altetarServiço(){
-	//configurar textarea para altura automática
-	(function () {
-		"use strict";
-
-		function addEvent(textarea) {
-			textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
-			function updateHeight() {
-				var offset = textarea.offsetHeight - textarea.clientHeight;
-				textarea.style.height = "auto";
-				textarea.style.height = textarea.scrollHeight + offset + "px";
-			}
-			textarea.addEventListener("keyup", updateHeight);
-			textarea.addEventListener("input", updateHeight);
-		}
-
-		document
-		.querySelectorAll(".trfTblCol12txa")
-		.forEach(addEvent);
-	})();
 	//alterar serviço executado
 	const z = [...document.getElementsByClassName('trfTblCol12txa')]
 	z.map((e)=>{
@@ -671,6 +695,18 @@ function trfTbl_autoPorcentagem(andamento, tarefa){
 		AltTarefasBd(id, "porcentagem", "50")
 	}
 }
+//caixa de texto de atualização do percentual
+document.getElementById("trfTbl_novoPercentual").addEventListener("input", (e)=>{
+	//impede colar ou digitar o zero no primeiro caracter
+	if(e.target.value.substring(0,1) == 0){
+		e.target.value = ""
+	}
+	//foca no botão salvar
+	if(e.target.value.length == 2){
+	
+		document.getElementById('trfTbl_confirmarPercentual').focus()
+	}
+})
 //botão de confirmar atualização da porcentagem
 var trfTbl_tarefaPCT = ""
 document.getElementById('trfTbl_confirmarPercentual').addEventListener('click', ()=>{
