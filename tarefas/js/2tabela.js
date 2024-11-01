@@ -72,6 +72,19 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				}
 				andamento.appendChild(slct);
 				andamento.firstChild.value = bdTabela[i].chave00
+				//eventos do select andamento
+				slct.addEventListener("focus", (e)=>{
+					const select = e.target;
+					const tarefa = select.parentElement.parentElement;
+					trfTbl_configAndamento(select, tarefa)
+				})
+				slct.addEventListener("change", (e)=>{
+					const select = e.target
+					const valor = e.target.value
+					var tarefa = e.target.parentElement.parentElement
+					var id = parseInt(tarefa.children[0].innerHTML)
+					trfTbl_altetarAndamento(select, valor, tarefa, id)
+				})
 
 				//preencher coluna chave 01
 				var ch01 = linha.insertCell(5);
@@ -181,7 +194,19 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				var opcs = linha.insertCell(15);
 				opcs.classList.add('trfTblCol16');
 				opcs.innerHTML = "<div><i class='bx bx-edit-alt btnEditTst'></i><i class='bx bx-message-square-x btnexcTst'></i></div>";
-				
+				//eventos do botão editar
+				opcs.firstChild.children[0].addEventListener("click", (e)=>{
+					var tarefa = e.target.parentElement.parentElement.parentElement
+					var id = parseInt(tarefa.firstChild.innerHTML)
+					trfTbl_alterarTarefas(id, tarefa)
+				})
+				//eventos do botão excluir
+				opcs.firstChild.children[1].addEventListener("click", (e)=>{
+					var tarefa = e.target.parentElement.parentElement.parentElement
+					var id = parseInt(tarefa.firstChild.innerHTML)
+					trfTbl_excluirTarefas(id, tarefa)
+				})
+
 				//altura automática das caixas de texto
 				ch03.firstChild.style.height = linha.clientHeight + "px"
 				ch04.firstChild.style.height = linha.clientHeight + "px"
@@ -214,7 +239,6 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 			//-------------------------------------------------------------------------
 
 			//controles da tabela------------------------------------------------------
-			trfTbl_altetarAndamento()//rotina de mudança no andamento da tarefa
 			trfTbl_altetarServiço()//teste alterar serviço executado
 			trfTbl_menuColunas()//configuração do menu de contole das colunas
 			trfTbl_quantidadesRodapé()//rodapé da tabela
@@ -280,25 +304,18 @@ async function trfTbl_CorLinha(e, linha){
 
 
 
-//BOTÃO EDITAR TAREFA-----------------------------------------------
+//EDITAR TAREFA-----------------------------------------------
 //variavel que define se nova tarefa ou id da tarefa que será editada
 var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js ; também é utilizada na folha /tarefas/js/formulário.js
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
-//função do botão editar tarefa
-document.getElementById("trf_tblTbBdy").addEventListener("click", (event)=>{
-	if(event.target.classList.contains("btnEditTst")){
-		var y = event.target.parentElement.parentElement.parentElement
-		var z = parseInt(y.firstChild.innerHTML)
-		//id para editar tarefa
-		idTarefa = z
-		async function editar(){
-			const verificar = await obterTarefas(z)//pertence a folha: /tarefas/js/banco.js
-			editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
-			trfTbl_EditarLinha = y
-		}editar()
-	}
-})
+//função editar tarefa
+async function trfTbl_alterarTarefas(id, tarefa){
+	idTarefa = id //id para editar tarefa
+	const verificar = await obterTarefas(id)//pertence a folha: /tarefas/js/banco.js
+	editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
+	trfTbl_EditarLinha = tarefa
+}
 //função para alterar a tarefa na tabela atual
 async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefas/js/formulário.js
 	(async ()=>{
@@ -396,20 +413,17 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 
 
 
-//BOTÃO EXCLUIR TAREFA----------------------------------------------------
-document.getElementById("trf_tblTbBdy").addEventListener("click", (event)=>{
-	if(event.target.classList.contains("btnexcTst")){
-		var y = event.target.parentElement.parentElement.parentElement
-		var z = parseInt(y.firstChild.innerHTML)
-		var icon = "img/imgInter.png"
-			var msg = "Excluir"
-			var act = "Deseja realmente excluir esta tarefa?"
-			var modo = "yn"
-			var reload = "false"
-			var func = () => {trfTbl_exclTarefa(z,y)}
-			openMSG(icon, msg, act, modo, reload,func);
-	}
-})
+//EXCLUIR TAREFA----------------------------------------------------
+function trfTbl_excluirTarefas(id, tarefa){
+	var icon = "img/imgInter.png"
+	var msg = "Excluir"
+	var act = "Deseja realmente excluir esta tarefa?"
+	var modo = "yn"
+	var reload = "false"
+	var func = () => {trfTbl_exclTarefa(id,tarefa)}
+	openMSG(icon, msg, act, modo, reload,func);
+}
+
 //função para excluir tarefa
 async function trfTbl_exclTarefa(z,y){
 	await excluirTarefa(z)//pertence a folha: /tarefas/js/banco.js
@@ -442,78 +456,67 @@ async function trfTbl_exclTarefa(z,y){
 //SALVAR AO ALTERAR ANDAMENTO------------------------------------------
 //variável que define andamento
 var trfTbl_andamentoAtv = ""
-function trfTbl_altetarAndamento(){
-	const x = [...document.getElementsByClassName("trf_tblSlctAdmt")]
-	x.map((e)=>{
-		const j = e.value
-		var y = e.parentElement.parentElement
-		var z = parseInt(y.children[0].innerHTML)
+//função para configurar opções de andamento
+function trfTbl_configAndamento(select, tarefa){
+	const opcoes = select.children
+	const pendente = trTbl_verificarPendencias(tarefa)
+	//caso alguma pendência
+	if(pendente == true){
+		for(i=0;i<opcoes.length;i++){
+			opcoes[i].disabled = true
+			opcoes[i].style.color = "#ddd"
+		}
+	}else{
+		//caso caixa de serviço vazia
+		const Servico = tarefa.children[11].firstChild
+		if(Servico.value == ""){
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = true
+				opcoes[i].style.color = "#ddd"
+				opcoes[0].disabled = false
+				opcoes[0].style.color = "#000"
+				opcoes[4].disabled = false
+				opcoes[4].style.color = "#000"
+			}
+		}else{
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = false
+				opcoes[i].style.color = "#000"
+				opcoes[0].disabled = true
+				opcoes[0].style.color = "#ddd"
+				opcoes[2].disabled = true
+				opcoes[2].style.color = "#ddd"
+			}
+		}
+	}
+}
+//alterar andamento no banco
+async function trfTbl_altetarAndamento(e, j, y, z){
 
-		//configurar lista de opções do select andamento
-		e.addEventListener("focus", ()=>{
-			const opcoes = e.children
-			const pendente = trTbl_verificarPendencias(y)
-			//caso alguma pendência
-			if(pendente == true){
-				for(i=0;i<opcoes.length;i++){
-					opcoes[i].disabled = true
-					opcoes[i].style.color = "#ddd"
-				}
-			}else{
-				//caso caixa de serviço vazia
-				const Servico = y.children[11].firstChild
-				if(Servico.value == ""){
-					for(i=0;i<opcoes.length;i++){
-						opcoes[i].disabled = true
-						opcoes[i].style.color = "#ddd"
-						opcoes[0].disabled = false
-						opcoes[0].style.color = "#000"
-						opcoes[4].disabled = false
-						opcoes[4].style.color = "#000"
-					}
-				}else{
-					for(i=0;i<opcoes.length;i++){
-						opcoes[i].disabled = false
-						opcoes[i].style.color = "#000"
-						opcoes[0].disabled = true
-						opcoes[0].style.color = "#ddd"
-						opcoes[2].disabled = true
-						opcoes[2].style.color = "#ddd"
-					}
-				}
-			}	
-		})
-
-		//alterar andamento no banco
-		e.addEventListener("change", ()=>{
-			async function alterar(){
-				await AltTarefasBd(z, "chave00", e.value)
-				const vlAlt = await obterDados(z, "chave00")
-				
-				//mensagem de erro!
-				if(vlAlt != e.value){
-						var icon = "img/imgError.png"
-						var msg = "Erro"
-						var act = "Erro ao alterar andamento"
-						var modo = "conf"
-						var reload = "false"
-						var func = ""
-						openMSG(icon, msg, act, modo, reload,func);
-						e.value = j
-				}else{
-					//cor da linha
-					trfTbl_CorLinha(e, y)
-					trfTbl_autoPorcentagem(e.value, y)
-					
-					//mensagem de sucesso!
-					document.getElementById('trf_tblmsgSec').style.display = "flex"
-					setTimeout(()=>{
-						document.getElementById('trf_tblmsgSec').style.display = "none"
-					},3000)
-				}	
-			}alterar()
-		})
-	})
+	await AltTarefasBd(z, "chave00", e.value)
+	const vlAlt = await obterDados(z, "chave00")
+	
+	//mensagem de erro!
+	if(vlAlt != e.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			e.value = j
+	}else{
+		//cor da linha
+		trfTbl_CorLinha(e, y)
+		trfTbl_autoPorcentagem(e.value, y)
+		
+		//mensagem de sucesso!
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
 }
 //procurar pendências
 function trTbl_verificarPendencias(tarefa){
