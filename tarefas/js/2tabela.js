@@ -292,6 +292,7 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 
 //---------------------------------CARREGAR FUNÇÕES DA TABELA PRINCIPAL--------------------------------
 //-----------------------------------------------------------------------------------------------------
+
 //CARREGAR CORES----------------------------------------------
 async function trfTbl_CorLinha(e, linha){
 	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
@@ -332,10 +333,12 @@ async function trfTbl_CorLinha(e, linha){
 
 
 //EDITAR TAREFA-----------------------------------------------
+
 //variavel que define se nova tarefa ou id da tarefa que será editada
 var idTarefa = ""//esta variável é alterada na folha /tarefas/js/menuSec.js ; também é utilizada na folha /tarefas/js/formulário.js
 //variavel que define qual linha será editada na tabela
 var trfTbl_EditarLinha = "" //esta variável é alterada na folha /tarefas/js/formulário.js
+
 //função editar tarefa
 async function trfTbl_alterarTarefas(elemento){
 	var tarefa = elemento.parentElement.parentElement.parentElement
@@ -345,6 +348,7 @@ async function trfTbl_alterarTarefas(elemento){
 	editarTarefa(verificar)//pertence a folha: /tarefas/js/formulario.js
 	trfTbl_EditarLinha = tarefa
 }
+
 //função para alterar a tarefa na tabela atual
 async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefas/js/formulário.js
 	(async ()=>{
@@ -485,6 +489,7 @@ async function trfTbl_exclTarefa(z,y){
 
 
 //SALVAR AO ALTERAR ANDAMENTO------------------------------------------
+
 //variável que define andamento
 var trfTbl_andamentoAtv = ""
 //função para configurar opções de andamento
@@ -522,6 +527,7 @@ function trfTbl_configAndamento(select){
 		}
 	}
 }
+
 //alterar andamento no banco
 async function trfTbl_altetarAndamento(e){
 
@@ -548,6 +554,7 @@ async function trfTbl_altetarAndamento(e){
 		trfTbl_autoPorcentagem(e.value, y)
 	}
 }
+
 //procurar pendências
 function trTbl_verificarPendencias(tarefa){
 	var pendenciasAtivas = false
@@ -564,6 +571,7 @@ function trTbl_verificarPendencias(tarefa){
 
 
 //funções para caixa de serviço executado----------------------------------------------
+
 //altura automática do textarea
 function trfTbl_auturaAutomaticaTXA(textarea){
 	textarea.style.minHeight = textarea.parentElement.clientHeight + "px";

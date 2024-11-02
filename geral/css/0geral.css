@@ -77,7 +77,7 @@ li {
 	margin-top: 65px;
 	overflow-y: auto;
 	scrollbar-width:thin;
-	scrollbar-color: var(--light-blue) var(--light);
+	scrollbar-color: #999 #fff;
 }
 #areaPcp.menuRecolhido + #areaPcp{
 	width: 100%;

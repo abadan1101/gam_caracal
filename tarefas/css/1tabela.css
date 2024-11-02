@@ -92,6 +92,8 @@
 	overflow-x: auto;
 	max-height: calc(100vh - 200px);
 	border: solid 1px #ccc;
+	scrollbar-width:thin;
+	scrollbar-color: #999 #fff;
 }
 #trf_tblTb{
 	border-collapse: collapse;
@@ -240,7 +242,8 @@
 	font-size: 16px;
 	height: 45px;
 	outline: none;
-	scrollbar-color: #FFF var(--light);
+	scrollbar-width:thin;
+	scrollbar-color: #999 #fff;
 }
 .trfTblCol12txa:focus{
 	border: solid 1px #fff;
