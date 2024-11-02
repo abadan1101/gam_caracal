@@ -244,6 +244,7 @@
 	outline: none;
 	scrollbar-width:thin;
 	scrollbar-color: #999 #fff;
+	margin-bottom: -5px;
 }
 .trfTblCol12txa:focus{
 	border: solid 1px #fff;
