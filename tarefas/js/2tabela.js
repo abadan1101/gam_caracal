@@ -650,7 +650,6 @@ function trfTbl_altetarServiço(){
 							var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
 							console.log(bdCfg.chave00.length)
 							for(i = 0; i < bdCfg.chave00.length; i++){
-								console.log(i)
 								if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && u.includes(bdCfg.chave00[i] + "**")){
 									trfTbl_selectAndamento.value = bdCfg.chave00[i]
 								}
