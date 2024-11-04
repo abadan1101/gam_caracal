@@ -115,6 +115,8 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				}
 				ch01.appendChild(slct1);
 				ch01.firstChild.value = bdTabela[i].chave02
+				//eventos do select chave 01
+				slct1.addEventListener("change", (e)=>{trfTbl_altetarChave01(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna chave 02------------------------
@@ -136,6 +138,8 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				}
 				ch02.appendChild(slct2);
 				ch02.firstChild.value = bdTabela[i].chave03
+				//eventos do select chave 02
+				slct2.addEventListener("change", (e)=>{trfTbl_altetarChave02(e.target)})
 				//-------------------------------------------------
 
 				//preencher chave 03-------------------------------
@@ -147,6 +151,8 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				cxText1.classList.add('trfTbl_inputTxt');
 				ch03.appendChild(cxText1);
 				ch03.firstChild.value = bdTabela[i].chave04
+				//eventos do select chave 02
+				ch03.firstChild.addEventListener("change", (e)=>{trfTbl_altetarChave03(e.target)})
 				//-------------------------------------------------
 				
 				//preencher chave 04-------------------------------
@@ -158,6 +164,8 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				cxText2.classList.add('trfTbl_inputTxt');
 				ch04.appendChild(cxText2);
 				ch04.firstChild.value = bdTabela[i].chave05
+				//eventos do select chave 02
+				ch04.firstChild.addEventListener("change", (e)=>{trfTbl_altetarChave04(e.target)})
 				//-------------------------------------------------
 				
 				//preencher porcentagem----------------------------
@@ -179,8 +187,12 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				k.classList.add('trfTblCol12txa');
 				serv.appendChild(k);
 				serv.firstChild.value = bdTabela[i].serviço;
-				//altura automática
+				//altura automática ao digitar
 				trfTbl_auturaAutomaticaTXA(serv.firstChild)
+				//altura automática ao focar
+				serv.firstChild.addEventListener("focus",(e)=>{trfTbl_auturaAutomaticaTXAFoco(e.target)})
+				//rotinas para salvar serviço executado
+				serv.firstChild.addEventListener("focusout",(e)=>{trfTbl_salvarTarefaTXA(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna das pendencias------------------	
@@ -258,7 +270,6 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 
 
 			//controles da tabela--------------------------------------------
-			trfTbl_altetarServiço()//teste alterar serviço executado
 			trfTbl_menuColunas()//configuração do menu de contole das colunas
 			trfTbl_quantidadesRodapé()//rodapé da tabela
 			//---------------------------------------------------------------
@@ -493,12 +504,23 @@ async function trfTbl_exclTarefa(z,y){
 //variável que define andamento
 var trfTbl_andamentoAtv = ""
 //função para configurar opções de andamento
-function trfTbl_configAndamento(select){
+async function trfTbl_configAndamento(select){
 	const tarefa = select.parentElement.parentElement;
 	const opcoes = select.children
 	const pendente = trTbl_verificarPendencias(tarefa)
+
+	//verificar uso de andamento automático no textarea
+	const vlTXA = select.parentElement.parentElement.children[11].firstChild.value;
+	var usoTXA = false
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	for(i = 0; i < bdCfg.chave00.length; i++){
+		if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && vlTXA.includes(bdCfg.chave00[i] + "**")){
+			usoTXA = true
+		}
+	}
+
 	//caso alguma pendência
-	if(pendente == true){
+	if(pendente == true || usoTXA == true){
 		for(i=0;i<opcoes.length;i++){
 			opcoes[i].disabled = true
 			opcoes[i].style.color = "#ddd"
@@ -565,14 +587,149 @@ function trTbl_verificarPendencias(tarefa){
 	}
 	return(pendenciasAtivas)
 }
-//-----------------------------------------------------------------------------
+//---------------------------------------------------------------------
 
 
 
 
-//funções para caixa de serviço executado----------------------------------------------
+//SALVAR AO ALTERAR CHAVE 01-------------------------------------------
+async function trfTbl_altetarChave01(elemento){
+	const valorAnterior = elemento.value
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave02", elemento.value)
+	const vlAlt = await obterDados(id, "chave02")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			elemento.value = valorAnterior
+	}else{
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+//---------------------------------------------------------------------
 
-//altura automática do textarea
+
+
+
+//SALVAR AO ALTERAR CHAVE 02-------------------------------------------
+async function trfTbl_altetarChave02(elemento){
+	const valorAnterior = elemento.value
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave03", elemento.value)
+	const vlAlt = await obterDados(id, "chave03")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			elemento.value = valorAnterior
+	}else{
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+//---------------------------------------------------------------------
+
+
+
+
+//SALVAR AO ALTERAR CHAVE 03-------------------------------------------
+async function trfTbl_altetarChave03(elemento){
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave04", elemento.value)
+	const vlAlt = await obterDados(id, "chave04")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+	}else{
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+//---------------------------------------------------------------------
+
+
+
+
+//SALVAR AO ALTERAR CHAVE 04-------------------------------------------
+async function trfTbl_altetarChave04(elemento){
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave05", elemento.value)
+	const vlAlt = await obterDados(id, "chave05")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+	}else{
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+//---------------------------------------------------------------------
+
+
+
+
+//FUNÇÕES PARA A CAIXA DE SERVIÇO EXECUTADO----------------------------
+
+var alturaTXA = ""
+
+//altura automática do textarea ao focar
+function trfTbl_auturaAutomaticaTXAFoco(elemento){
+	alturaTXA = elemento.parentElement.parentElement.clientHeight
+	if (elemento.scrollHeight > elemento.offsetHeight){
+		elemento.style.height = elemento.scrollHeight + "px"
+	}
+	
+}
+
+//altura automática do textarea ao digitar
 function trfTbl_auturaAutomaticaTXA(textarea){
 	textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
 	function updateHeight(){
@@ -584,103 +741,84 @@ function trfTbl_auturaAutomaticaTXA(textarea){
 	textarea.addEventListener("input", updateHeight);
 }
 
-//alterar serviço executado
-function trfTbl_altetarServiço(){
-	//alterar serviço executado
-	const z = [...document.getElementsByClassName('trfTblCol12txa')]
-	z.map((e)=>{
-		var y = e.parentElement.parentElement
-		
-		var p = ""
-		e.addEventListener("focus",()=>{
-			p = e.value
-			if (e.scrollHeight > e.offsetHeight){
-				e.style.height = e.scrollHeight + "px"
-			}
-		})
-		
-		const elmnt = e.parentElement.parentElement.clientHeight
-		e.addEventListener("focusout",()=>{
-			const u = e.value
-			if(elmnt != 0){
-				e.style.height = elmnt + "px"
-			}
-			
-			async function alterar(){
-				var z = parseInt(y.children[0].innerHTML)
-				const vlAlt = await obterDados(z, "serviço")
-				if(u != vlAlt){
-					await AltTarefasBd(z, "serviço", e.value)
-					const vlAltx = await obterDados(z, "serviço")
-					if(vlAltx != e.value){
-						var icon = "img/imgError.png"
-						var msg = "Erro"
-						var act = "Erro ao alterar serviço executado"
-						var modo = "conf"
-						var reload = "false"
-						var func = ""
-						openMSG(icon, msg, act, modo, reload,func);
+//salvar serviço executado
+async function trfTbl_salvarTarefaTXA(e){
+	var y = e.parentElement.parentElement
+	const u = e.value
+
+	if(alturaTXA != 0){
+		e.style.height = alturaTXA + "px"
+	}
+
+	var z = parseInt(y.children[0].innerHTML)
+		const vlAlt = await obterDados(z, "serviço")
+		if(u != vlAlt){
+			await AltTarefasBd(z, "serviço", e.value)
+			const vlAltx = await obterDados(z, "serviço")
+			if(vlAltx != e.value){
+				var icon = "img/imgError.png"
+				var msg = "Erro"
+				var act = "Erro ao alterar serviço executado"
+				var modo = "conf"
+				var reload = "false"
+				var func = ""
+				openMSG(icon, msg, act, modo, reload,func);
+			}else{
+				//alterar andamento da tarefa ao mudar o serviço executado
+				const trfTbl_selectAndamento = y.children[4].firstChild
+				var servico = e
+				const pendente = trTbl_verificarPendencias(y)
+
+				if(trfTbl_selectAndamento.value != "Aberto"){
+					trfTbl_andamentoAtv = trfTbl_selectAndamento.value
+				}else{
+					trfTbl_andamentoAtv = "Em Exec."
+				}
+
+				if(pendente != true){
+					if(servico.value == ""){
+						if(trfTbl_andamentoAtv != "Ag. Abrir"){
+							trfTbl_selectAndamento.value = "Aberto"
+						}else{
+							trfTbl_selectAndamento.value = "Ag. Abrir"
+						}
 					}else{
-						//alterar andamento da tarefa ao mudar o serviço executado
-						const trfTbl_selectAndamento = y.children[4].firstChild
-						var servico = e
-						const pendente = trTbl_verificarPendencias(y)
-
-						if(trfTbl_selectAndamento.value != "Aberto"){
-							trfTbl_andamentoAtv = trfTbl_selectAndamento.value
+						if(trfTbl_andamentoAtv == "Aberto" || trfTbl_andamentoAtv == ""){
+							trfTbl_selectAndamento.value = "Em Exec."
 						}else{
-							trfTbl_andamentoAtv = "Em Exec."
+							trfTbl_selectAndamento.value = trfTbl_andamentoAtv
+							
 						}
-
-						if(pendente != true){
-							if(servico.value == ""){
-								if(trfTbl_andamentoAtv != "Ag. Abrir"){
-									trfTbl_selectAndamento.value = "Aberto"
-								}else{
-									trfTbl_selectAndamento.value = "Ag. Abrir"
-								}
-							}else{
-								if(trfTbl_andamentoAtv == "Aberto" || trfTbl_andamentoAtv == ""){
-									trfTbl_selectAndamento.value = "Em Exec."
-								}else{
-									trfTbl_selectAndamento.value = trfTbl_andamentoAtv
-									
-								}
-							}
-							var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
-							console.log(bdCfg.chave00.length)
-							for(i = 0; i < bdCfg.chave00.length; i++){
-								if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && u.includes(bdCfg.chave00[i] + "**")){
-									trfTbl_selectAndamento.value = bdCfg.chave00[i]
-								}
-							}
-						}
-						
-						await AltTarefasBd(z, "chave00", trfTbl_selectAndamento.value)
-						const vlAlt = await obterDados(z, "chave00")
-
-						//mensagem de erro!
-						if(vlAlt != trfTbl_selectAndamento.value){
-							var icon = "img/imgError.png"
-							var msg = "Erro"
-							var act = "Erro ao alterar andamento"
-							var modo = "conf"
-							var reload = "false"
-							var func = ""
-							openMSG(icon, msg, act, modo, reload,func);
-						}else{
-							//cor da linha
-							trfTbl_CorLinha(trfTbl_selectAndamento, y)
-							trfTbl_autoPorcentagem(trfTbl_selectAndamento.value, y)
+					}
+					var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+					for(i = 0; i < bdCfg.chave00.length; i++){
+						if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && u.includes(bdCfg.chave00[i] + "**")){
+							trfTbl_selectAndamento.value = bdCfg.chave00[i]
 						}
 					}
 				}
-			}alterar()
-			
-		})
-	})	
+				
+				await AltTarefasBd(z, "chave00", trfTbl_selectAndamento.value)
+				const vlAlt = await obterDados(z, "chave00")
+
+				//mensagem de erro!
+				if(vlAlt != trfTbl_selectAndamento.value){
+					var icon = "img/imgError.png"
+					var msg = "Erro"
+					var act = "Erro ao alterar andamento"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					//cor da linha
+					trfTbl_CorLinha(trfTbl_selectAndamento, y)
+					trfTbl_autoPorcentagem(trfTbl_selectAndamento.value, y)
+				}
+			}
+		}
 }
-//--------------------------------------------------------------
+//---------------------------------------------------------------------
 
 
 
@@ -741,7 +879,7 @@ document.getElementById('trfTbl_confirmarPercentual').addEventListener('click', 
 		document.getElementById("trfTbl_novoPercentual").reportValidity()
 	}
 })
-//funcção para atualizar a porcentagem
+//função para atualizar a porcentagem
 async function trfTbl_autoPorcentagemDb(porcentagem, tarefa){
 	const id = parseInt(tarefa.children[0].innerHTML)
 	await AltTarefasBd(id, "porcentagem", porcentagem)

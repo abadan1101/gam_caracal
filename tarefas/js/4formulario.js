@@ -1165,63 +1165,84 @@ function trfFrm_altAndamentoCB(){
 //alterar andamento da tarefa ao mudar o serviço executado
 var servico = document.getElementById("trf_form_txa2")
 servico.addEventListener("focusout",()=>{
-	const pendente = trfFrm_verificarPendencias()
-	if(pendente != true){
-		if(servico.value == ""){
-			if(trfFrm_andamentoAtv != "Ag. Abrir"){
-				trfFrm_selectAndamento.value = "Aberto"
+	(async function alterarServico(){
+		const pendente = trfFrm_verificarPendencias()
+		if(pendente != true){
+			if(servico.value == ""){
+				if(trfFrm_andamentoAtv != "Ag. Abrir"){
+					trfFrm_selectAndamento.value = "Aberto"
+				}else{
+					trfFrm_selectAndamento.value = "Ag. Abrir"
+				}
 			}else{
-				trfFrm_selectAndamento.value = "Ag. Abrir"
-			}
-		}else{
-			if(trfFrm_andamentoAtv == "Aberto"){
-				trfFrm_selectAndamento.value = "Em Exec."
-			}else{
-				if(trfFrm_andamentoAtv == "Pendente"){
+				if(trfFrm_andamentoAtv == "Aberto"){
 					trfFrm_selectAndamento.value = "Em Exec."
 				}else{
-					trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+					if(trfFrm_andamentoAtv == "Pendente"){
+						trfFrm_selectAndamento.value = "Em Exec."
+					}else{
+						trfFrm_selectAndamento.value = trfFrm_andamentoAtv
+					}
+					
 				}
-				
 			}
+			var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+			for(i = 0; i < bdCfg.chave00.length; i++){
+				if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && servico.value.includes(bdCfg.chave00[i] + "**")){
+					trfFrm_selectAndamento.value = bdCfg.chave00[i]
+				}
+			}
+			trfFrm_autoPorcentagem()
 		}
-		trfFrm_autoPorcentagem()
-	}
+	})()
 })
 
 //configurar lista de opções do select andamento
 trfFrm_selectAndamento.addEventListener("focus",()=>{
-	const opcoes = [...trfFrm_selectAndamento.children]
-	//caso alguma pendência
-	const pendente = trfFrm_verificarPendencias()
-	if(pendente == true){
-		for(i=0;i<opcoes.length;i++){
-			opcoes[i].disabled = true
-			opcoes[i].style.color = "#ddd"
+	(async function andamentoAuto(){
+		const opcoes = [...trfFrm_selectAndamento.children]
+
+		//verificar uso de andamento automático no textarea
+		const vlTXA = document.getElementById("trf_form_txa2").value;
+		var usoTXA = false
+		var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+		for(i = 0; i < bdCfg.chave00.length; i++){
+			if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && vlTXA.includes(bdCfg.chave00[i] + "**")){
+				usoTXA = true
+			}
 		}
-	}else{
-		//caso caixa de serviço vazia
-		const Servico = document.getElementById("trf_form_txa2")
-		if(Servico.value == ""){
+
+		//caso alguma pendência
+		const pendente = trfFrm_verificarPendencias()
+		if(pendente == true || usoTXA == true){
 			for(i=0;i<opcoes.length;i++){
 				opcoes[i].disabled = true
 				opcoes[i].style.color = "#ddd"
-				opcoes[0].disabled = false
-				opcoes[0].style.color = "#000"
-				opcoes[4].disabled = false
-				opcoes[4].style.color = "#000"
 			}
 		}else{
-			for(i=0;i<opcoes.length;i++){
-				opcoes[i].disabled = false
-				opcoes[i].style.color = "#000"
-				opcoes[0].disabled = true
-				opcoes[0].style.color = "#ddd"
-				opcoes[2].disabled = true
-				opcoes[2].style.color = "#ddd"
+			//caso caixa de serviço vazia
+			const Servico = document.getElementById("trf_form_txa2")
+			if(Servico.value == ""){
+				for(i=0;i<opcoes.length;i++){
+					opcoes[i].disabled = true
+					opcoes[i].style.color = "#ddd"
+					opcoes[0].disabled = false
+					opcoes[0].style.color = "#000"
+					opcoes[4].disabled = false
+					opcoes[4].style.color = "#000"
+				}
+			}else{
+				for(i=0;i<opcoes.length;i++){
+					opcoes[i].disabled = false
+					opcoes[i].style.color = "#000"
+					opcoes[0].disabled = true
+					opcoes[0].style.color = "#ddd"
+					opcoes[2].disabled = true
+					opcoes[2].style.color = "#ddd"
+				}
 			}
-		}
-	}	
+		}	
+	})()
 })
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
