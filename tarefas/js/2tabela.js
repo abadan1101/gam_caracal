@@ -571,8 +571,15 @@ async function trfTbl_altetarAndamento(e){
 			openMSG(icon, msg, act, modo, reload,func);
 			e.value = j
 	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(z, "atualizacao", dataAtlz)
+		y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 		//cor da linha
 		trfTbl_CorLinha(e, y)
+
+		//ajustar porcentagem
 		trfTbl_autoPorcentagem(e.value, y)
 	}
 }
@@ -612,6 +619,11 @@ async function trfTbl_altetarChave01(elemento){
 			openMSG(icon, msg, act, modo, reload,func);
 			elemento.value = valorAnterior
 	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 		//mensagem de confirmação
 		document.getElementById('trf_tblmsgSec').style.display = "flex"
 		setTimeout(()=>{
@@ -644,6 +656,11 @@ async function trfTbl_altetarChave02(elemento){
 			openMSG(icon, msg, act, modo, reload,func);
 			elemento.value = valorAnterior
 	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 		//mensagem de confirmação
 		document.getElementById('trf_tblmsgSec').style.display = "flex"
 		setTimeout(()=>{
@@ -674,6 +691,11 @@ async function trfTbl_altetarChave03(elemento){
 			var func = ""
 			openMSG(icon, msg, act, modo, reload,func);
 	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 		//mensagem de confirmação
 		document.getElementById('trf_tblmsgSec').style.display = "flex"
 		setTimeout(()=>{
@@ -704,6 +726,11 @@ async function trfTbl_altetarChave04(elemento){
 			var func = ""
 			openMSG(icon, msg, act, modo, reload,func);
 	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 		//mensagem de confirmação
 		document.getElementById('trf_tblmsgSec').style.display = "flex"
 		setTimeout(()=>{
@@ -811,8 +838,15 @@ async function trfTbl_salvarTarefaTXA(e){
 					var func = ""
 					openMSG(icon, msg, act, modo, reload,func);
 				}else{
+					//atualizar data
+					var dataAtlz = new Date().getTime()
+					AltTarefasBd(z, "atualizacao", dataAtlz)
+					y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
 					//cor da linha
 					trfTbl_CorLinha(trfTbl_selectAndamento, y)
+
+					//atualizar porcentagem
 					trfTbl_autoPorcentagem(trfTbl_selectAndamento.value, y)
 				}
 			}
