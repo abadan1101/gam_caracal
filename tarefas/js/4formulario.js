@@ -1134,7 +1134,7 @@ trfFrm_tabelaPedidos.map((e)=>{
 		}
 	})
 })
-function trfFrm_altAndamentoCB(){
+async function trfFrm_altAndamentoCB(){
 	const pendente = trfFrm_verificarPendencias()
 		if(pendente == false){
 			if(trfFrm_andamentoAtv == "Pendente"){
@@ -1157,6 +1157,12 @@ function trfFrm_altAndamentoCB(){
 						trfFrm_selectAndamento.value = trfFrm_andamentoAtv
 					}
 				}
+			}
+		}
+		var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+		for(i = 0; i < bdCfg.chave00.length; i++){
+			if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && document.getElementById("trf_form_txa2").value.includes(bdCfg.chave00[i] + "**")){
+				trfFrm_selectAndamento.value = bdCfg.chave00[i]
 			}
 		}
 	trfFrm_autoPorcentagem()
