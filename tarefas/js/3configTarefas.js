@@ -245,7 +245,13 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 
 
 //------------------------CONFIGURAÇÕES DAS LINHAS----------------------
-//---------------------------------------------------------------------
+//----------------------------------------------------------------------
+
+//textarea avançado
+tinymce.init({
+	selector: '.textoAvancado'
+});
+
 //carregar configurações das linhas
 async function loadCnfTrfLin(iDB, nLin){//função chamada na folha: /tarefas/js/carregamento.js
 	//carrega tabela
