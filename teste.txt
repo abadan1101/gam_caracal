@@ -1,0 +1,12 @@
+<script src="FileSaver.js"></script><!-- editor de texto avançado -->	
+async function retardar(){
+	let nomeArquivo = 'NotaFiscal';
+	
+	//preenche a tabela principal
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	var myJsonString = JSON.stringify(bdTabela);
+
+let blob = new Blob( [myJsonString] , {type: "text/plain;charset=utf-8"} );
+saveAs(blob,nomeArquivo+".json");
+
+}retardar()
