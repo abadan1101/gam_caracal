@@ -135,6 +135,26 @@ async function loadTBLin(){
 	})
 }
 
+//baixar tabelas completas das configurações das tarefas
+async function loadTBCfgGeral(){
+	await bdOK()
+	return new Promise((resolve)=>{
+		const tabela =  []
+		var transaction1 = db.transaction('configTaref', "readonly");
+		var store1 = transaction1.objectStore('configTaref');
+		var request1 = store1.openCursor();
+		request1.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				tabela.push(cursor.value)
+				cursor.continue();
+			}else{
+				resolve(tabela)
+			}
+		}
+	})
+}
+
 //baixar tabelas das configurações das tarefas
 async function loadTBCfgLin(n){
 	await bdOK()
