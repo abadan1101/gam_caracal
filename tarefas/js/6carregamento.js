@@ -225,5 +225,3 @@ document.getElementById("cfgTarf").addEventListener('click',()=>{
 
 
 
-
-
