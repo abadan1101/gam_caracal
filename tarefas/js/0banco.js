@@ -359,6 +359,65 @@ function excluirTarefa(z){
 
 
 
+//------------------------FUNÇÕES PARA REALIZAÇÃO DO BACKUP E RESTAURAÇÃO---------------------
+//--------------------------------------------------------------------------------------------
+//limprar banco de dados
+function limparBD(){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction(dbLinha, "readwrite");
+		var store = transaction.objectStore(dbLinha);
+		var request = store.openCursor();
+		request.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				cursor.delete()
+				cursor.continue();
+			}
+		}
+		resolve();
+
+		//se hover erro
+		request.onerror = (event) => {
+			//mensagem de rejeitado
+			var icon = "img/imgAlert.png"
+			var msg = "Erro ao limpar banco de dados!"
+			var act = event
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro ao limpar o banco de dados da " + dbLinha);
+		}
+	})
+}
+
+//restaurar banco de dados
+function restaurarBD(bancoBackup){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction(dbLinha, "readwrite"); 
+		var tarefTable = transaction.objectStore(dbLinha)
+		bancoBackup.map((e)=>{
+			tarefTable.put(e)
+		})
+		resolve();
+
+		//se hover erro
+		transaction.onerror = (event) => {
+			//mensagem de rejeitado
+			var icon = "img/imgAlert.png"
+			var msg = "Erro em restaurar!"
+			var act = event
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro ao restaurar a " + dbLinha);
+		}
+	})
+}
+//--------------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------------
+
 
 
 

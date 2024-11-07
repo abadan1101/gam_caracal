@@ -94,27 +94,48 @@ document.getElementById("backupGeral").addEventListener("click",()=>{
 
 //--------------------------------------ROTINAS PARA RESTAURAR O BANCO DE DADOS-------------------------------
 //------------------------------------------------------------------------------------------------------------
+//chamada do botão restaurar banco de dados
 document.getElementById("restaurarBakup").addEventListener("click",()=>{
-	console.log(bkLinha01)
-	console.log(bkLinha02)
-	console.log(bkLinha03)
-	console.log(bkLinhaConf)
-	
+	var icon = "img/imgInter.png"
+	var msg = "Deseja restaurar o banco de dados?"
+	var act = "Todos os seus dados atuais serão perdidos! Deseja continuar?"
+	var modo = "yn"
+	var reload = "false"
+	var func = () => {bkpRestaurar()}
+	openMSG(icon, msg, act, modo, reload,func);
+})
+
+//função para restaurar o banco de dados
+async function bkpRestaurar(){
 	//restaurar linha 01
 	dbLinha = "linha01"
-	//addTarefasBd(bkLinha01, "true")
-	
+	await limparBD()
+	await restaurarBD(bkLinha01)//esta variável pertence a folha: /backup/arquivosBackup/backupLinha01.js
+
 	//restaurar linha 02
 	dbLinha = "linha02"
-	//addTarefasBd(bkLinha02, "true")
+	await limparBD()
+	await restaurarBD(bkLinha02)//esta variável pertence a folha: /backup/arquivosBackup/backupLinha02.js
 	
 	//restaurar linha 03
 	dbLinha = "linha03"
-	//addTarefasBd(bkLinha03, "true")
-	
+	await limparBD()
+	await restaurarBD(bkLinha03)//esta variável pertence a folha: /backup/arquivosBackup/backupLinha03.js
+
 	//restaurar configuração das linhas
 	dbLinha = "configTaref"
-})
+	await limparBD()
+	await restaurarBD(bkLinhaConf)//esta variável pertence a folha: /backup/arquivosBackup/backupLinhaConfig.js
+
+	//mensagem de corfirmado
+	var icon = "img/imgOK.png"
+	var msg = "Restauração!"
+	var act = "Dados restaurados com sucesso!"
+	var modo = "conf"
+	var reload = "true"
+	var func = ""
+	openMSG(icon, msg, act, modo, reload,func);
+}
 //------------------------------------------------------------------------------------------------------------
 
 

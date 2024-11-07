@@ -1,7 +1,7 @@
-//-------------------------MENU SECUNDÁRIO DAS TAREFAS----------------------------------
-//--------------------------------------------------------------------------------------
 
-//ABRIR E FECHAR MENU SECUNDÁRIO
+
+//--------------------------ABRIR E FECHAR MENU SECUNDÁRIO------------------------------
+//--------------------------------------------------------------------------------------
 const trf_menu = document.getElementById("trf_menu")
 const trf_mn = document.getElementById("trf_mn")
 trf_menu.addEventListener('click', function () {
@@ -16,23 +16,35 @@ window.addEventListener('click', function (e) {
 		}
 	}
 })
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
-//BOTÃO NOVA TAREFA
+
+
+
+//------------------------------BOTÃO NOVA TAREFA---------------------------------------
+//--------------------------------------------------------------------------------------
 const tmAf = document.getElementById("trf_menu_afNew")	
 tmAf.addEventListener("click",(evt)=>{
 	novaTarefa()//função pertence a folha: /tarefas/js/5formulário.js
 	//id para inserir nova tarefa
 	idTarefa = "novo"//variável pertence a folha: /tarefas/js/tabela.js
 })
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
-//BOTÃO IMPORTAR
+
+
+
+//------------------------------BOTÃO IMPORTAR TAREFAS----------------------------------
+//--------------------------------------------------------------------------------------
 let fileInput = document.getElementById('trf_menu_afImp')
 fileInput.addEventListener('change', () => {
 	const file = fileInput.files[0]
 	const reader = new FileReader()
 	const docSelect = file.name;
 	
-	//baixar planilha de ordens de serviço abertas
+	//baixar planilha de ordens de serviço abertas ou pendentes
 	if(docSelect.includes("OSVirtualAbertaAeronave") || docSelect.includes("OSVirtualPendenteAeronave")){
 		reader.onload = (event) => {
 			const data = event.target.result
@@ -229,5 +241,78 @@ fileInput.addEventListener('change', () => {
 	}
 	reader.readAsArrayBuffer(file)	
 })
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------BOTÃO EXPORTAR TAREFAS----------------------------------
+//--------------------------------------------------------------------------------------
+//chamada do botão exportar tarefas
+document.getElementById("exportarLinha").addEventListener("click", ()=>{
+	exportarTarefas()
+})
+
+//função para exportar tarefas
+async function exportarTarefas(){
+	//variáveis
+	const nomeAba = "tarefas da " + dbLinha
+	const nomePlanilha = "vn.xlsx"
+	var tarefas = [["origem","data","tipo","número","descrição","status","pim","obs"]];
+	var tarefasAdd = []
+
+	//montar arrays das tarefas
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	bdTabela.map((e)=>{
+		//origem
+		tarefasAdd.push("A/T")
+
+		//data
+		tarefasAdd.push(new Date(e.data).toLocaleDateString("pt-BR"))
+
+		//disponibilidade
+		var disp = ""
+		if(e.chave01 == "Disponível"){disp="D"}
+		if(e.chave01 == "Indisponível"){disp="I"}
+		if(e.chave01 == "Restrito"){disp="R"}
+		tarefasAdd.push(disp)
+
+		//numero
+		tarefasAdd.push(e.numero)
+
+		//descrição da tarefa
+		tarefasAdd.push(e.tarefa)
+
+		//status
+		var status = "EM EXEC. +60%"
+		if(e.chave00 == "Aberto"){status="ABERTA"}
+		if(e.chave00 == "Fechado"){status="FECHADA"}
+		if(e.chave00 == "Pendente"){status="PENDENTE + 60%"}
+		if(e.chave00 == "Ag. Virada"){status="AG. VIRADA"}
+		if(e.chave00 == "Ag. Abrir"){status="AG. ABRIR"}
+		if(e.chave00 == "Em Exec."){status="EM EXEC. + 60%"}
+
+		tarefasAdd.push(status)
+
+		//pim
+		tarefasAdd.push("")
+
+		//observação
+		tarefasAdd.push(e.serviço)
+
+		//popular array
+		tarefas.push(tarefasAdd)
+
+		//limpar array
+		tarefasAdd = []
+	})
+
+	//gravar planilha
+	var workbook = XLSX.utils.book_new();
+	var worksheet = XLSX.utils.aoa_to_sheet(tarefas);
+	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba);
+	XLSX.writeFile(workbook, nomePlanilha);
+}
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
