@@ -1022,6 +1022,37 @@ async function trfTbl_quantidadesRodapé(){
 }
 //------------------------------------------------------------------------
 
+
+//filtros do cabeçalho das tarefas----------------------------------------
+//filtro da coluna "número"
+document.getElementById("trfTblCol2Dv1").addEventListener("click",()=>{
+	document.getElementById("trfTblCol2Dv2").style.display = "flex"
+	document.getElementById("trfTblCol2Inpt").focus()	
+})
+document.getElementById("trfTblCol2Inpt").addEventListener("focusout",()=>{
+	document.getElementById("trfTblCol2Dv2").style.display = "none"
+})
+document.getElementById("trfTblCol2Inpt").addEventListener("input",()=>{
+	const tabela = [...document.getElementById("trf_tblTbBdy").children]
+	tabela.map((e)=>{
+
+		if(e.children[1].innerHTML.includes(document.getElementById("trfTblCol2Inpt").value) == false){
+			e.style.display = "none"
+		}else{
+			e.style.display = ""
+		}
+		
+		if(document.getElementById("trfTblCol2Inpt").value == ""){
+			document.getElementById("trfTblCol2Dv1").style.background = "#555"
+		}else{
+			document.getElementById("trfTblCol2Dv1").style.background = "#f00"
+		}
+	})
+})
+//------------------------------------------------------------------------
+
+
+
 //carregar caixas de seleção dos filtros das colunas da tabela principal
 function trfTbl_carregarCabecalho(){
 	// //buscar indices para criar os filtros

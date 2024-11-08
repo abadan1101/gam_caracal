@@ -34,6 +34,14 @@
 	padding: 0 20px 0 20px;
 	text-align: center;
 }
+#msgAlertSenhaDv{
+	display: none;
+	flex-direction: column;
+}
+#msgAlertSenhaLb{
+	display: none;
+	color: #f00;
+}
 .msgAlertBtn{
 	display: flex;
 	height: 60px;

@@ -102,7 +102,8 @@ document.getElementById("restaurarBakup").addEventListener("click",()=>{
 	var modo = "yn"
 	var reload = "false"
 	var func = () => {bkpRestaurar()}
-	openMSG(icon, msg, act, modo, reload,func);
+	var senha = true
+	openMSG(icon, msg, act, modo, reload,func,senha);
 })
 
 //função para restaurar o banco de dados

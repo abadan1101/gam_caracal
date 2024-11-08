@@ -104,6 +104,20 @@
 	height: 50px;
 	font-size: 15px;
 }
+.trfTblColDv1{
+	cursor: pointer;
+}
+.trfTblColDv2{
+	display: none;
+	position: absolute;
+	width: auto;
+	align-items: center;
+	background: #fff;
+	padding: 5px;
+}
+.trfTblColInpt{
+	font-size: 16px;
+}
 #trf_tblTb th, #trf_tblTb td{
 	padding: 0 5px 0 5px;
 }
@@ -137,8 +151,8 @@
 	text-align: center;
 }
 .trfTblCol4{
-	width: 50px;
-	max-width: 50px;
+	width: 80px;
+	max-width: 80px;
 	text-align: center;
 }
 .trfTblCol5{
@@ -244,7 +258,7 @@
 	outline: none;
 	scrollbar-width:thin;
 	scrollbar-color: #999 #fff;
-	/*margin-bottom: -5px;*/
+	margin-bottom: -1px; /*-5px para o chrome*/
 }
 .trfTblCol12txa:focus{
 	border: solid 1px #fff;

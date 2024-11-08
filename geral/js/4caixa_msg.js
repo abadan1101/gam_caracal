@@ -12,6 +12,10 @@ function cxAviso(){
 			"<div class='msgAlert'><img src='#' alt='Logo' id='iconAlert'></div>"+
 			"<div class='msgAlert'><h4 id='msgAlertText'>texto de alerta</h4></div>"+
 			"<div class='msgAlert'><p id='msgAlertAct'>texto da ação</p></div>"+
+			"<div class='msgAlert' id='msgAlertSenhaDv'>"+
+				"<input type='password' id='msgAlertSenha' placeholder='digite a senha...'>"+
+				"<label id='msgAlertSenhaLb'>senha incorreta</label>"+
+			"</div>"+
 			"<div class='msgAlertBtn'>"+
 				"<button id='msgAlertBtn'>OK</button>"+
 				"<button id='msgAlertBtnY'>SIM</button>"+
@@ -35,6 +39,7 @@ function cxAviso(){
 //variável modo("conf" para chamada de caixas de aviso com "OK")
 //variável reload("true" para recarregamento da pagina ou "false")
 //variável func("func" para chamar a função em caso de resposta sim).
+//variável senha("true" para chamar a caixa de senha ou "false" para ocultar)
 
 //exemplo para chamar a caixa de mensagem:
 // var icon = "img/imgInter.png"
@@ -43,10 +48,11 @@ function cxAviso(){
 // var modo = "yn"
 // var reload = ""
 // var func = () => {minha_função()}
-// openMSG(icon, msg, act, modo, reload,func);
+// var senha = false 
+// openMSG(icon, msg, act, modo, reload,func,senha);
 
 //abrir caixa de alertas e mensagens
-function openMSG(icon, msg, act, modo, reload,func){
+function openMSG(icon, msg, act, modo, reload,func,senha){
 	cxAviso()
 	if(modo == "yn"){
 		document.getElementById('msgAlertBtnY').style.display = "block";
@@ -55,6 +61,10 @@ function openMSG(icon, msg, act, modo, reload,func){
 	if(modo == "conf"){
 		document.getElementById('msgAlertBtn').style.display = "block";
 	}
+	if(senha == true){
+		document.getElementById('msgAlertSenhaDv').style.display = "flex"
+	}
+	
 	document.getElementById('iconAlert').src = icon;
 	document.getElementById("msgAlertText").innerHTML = msg;
 	document.getElementById("msgAlertAct").innerHTML = act;
@@ -72,11 +82,24 @@ function openMSG(icon, msg, act, modo, reload,func){
 
 	//botão sim
 	document.getElementById("msgAlertBtnY").addEventListener('click', function () {
-		document.getElementById("PnlmsgAlert").remove();
-		func();
-		if(reload == "true"){
-			location.reload();
-		}
+		if(senha == true){
+			if(document.getElementById("msgAlertSenha").value == "1101"){//senha padrão "1101"
+				document.getElementById("PnlmsgAlert").remove();
+				func();
+				if(reload == "true"){
+					location.reload();
+				}
+			}else{
+				document.getElementById('msgAlertSenhaLb').style.display = "block"
+			}
+			
+		}else{
+			document.getElementById("PnlmsgAlert").remove();
+			func();
+			if(reload == "true"){
+				location.reload();
+			}
+		}	
 	})
 	
 	//botão não
