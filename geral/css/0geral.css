@@ -70,8 +70,8 @@ li {
 }
 #areaPcp {
 	position: fixed;
-	width: calc(100% - 260px);
-	left: 260px;
+	width: 100%;
+	left: 2px;
 	transition: all .3s ease;
 	height: 100%;
 	margin-top: 65px;
