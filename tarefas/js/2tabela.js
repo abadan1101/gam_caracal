@@ -270,8 +270,13 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 
 
 			//controles da tabela--------------------------------------------
-			trfTbl_menuColunas()//configuração do menu de contole das colunas
-			trfTbl_quantidadesRodapé()//rodapé da tabela
+			trfTbl_menuColunas();//configuração do menu de contole das colunas
+
+			//filtrar tarefas
+			(async function filt(){
+				await trfTbl_filtroReload();
+				trfTbl_filtro()
+			})()
 			//---------------------------------------------------------------
 			
 			
@@ -422,6 +427,9 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 
 			//adicionar cor da linha
 			trfTbl_CorLinha(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+
+			//filtro das tarefas
+			trfTbl_filtro()
 
 			//reiniciar variáveis
 			idTarefa = ""
@@ -1016,9 +1024,16 @@ chbx.map((e)=>{
 async function trfTbl_quantidadesRodapé(){
 	const texto = document.getElementById("trfTblQtd")
 	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
-	var qtdTabela = document.getElementById("trf_tblTbBdy").children.length
+	var qtdTabela = [...document.getElementById("trf_tblTbBdy").children]
+	var qtd = 0
+	qtdTabela.map((e)=>{
+		if(e.style.display != "none"){
+			qtd ++
+		}
+	})
+
 	//PROVISÓRIO
-	texto.innerText = "mostrando " + qtdTabela + " de " + bdTabela.length + " tarefas cadastradas";
+	texto.innerText = "mostrando " + qtd + " de " + bdTabela.length + " tarefas cadastradas";
 }
 //------------------------------------------------------------------------
 
@@ -1027,13 +1042,13 @@ async function trfTbl_quantidadesRodapé(){
 //filtro da coluna "número"
 document.getElementById("trfTblCol2Dv1").addEventListener("click",()=>{
 	document.getElementById("trfTblCol2Dv2").style.display = "flex"
-	document.getElementById("trfTblCol2Inpt").focus()	
+	document.getElementById("filtC1").focus()	
 })
 
 //filtro da coluna "data"
 document.getElementById("trfTblCol3Dv1").addEventListener("click",()=>{
 	document.getElementById("trfTblCol3Dv2").style.display = "flex"
-	document.getElementById("trfTblCol3Inpt").focus()	
+	document.getElementById("filtC2").focus()	
 })
 
 
@@ -1043,6 +1058,7 @@ const trfTbl_input = [...document.getElementsByClassName("trfTblColInpt")]
 trfTbl_input.map((evt)=>{
 
 	evt.addEventListener("input",(e)=>{
+		localStorage.setItem(e.target.id,e.target.value)
 		trfTbl_filtro()
 		//alarme de filtro ativo
 		const alarme = e.target.parentElement.parentElement.children[0]
@@ -1061,18 +1077,41 @@ trfTbl_input.map((evt)=>{
 //função para realizar o filtro
 function trfTbl_filtro(){
 	const tabela = [...document.getElementById("trf_tblTbBdy").children]
-	const numero = document.getElementById("trfTblCol2Inpt")
-	const data = document.getElementById("trfTblCol3Inpt")
+	const input = [...document.getElementsByClassName("trfTblColInpt")]
+	
 	tabela.map((e)=>{
 
 		if(
-			e.children[1].innerHTML.includes(numero.value) == false ||
-			e.children[2].innerHTML.includes(data.value) == false
+			e.children[1].innerHTML.includes(input[0].value) == false ||
+			e.children[2].innerHTML.includes(input[1].value) == false
 		){
 			e.style.display = "none"
 		}else{
 			e.style.display = ""
 		}
+	})
+	trfTbl_quantidadesRodapé()
+}
+
+//preencher input dos filtros na inicialização
+function trfTbl_filtroReload(){
+	return new Promise((resolve)=>{
+		const input = [...document.getElementsByClassName("trfTblColInpt")]
+
+		//preencher input
+		input[0].value = localStorage.getItem("filtC1");
+		input[1].value = localStorage.getItem("filtC2");
+
+		//alarmes de filtro ativo
+		for(i=0;i < input.length;i++){
+			var alarme = input[i].parentElement.parentElement.children
+			if(input[i].value == ""){
+				alarme[0].style.background = "#555"
+			}else{
+				alarme[0].style.background = "#f00"
+			}
+		}
+		resolve()
 	})
 }
 //------------------------------------------------------------------------
