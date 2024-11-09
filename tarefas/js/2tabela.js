@@ -1029,26 +1029,52 @@ document.getElementById("trfTblCol2Dv1").addEventListener("click",()=>{
 	document.getElementById("trfTblCol2Dv2").style.display = "flex"
 	document.getElementById("trfTblCol2Inpt").focus()	
 })
-document.getElementById("trfTblCol2Inpt").addEventListener("focusout",()=>{
-	document.getElementById("trfTblCol2Dv2").style.display = "none"
+
+//filtro da coluna "data"
+document.getElementById("trfTblCol3Dv1").addEventListener("click",()=>{
+	document.getElementById("trfTblCol3Dv2").style.display = "flex"
+	document.getElementById("trfTblCol3Inpt").focus()	
 })
-document.getElementById("trfTblCol2Inpt").addEventListener("input",()=>{
+
+
+
+//evento dos input text dos filtros
+const trfTbl_input = [...document.getElementsByClassName("trfTblColInpt")]
+trfTbl_input.map((evt)=>{
+
+	evt.addEventListener("input",(e)=>{
+		trfTbl_filtro()
+		//alarme de filtro ativo
+		const alarme = e.target.parentElement.parentElement.children[0]
+		if(e.target.value == ""){
+			alarme.style.background = "#555"
+		}else{
+			alarme.style.background = "#f00"
+		}
+	})
+
+	evt.addEventListener("focusout",(e)=>{
+		e.target.parentElement.style.display = "none"
+	})
+})
+
+//função para realizar o filtro
+function trfTbl_filtro(){
 	const tabela = [...document.getElementById("trf_tblTbBdy").children]
+	const numero = document.getElementById("trfTblCol2Inpt")
+	const data = document.getElementById("trfTblCol3Inpt")
 	tabela.map((e)=>{
 
-		if(e.children[1].innerHTML.includes(document.getElementById("trfTblCol2Inpt").value) == false){
+		if(
+			e.children[1].innerHTML.includes(numero.value) == false ||
+			e.children[2].innerHTML.includes(data.value) == false
+		){
 			e.style.display = "none"
 		}else{
 			e.style.display = ""
 		}
-		
-		if(document.getElementById("trfTblCol2Inpt").value == ""){
-			document.getElementById("trfTblCol2Dv1").style.background = "#555"
-		}else{
-			document.getElementById("trfTblCol2Dv1").style.background = "#f00"
-		}
 	})
-})
+}
 //------------------------------------------------------------------------
 
 
