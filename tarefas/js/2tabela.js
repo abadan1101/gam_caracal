@@ -1039,19 +1039,14 @@ async function trfTbl_quantidadesRodapé(){
 
 
 //filtros do cabeçalho das tarefas----------------------------------------
-//filtro da coluna "número"
-document.getElementById("trfTblCol2Dv1").addEventListener("click",()=>{
-	document.getElementById("trfTblCol2Dv2").style.display = "flex"
-	document.getElementById("filtC1").focus()	
+//chamada dos filtros
+document.getElementById("trf_tblTbHd").addEventListener("click",(e)=>{
+	const el = e.target.parentElement.parentElement.children[1]
+	if(e.target.classList.contains("filt")){
+		el.style.display = "flex"
+		el.children[0].focus()
+	}
 })
-
-//filtro da coluna "data"
-document.getElementById("trfTblCol3Dv1").addEventListener("click",()=>{
-	document.getElementById("trfTblCol3Dv2").style.display = "flex"
-	document.getElementById("filtC2").focus()	
-})
-
-
 
 //evento dos input text dos filtros
 const trfTbl_input = [...document.getElementsByClassName("trfTblColInpt")]
@@ -1083,7 +1078,13 @@ function trfTbl_filtro(){
 
 		if(
 			e.children[1].innerHTML.includes(input[0].value) == false ||
-			e.children[2].innerHTML.includes(input[1].value) == false
+			e.children[2].innerHTML.includes(input[1].value) == false ||
+			e.children[9].innerHTML.includes(input[2].value) == false ||
+			e.children[10].innerHTML.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
+			e.children[11].firstChild.value.toLowerCase().includes(input[4].value.toLowerCase()) == false ||
+			e.children[12].innerHTML.toLowerCase().includes(input[5].value.toLowerCase()) == false ||
+			e.children[13].innerHTML.toLowerCase().includes(input[6].value.toLowerCase()) == false ||
+			e.children[14].innerHTML.includes(input[7].value) == false
 		){
 			e.style.display = "none"
 		}else{
@@ -1099,8 +1100,14 @@ function trfTbl_filtroReload(){
 		const input = [...document.getElementsByClassName("trfTblColInpt")]
 
 		//preencher input
-		input[0].value = localStorage.getItem("filtC1");
-		input[1].value = localStorage.getItem("filtC2");
+		input[0].value = localStorage.getItem("filtC2");
+		input[1].value = localStorage.getItem("filtC3");
+		input[2].value = localStorage.getItem("filtC10");
+		input[3].value = localStorage.getItem("filtC11");
+		input[4].value = localStorage.getItem("filtC12");
+		input[5].value = localStorage.getItem("filtC13");
+		input[6].value = localStorage.getItem("filtC14");
+		input[7].value = localStorage.getItem("filtC15");
 
 		//alarmes de filtro ativo
 		for(i=0;i < input.length;i++){

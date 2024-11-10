@@ -106,6 +106,7 @@
 }
 .trfTblColDv1{
 	cursor: pointer;
+	width: max-content;
 }
 .trfTblColDv2{
 	display: none;
