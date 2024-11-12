@@ -6,6 +6,8 @@
 document.getElementById("backupGeral").addEventListener("click",()=>{
 	async function backup(){
 		try{
+			//verifica banco ativo
+			const dbAtivo = dbLinha
 			//backup linha 01--------------------------------------------
 			dbLinha = "linha01"
 			
@@ -16,7 +18,7 @@ document.getElementById("backupGeral").addEventListener("click",()=>{
 			var textoJSON = JSON.stringify(bdTabela);
 
 			let blob = new Blob( ["const bkLinha01 = " + textoJSON] , {type: "text/plain;charset=utf-8"} );
-			saveAs(blob,nomeArquivo+".js");
+			saveAs(blob,nomeArquivo+".txt");
 			//----------------------------------------------------------
 			
 			
@@ -30,7 +32,7 @@ document.getElementById("backupGeral").addEventListener("click",()=>{
 			var textoJSON2 = JSON.stringify(bdTabela2);
 
 			let blob2 = new Blob( ["const bkLinha02 = " + textoJSON2] , {type: "text/plain;charset=utf-8"} );
-			saveAs(blob2,nomeArquivo2+".js");
+			saveAs(blob2,nomeArquivo2+".txt");
 			//----------------------------------------------------------
 			
 			
@@ -44,7 +46,7 @@ document.getElementById("backupGeral").addEventListener("click",()=>{
 			var textoJSON3 = JSON.stringify(bdTabela3);
 
 			let blob3 = new Blob( ["const bkLinha03 = " + textoJSON3] , {type: "text/plain;charset=utf-8"} );
-			saveAs(blob3,nomeArquivo3+".js");
+			saveAs(blob3,nomeArquivo3+".txt");
 			//----------------------------------------------------------
 			
 			
@@ -59,8 +61,12 @@ document.getElementById("backupGeral").addEventListener("click",()=>{
 			var textoJSON4 = JSON.stringify(bdTabela4);
 
 			let blob4 = new Blob( ["const bkLinhaConf = " + textoJSON4] , {type: "text/plain;charset=utf-8"} );
-			saveAs(blob4,nomeArquivo4+".js");
+			saveAs(blob4,nomeArquivo4+".txt");
 			//----------------------------------------------------------
+			
+			
+			//retoma o banco ativo
+			dbLinha = dbAtivo
 			
 			
 			//mensagem de corfirmado
