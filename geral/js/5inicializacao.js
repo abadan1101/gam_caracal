@@ -102,15 +102,5 @@ $(document).ready(function() {
 $(document).ready(function() {
 	$('.pesq_formEqu').select2();//
 });
-
-
-//exemplo caixa de pesquisa multiseleção
-// $(document).ready(function() {
-// 	$('.pesq_formBxr').select2({multiple: true});//
-// });
-
-// $("#botao").click(function() {
-// 	alert($(".pesq_formBxr").val());
-// });
 //________________________________________________________________________________
 //--------------------------------------------------------------------------------
