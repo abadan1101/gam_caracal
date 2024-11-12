@@ -26,6 +26,11 @@ git pull origin main
 
 
 
+-----------COMPRAR PAGINAS PRONTAS-------
+https://themeforest.net/
+https://wrapbootstrap.com/
+
+
 ---------------ASYNC AWAIT---------------
 function teste1(){
 	return new Promise((resolve)=>{

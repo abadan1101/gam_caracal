@@ -86,18 +86,31 @@ $('.maskNum02').mask('00'); //somente numeros até 02 caracteres
 
 //CONFIGURAÇÃO PARA CAIXAS DE PESQUISA SIMPLES DE INPUT
 //modulo das tarefas
-//caixas de pesquisa
+//caixa de pesquisa baixar cartão
 $(document).ready(function() {
 	$('.pesq_formBxr').select2();//
 });
+//caixa de pesquisa ferramentas
 $(document).ready(function() {
 	$('.pesq_formFer').select2();//
 });
+//caixa de pesquisa produtos
 $(document).ready(function() {
 	$('.pesq_formProd').select2();//
 });
+//caixa de pesquisa equipe
 $(document).ready(function() {
 	$('.pesq_formEqu').select2();//
 });
+
+
+//exemplo caixa de pesquisa multiseleção
+// $(document).ready(function() {
+// 	$('.pesq_formBxr').select2({multiple: true});//
+// });
+
+// $("#botao").click(function() {
+// 	alert($(".pesq_formBxr").val());
+// });
 //________________________________________________________________________________
 //--------------------------------------------------------------------------------
