@@ -296,7 +296,14 @@ async function exportarTarefas(){
 		tarefasAdd.push(status)
 
 		//pim
-		tarefasAdd.push("")
+		var pim = e.pedidos
+		var pimCell = ""
+		pim.map((e)=>{
+			pimCell = e.pim + " " + pimCell
+		})
+		
+		//observação
+		tarefasAdd.push(pimCell)
 
 		//observação
 		tarefasAdd.push(e.serviço)
