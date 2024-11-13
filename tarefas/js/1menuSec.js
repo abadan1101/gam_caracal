@@ -301,8 +301,6 @@ async function exportarTarefas(){
 		pim.map((e)=>{
 			pimCell = e.pim + " " + pimCell
 		})
-		
-		//observação
 		tarefasAdd.push(pimCell)
 
 		//observação
