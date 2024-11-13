@@ -256,97 +256,67 @@ document.getElementById("exportarLinha").addEventListener("click", ()=>{
 
 //função para exportar tarefas
 async function exportarTarefas(){
+
 	//variáveis
-	const nomeAba = "tarefas da " + dbLinha
+	const nomeAba1 = "tarefas da " + dbLinha
+	const nomeAba2 = "backup da " + dbLinha
 	const nomePlanilha = "vn.xlsx"
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+
+
+
+
+	
+	//array da aba tarefas da linha (pasta do planejamento)
 	var tarefas = [
 		["% cumprido",0.25],
 		[
-			"número","data","andamento","disp.","chave01","chave02","chave03",
-			"chave04","tarefa","serviço","pedidos","ferramentas","produtos",
-			"equipe","atualização","porcentagem"
+			"origem","data","tipo","número","descrição","status","pim","obs"
 		]
 	];
 	var tarefasAdd = []
-
-	//montar arrays das tarefas
-	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	//montar arrays das tarefas da linha
 	bdTabela.map((e)=>{
-
-		//numero
-		tarefasAdd.push(e.numero)
+		//origem
+		tarefasAdd.push("A/T")
 
 		//data
 		tarefasAdd.push(new Date(e.data).toLocaleDateString("pt-BR"))
 
-		//andamento
-		tarefasAdd.push(e.chave00)
-		// var status = "EM EXEC. +60%"
-		// if(e.chave00 == "Aberto"){status="ABERTA"}
-		// if(e.chave00 == "Fechado"){status="FECHADA"}
-		// if(e.chave00 == "Pendente"){status="PENDENTE + 60%"}
-		// if(e.chave00 == "Ag. Virada"){status="AG. VIRADA"}
-		// if(e.chave00 == "Ag. Abrir"){status="AG. ABRIR"}
-		// if(e.chave00 == "Em Exec."){status="EM EXEC. + 60%"}
-
 		//disponibilidade
-		tarefasAdd.push(e.chave01)
-		// var disp = ""
-		// if(e.chave01 == "Disponível"){disp="D"}
-		// if(e.chave01 == "Indisponível"){disp="I"}
-		// if(e.chave01 == "Restrito"){disp="R"}
-		
-		//chave01
-		tarefasAdd.push(e.chave02)
+		var disp = ""
+		if(e.chave01 == "Disponível"){disp="D"}
+		if(e.chave01 == "Indisponível"){disp="I"}
+		if(e.chave01 == "Restrito"){disp="R"}
+		tarefasAdd.push(disp)
 
-		//chave02
-		tarefasAdd.push(e.chave03)
-
-		//chave03
-		tarefasAdd.push(e.chave04)
-
-		//chave04
-		tarefasAdd.push(e.chave05)
-		
+		//numero
+		tarefasAdd.push(e.numero)
 
 		//descrição da tarefa
 		tarefasAdd.push(e.tarefa)
 
-		//serviço
-		tarefasAdd.push(e.serviço)
-		
+		//status
+		var status = "EM EXEC. +60%"
+		if(e.chave00 == "Aberto"){status="ABERTA"}
+		if(e.chave00 == "Fechado"){status="FECHADA"}
+		if(e.chave00 == "Pendente"){status="PENDENTE + 60%"}
+		if(e.chave00 == "Ag. Virada"){status="AG. VIRADA"}
+		if(e.chave00 == "Ag. Abrir"){status="AG. ABRIR"}
+		if(e.chave00 == "Em Exec."){status="EM EXEC. + 60%"}
 
-		
+		tarefasAdd.push(status)
 
 		//pim
-		// var pim = e.pedidos
-		// var pimCell = ""
-		// pim.map((e)=>{
-		// 	pimCell = e.pim + " " + pimCell
-		// })
-		// tarefasAdd.push(pimCell)
+		var pim = e.pedidos
+		var pimCell = ""
+		pim.map((e)=>{
+			pimCell = e.pim + " " + pimCell
+		})
+		tarefasAdd.push(pimCell)
 
-		
-
-		
-
-		//pedidos
-		tarefasAdd.push(JSON.stringify(e.pedidos))
-
-		//ferramentas
-		tarefasAdd.push(JSON.stringify(e.ferramentas))
-
-		//produtos
-		tarefasAdd.push(JSON.stringify(e.produtos))
-
-		//equipe
-		tarefasAdd.push(JSON.stringify(e.equipe))
-
-		//atualização
-		tarefasAdd.push(new Date(e.atualizacao).toLocaleDateString("pt-BR"))
-
-		//porcentagem
-		tarefasAdd.push(e.porcentagem)
+		//observação
+		tarefasAdd.push(e.serviço)
 
 		//popular array
 		tarefas.push(tarefasAdd)
@@ -355,10 +325,67 @@ async function exportarTarefas(){
 		tarefasAdd = []
 	})
 
+
+
+
+
+
+	//array do backup da linha
+	var tarefasBK = [
+		[
+			"número","data","andamento","disp.","chave01","chave02","chave03",
+			"chave04","tarefa","serviço","pedidos","ferramentas","produtos",
+			"equipe","atualização","porcentagem"
+		]
+	];
+	var tarefasBKAdd = []
+
+	//montar arrays do backup da linha
+	bdTabela.map((e)=>{
+		//numero
+		tarefasBKAdd.push(e.numero)
+		//data
+		tarefasBKAdd.push(e.data)
+		//andamento
+		tarefasBKAdd.push(e.chave00)
+		//disponibilidade
+		tarefasBKAdd.push(e.chave01)
+		//chave01
+		tarefasBKAdd.push(e.chave02)
+		//chave02
+		tarefasBKAdd.push(e.chave03)
+		//chave03
+		tarefasBKAdd.push(e.chave04)
+		//chave04
+		tarefasBKAdd.push(e.chave05)
+		//descrição da tarefa
+		tarefasBKAdd.push(e.tarefa)
+		//serviço
+		tarefasBKAdd.push(e.serviço)
+		//pedidos
+		tarefasBKAdd.push(JSON.stringify(e.pedidos))
+		//ferramentas
+		tarefasBKAdd.push(JSON.stringify(e.ferramentas))
+		//produtos
+		tarefasBKAdd.push(JSON.stringify(e.produtos))
+		//equipe
+		tarefasBKAdd.push(JSON.stringify(e.equipe))
+		//atualização
+		tarefasBKAdd.push(e.atualizacao)
+		//porcentagem
+		tarefasBKAdd.push(e.porcentagem)
+		//popular array
+		tarefasBK.push(tarefasBKAdd)
+		//limpar array
+		tarefasBKAdd = []
+	})
+
 	//gravar planilha
 	var workbook = XLSX.utils.book_new();
 	var worksheet = XLSX.utils.aoa_to_sheet(tarefas);
-	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba);
+	var worksheet1 = XLSX.utils.aoa_to_sheet(tarefasBK);
+	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
+	XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
 	XLSX.writeFile(workbook, nomePlanilha);
 }
 //--------------------------------------------------------------------------------------
