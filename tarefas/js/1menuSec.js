@@ -253,7 +253,7 @@ async function exportarTarefas(){
 		tarefasAdd.push(e.tarefa)
 
 		//status
-		var status = "EM EXEC. +60%"
+		var status = "EM EXEC. + 60%"
 		if(e.chave00 == "Aberto"){status="ABERTA"}
 		if(e.chave00 == "Fechado"){status="FECHADA"}
 		if(e.chave00 == "Pendente"){status="PENDENTE + 60%"}
