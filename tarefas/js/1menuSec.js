@@ -36,6 +36,25 @@ tmAf.addEventListener("click",(evt)=>{
 
 
 
+//------------------------------BOTÃO ADD EM LOTE---------------------------------------
+//--------------------------------------------------------------------------------------
+const trfTbl_AddLote = document.getElementById("trf_menu_afLote")	
+trfTbl_AddLote.addEventListener("click",(evt)=>{
+	//mensagem
+	var icon = "img/imgOK.png"
+	var msg = "Em Desenvolvimento"
+	var act = "Aguarde, rotina em desenvolvimento!"
+	var modo = "conf"
+	var reload = "false"
+	var func = ""
+	openMSG(icon, msg, act, modo, reload,func);
+})
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+
 //------------------------------BOTÃO IMPORTAR TAREFAS----------------------------------
 //--------------------------------------------------------------------------------------
 let fileInput = document.getElementById('trf_menu_afImp')
@@ -92,8 +111,7 @@ fileInput.addEventListener('change', () => {
 				}
 				
 				//ajustar descrição da tarefa
-				var descricao = ""
-				if(docSelect.includes("OSVirtualAbertaAeronave")){descricao = e.__EMPTY_4}else{descricao = e.__EMPTY_5}
+				var descricao = e.__EMPTY_5
 				
 				//ajuste para pular linhas não desejaveis da planilha baixada
 				if(e.__EMPTY == "" || e.__EMPTY == "NÚMERO" || e.__EMPTY == "Ordens de Serviço Pendentes - (Processamento Virtual)"){
@@ -120,27 +138,25 @@ fileInput.addEventListener('change', () => {
 				}		
 			})		
 			addTarefasBd(tabela, "true")//função pertence a folha: /tarefas/js/banco.js
+			
 		}
 	}
 	
-	//PROVISÓRIO
-	//baixar planilha do backup da planilha antiga
-	if(docSelect.includes("backup planilha antiga")){
+	//baixar planilha "baixar cartões"
+	if(docSelect.includes("baixar cartões")){
 		reader.onload = (event) => {
 			const data = event.target.result
 			const workbook = XLSX.read(data, {type:'array'})
 			const firstSheetName = workbook.SheetNames[0]
 			const worksheet = workbook.Sheets[firstSheetName]
 			const rows = XLSX.utils.sheet_to_json(worksheet)
-			const row = rows[0]
 			var tabela = []
 			
-			rows.map((e)=>{
-				var timestamp = ((e.DATA - 25569)*86400000)+86400000
-				
+			//data da tarefa
+			var timestamp = ((rows[0].DATA - 25569)*86400000)+86400000
 				if(!timestamp){
 					try{
-						var hj = e.DATA
+						var hj = rows[0].DATA
 						var array = hj.split('');
 						var dth = array[6] + array[7] + array[8] + array[9] + "/" + array[3] + array[4] + "/" + array[0] + array[1]
 						timestamp = new Date(dth).getTime()
@@ -152,91 +168,30 @@ fileInput.addEventListener('change', () => {
 					}
 					
 				}
-
-				if(e.TP == "i" || e.TP == "I"){
-					e.TP = "Indisponível"
-				}
-				
-				if(e.TP == "d" || e.TP == "D"){
-					e.TP = "Disponível"
-				}
-				
-				if(e.TP == "r" || e.TP == "R"){
-					e.TP = "Restrito"
-				}
-				if(!e.TP){
-					e.TP = ""
-				}
-
-				if(!e["NÚMERO"]){
-					e.NUMERO = ""
-				}
-				
-				if(!e.STATUS){
-					e.STATUS = ""
-				}
-				if(e.STATUS == "AG. ABRIR"){
-					e.STATUS = "Ag. Abrir"
-				}
-				if(e.STATUS == "ABERTA"){
-					e.STATUS = "Aberto"
-				}
-				if(e.STATUS == "PRIORIDADE"){
-					e.STATUS = "Prioridade"
-				}
-				if(e.STATUS == "PENDENTE + 30%" || e.STATUS == "PENDENTE + 60%" || e.STATUS == "PENDENTE + 90%" || e.STATUS == "PENDENTE"){
-					e.STATUS = "Pendente"
-				}
-				if(e.STATUS == "EM EXEC. + 30%" || e.STATUS == "EM EXEC. + 60%" || e.STATUS == "EM EXEC. + 90%"){
-					e.STATUS = "Em Exec."
-				}
-				if(e.STATUS == "AG. TESTE" || e.STATUS == "AG. TESTE FUN."){
-					e.STATUS = "Ag. Teste"
-				}
-				if(e.STATUS == "AG. VIRADA" || e.STATUS == "AG. VIRADA/VOO"){
-					e.STATUS = "Ag. Virada"
-				}
-				if(e.STATUS == "AG. SUP/CQ"){
-					e.STATUS = "Ag. Sup/CQ"
-				}
-				if(e.STATUS == "FECHADA"){
-					e.STATUS = "Fechado"
-				}
-				
-				if(!e["OBSERVAÇÃO"]){
-					e["OBSERVAÇÃO"] = ""
-				}
-				
-				
-				
-				let num = e["NÚMERO"];
-				let date = timestamp;
-				let admt = e.STATUS
-				let tip = e.TP			
-				let desc = e["DESCRIÇÃO DO SERVIÇO"]
-				let serv = e["OBSERVAÇÃO"]
-							
-				
+			
+			for(i = 1; i < rows.length; i++){
 				tabela.push({
-					numero: num,
-					data: date,
-					chave00: admt,
-					chave01: tip,
+					numero: rows[0].NUMERO,
+					data: timestamp,
+					chave00: "Aberto",
+					chave01: rows[0].TIPO,
 					chave02: "",
 					chave03: "",
 					chave04: "",
 					chave05: "",
 					porcentagem: "0",
-					tarefa: desc,
-					serviço: serv,
+					tarefa: rows[i].CARTÕES,
+					serviço: "",
 					pedidos: [],
 					ferramentas: [],
 					produtos: [],
 					equipe: [],
 					atualizacao: new Date().getTime()
 				})
-			})
-			addTarefasBd(tabela, "true")//função pertence a folha: /tarefas/js/banco.js				
+				
+			}
+			addTarefasBd(tabela, "true")//função pertence a folha: /tarefas/js/banco.js
+							
 		}				
 	}
 	reader.readAsArrayBuffer(file)	
@@ -258,9 +213,9 @@ document.getElementById("exportarLinha").addEventListener("click", ()=>{
 async function exportarTarefas(){
 
 	//variáveis
-	const nomeAba1 = "tarefas da " + dbLinha
+	const nomeAba1 = "CARTÕES VN"
 	const nomeAba2 = "backup da " + dbLinha
-	const nomePlanilha = "vn.xlsx"
+	const nomePlanilha = "vn.ods"
 	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 
 
@@ -268,8 +223,9 @@ async function exportarTarefas(){
 
 	
 	//array da aba tarefas da linha (pasta do planejamento)
+	
 	var tarefas = [
-		["% cumprido",0.25],
+		[""],
 		[
 			"origem","data","tipo","número","descrição","status","pim","obs"
 		]
@@ -333,9 +289,9 @@ async function exportarTarefas(){
 	//array do backup da linha
 	var tarefasBK = [
 		[
-			"número","data","andamento","disp.","chave01","chave02","chave03",
-			"chave04","tarefa","serviço","pedidos","ferramentas","produtos",
-			"equipe","atualização","porcentagem"
+			"numero","data","andamento","disp","chave01","chave02","chave03",
+			"chave04","tarefa","servico","pedidos","ferramentas","produtos",
+			"equipe","atualizacao","porcentagem"
 		]
 	];
 	var tarefasBKAdd = []
@@ -387,6 +343,112 @@ async function exportarTarefas(){
 	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
 	XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
 	XLSX.writeFile(workbook, nomePlanilha);
+	
 }
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------BOTÃO RESTAURAR---------------------------------------
+//--------------------------------------------------------------------------------------
+let fileInput1 = document.getElementById('trf_menu_afRest')
+fileInput1.addEventListener('change', () => {
+	const file = fileInput1.files[0]
+	const reader = new FileReader()
+	const docSelect = file.name;
+	
+	if(docSelect == "vn.ods"){
+		//mensagem
+		var icon = "img/imgAlert.png"
+		var msg = "Atenção!"
+		var act = "Todas as tarefas atuais serão perdidas. Deseja continuar?"
+		var modo = "yn"
+		var reload = ""
+		var func = () => {minha_função()}
+		var senha = true 
+		openMSG(icon, msg, act, modo, reload,func,senha);
+		
+		function minha_função(){
+			reader.onload = (event) => {
+					const data = event.target.result
+					const workbook = XLSX.read(data, {type:'array'})
+					const firstSheetName = workbook.SheetNames[1]
+					const worksheet = workbook.Sheets[firstSheetName]
+					const rows = XLSX.utils.sheet_to_json(worksheet)
+					var tabela = [];
+					
+					console.log(rows);
+					
+					rows.map((e)=>{
+						tabela.push({
+							numero: e.numero,
+							data: e.data,
+							chave00: e.andamento,
+							chave01: e.disp,
+							chave02: e.chave01,
+							chave03: e.chave02,
+							chave04: e.chave03,
+							chave05: e.chave04,
+							porcentagem: e.porcentagem,
+							tarefa: e.tarefa,
+							serviço: e.servico,
+							pedidos: JSON.parse(e.pedidos),
+							ferramentas: JSON.parse(e.ferramentas),
+							produtos: JSON.parse(e.produtos),
+							equipe: JSON.parse(e.equipe),
+							atualizacao: e.atualizacao
+						})
+					});
+					
+					(async function restaurar(){
+						await limparBD();
+						await restaurarBD(tabela)
+						
+						//mensagem
+						var icon = "img/imgOK.png"
+						var msg = "Restaurado"
+						var act = "Tarefas restauradas com sucesso!"
+						var modo = "conf"
+						var reload = "true"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+					})()
+							
+			}
+			reader.readAsArrayBuffer(file)	
+		}		
+	}else{
+		//mensagem
+		var icon = "img/imgAlert.png"
+		var msg = "Arquivo inválido"
+		var act = "selecione o arquivo correto!"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+	}
+})
+
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+//------------------------------BOTÃO RELATÓRIOS---------------------------------------
+//--------------------------------------------------------------------------------------
+const trfTbl_Restaurar = document.getElementById("trf_menu_afRelatorios")	
+trfTbl_Restaurar.addEventListener("click",(evt)=>{
+	//mensagem
+	var icon = "img/imgOK.png"
+	var msg = "Em Desenvolvimento"
+	var act = "Aguarde, rotina em desenvolvimento!"
+	var modo = "conf"
+	var reload = "false"
+	var func = ""
+	openMSG(icon, msg, act, modo, reload,func);
+})
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
