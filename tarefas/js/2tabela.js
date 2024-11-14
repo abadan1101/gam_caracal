@@ -1010,6 +1010,15 @@ chbx.map((e)=>{
 			localStorage.setItem(x, true)
 		}else{
 			var y = [...document.getElementsByClassName(x)]
+
+			//desativar filtro
+			const elmt = y[0].children[1].children[0]
+			elmt.value = ""
+			localStorage.setItem(elmt.id,"")
+			y[0].children[0].style.background = "#555"
+			trfTbl_filtro()
+
+			//ocultar coluna
 			y.map((c)=>{
 				c.style.display = "none"
 			})
