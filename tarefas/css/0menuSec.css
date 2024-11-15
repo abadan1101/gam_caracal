@@ -43,7 +43,7 @@
     background: #ddd;
     font-size: 25px;
 }
-#trf_menu_afImp, #trf_menu_afRest{
+#trf_menu_afImp{
     display: flex;
     position: absolute;
     width: 170px;

@@ -136,5 +136,16 @@ nav .profile .profile-link a {
 nav .profile .profile-link a:hover {
 	background: var(--grey);
 }
+nav .profile .profile-link li:hover {
+	background: var(--grey);
+}
+#trf_menu_afRest{
+    display: flex;
+    position: absolute;
+    width: 170px;
+    height: 30px;
+    opacity: 0;
+}
+
 /*______________________________________________________________________________________________*/
 

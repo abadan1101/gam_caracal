@@ -213,17 +213,16 @@ document.getElementById("exportarLinha").addEventListener("click", ()=>{
 async function exportarTarefas(){
 
 	//variáveis
+	const bdAtivo = dbLinha;
 	const nomeAba1 = "CARTÕES VN"
-	const nomeAba2 = "backup da " + dbLinha
+	const nomeAba2 = "backup da linha 01"
+	const nomeAba3 = "backup da linha 02"
+	const nomeAba4 = "backup da linha 03"
+	const nomeAba5 = "backup das configurações"
 	const nomePlanilha = "vn.ods"
-	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 
-
-
-
-	
 	//array da aba tarefas da linha (pasta do planejamento)
-	
+	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 	var tarefas = [
 		[""],
 		[
@@ -280,13 +279,15 @@ async function exportarTarefas(){
 		//limpar array
 		tarefasAdd = []
 	})
+	//----------------------------------------------
 
 
 
 
 
-
-	//array do backup da linha
+	//array do backup da linha 01
+	dbLinha = "linha01"
+	var bdTabelaL1 = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 	var tarefasBK = [
 		[
 			"numero","data","andamento","disp","chave01","chave02","chave03",
@@ -297,7 +298,7 @@ async function exportarTarefas(){
 	var tarefasBKAdd = []
 
 	//montar arrays do backup da linha
-	bdTabela.map((e)=>{
+	bdTabelaL1.map((e)=>{
 		//numero
 		tarefasBKAdd.push(e.numero)
 		//data
@@ -335,103 +336,147 @@ async function exportarTarefas(){
 		//limpar array
 		tarefasBKAdd = []
 	})
+	//---------------------------------------------------------
+
+
+
+
+	//array do backup da linha 02
+	dbLinha = "linha02"
+	var bdTabelaL2 = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	var tarefasBK2 = [
+		[
+			"numero","data","andamento","disp","chave01","chave02","chave03",
+			"chave04","tarefa","servico","pedidos","ferramentas","produtos",
+			"equipe","atualizacao","porcentagem"
+		]
+	];
+	var tarefasBK2Add = []
+
+	//montar arrays do backup da linha
+	bdTabelaL2.map((e)=>{
+		//numero
+		tarefasBK2Add.push(e.numero)
+		//data
+		tarefasBK2Add.push(e.data)
+		//andamento
+		tarefasBK2Add.push(e.chave00)
+		//disponibilidade
+		tarefasBK2Add.push(e.chave01)
+		//chave01
+		tarefasBK2Add.push(e.chave02)
+		//chave02
+		tarefasBK2Add.push(e.chave03)
+		//chave03
+		tarefasBK2Add.push(e.chave04)
+		//chave04
+		tarefasBK2Add.push(e.chave05)
+		//descrição da tarefa
+		tarefasBK2Add.push(e.tarefa)
+		//serviço
+		tarefasBK2Add.push(e.serviço)
+		//pedidos
+		tarefasBK2Add.push(JSON.stringify(e.pedidos))
+		//ferramentas
+		tarefasBK2Add.push(JSON.stringify(e.ferramentas))
+		//produtos
+		tarefasBK2Add.push(JSON.stringify(e.produtos))
+		//equipe
+		tarefasBK2Add.push(JSON.stringify(e.equipe))
+		//atualização
+		tarefasBK2Add.push(e.atualizacao)
+		//porcentagem
+		tarefasBK2Add.push(e.porcentagem)
+		//popular array
+		tarefasBK2.push(tarefasBK2Add)
+		//limpar array
+		tarefasBK2Add = []
+	})
+	//----------------------------------------------------------
+
+
+
+
+
+	//array do backup da linha 03
+	dbLinha = "linha03"
+	var bdTabelaL3 = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+	var tarefasBK3 = [
+		[
+			"numero","data","andamento","disp","chave01","chave02","chave03",
+			"chave04","tarefa","servico","pedidos","ferramentas","produtos",
+			"equipe","atualizacao","porcentagem"
+		]
+	];
+	var tarefasBK3Add = []
+
+	//montar arrays do backup da linha
+	bdTabelaL3.map((e)=>{
+		//numero
+		tarefasBK3Add.push(e.numero)
+		//data
+		tarefasBK3Add.push(e.data)
+		//andamento
+		tarefasBK3Add.push(e.chave00)
+		//disponibilidade
+		tarefasBK3Add.push(e.chave01)
+		//chave01
+		tarefasBK3Add.push(e.chave02)
+		//chave02
+		tarefasBK3Add.push(e.chave03)
+		//chave03
+		tarefasBK3Add.push(e.chave04)
+		//chave04
+		tarefasBK3Add.push(e.chave05)
+		//descrição da tarefa
+		tarefasBK3Add.push(e.tarefa)
+		//serviço
+		tarefasBK3Add.push(e.serviço)
+		//pedidos
+		tarefasBK3Add.push(JSON.stringify(e.pedidos))
+		//ferramentas
+		tarefasBK3Add.push(JSON.stringify(e.ferramentas))
+		//produtos
+		tarefasBK3Add.push(JSON.stringify(e.produtos))
+		//equipe
+		tarefasBK3Add.push(JSON.stringify(e.equipe))
+		//atualização
+		tarefasBK3Add.push(e.atualizacao)
+		//porcentagem
+		tarefasBK3Add.push(e.porcentagem)
+		//popular array
+		tarefasBK3.push(tarefasBK3Add)
+		//limpar array
+		tarefasBK3Add = []
+	})
+	//---------------------------------------------------
+
+
+	//array do backup das configurações
+	var bdTabelaConf = await loadTBCfgGeral()//pertence a folha: /tarefas/js/banco.js
+	var tarefasBK4 = [["configuracoes"]];
+	tarefasBK4.push([JSON.stringify(bdTabelaConf)])
+	//---------------------------------------------------
 
 	//gravar planilha
 	var workbook = XLSX.utils.book_new();
 	var worksheet = XLSX.utils.aoa_to_sheet(tarefas);
 	var worksheet1 = XLSX.utils.aoa_to_sheet(tarefasBK);
+	var worksheet2 = XLSX.utils.aoa_to_sheet(tarefasBK2);
+	var worksheet3 = XLSX.utils.aoa_to_sheet(tarefasBK3);
+	var worksheet4 = XLSX.utils.aoa_to_sheet(tarefasBK4);
 	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
 	XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
+	XLSX.utils.book_append_sheet(workbook, worksheet2, nomeAba3);
+	XLSX.utils.book_append_sheet(workbook, worksheet3, nomeAba4);
+	XLSX.utils.book_append_sheet(workbook, worksheet4, nomeAba5);
 	XLSX.writeFile(workbook, nomePlanilha);
+
+
+	//retornar banco ativo
+	dbLinha = bdAtivo;
 	
 }
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-
-
-
-
-//------------------------------BOTÃO RESTAURAR---------------------------------------
-//--------------------------------------------------------------------------------------
-let fileInput1 = document.getElementById('trf_menu_afRest')
-fileInput1.addEventListener('change', () => {
-	const file = fileInput1.files[0]
-	const reader = new FileReader()
-	const docSelect = file.name;
-	
-	if(docSelect == "vn.ods"){
-		//mensagem
-		var icon = "img/imgAlert.png"
-		var msg = "Atenção!"
-		var act = "Todas as tarefas atuais serão perdidas. Deseja continuar?"
-		var modo = "yn"
-		var reload = ""
-		var func = () => {minha_função()}
-		var senha = true 
-		openMSG(icon, msg, act, modo, reload,func,senha);
-		
-		function minha_função(){
-			reader.onload = (event) => {
-					const data = event.target.result
-					const workbook = XLSX.read(data, {type:'array'})
-					const firstSheetName = workbook.SheetNames[1]
-					const worksheet = workbook.Sheets[firstSheetName]
-					const rows = XLSX.utils.sheet_to_json(worksheet)
-					var tabela = [];
-					
-					console.log(rows);
-					
-					rows.map((e)=>{
-						tabela.push({
-							numero: e.numero,
-							data: e.data,
-							chave00: e.andamento,
-							chave01: e.disp,
-							chave02: e.chave01,
-							chave03: e.chave02,
-							chave04: e.chave03,
-							chave05: e.chave04,
-							porcentagem: e.porcentagem,
-							tarefa: e.tarefa,
-							serviço: e.servico,
-							pedidos: JSON.parse(e.pedidos),
-							ferramentas: JSON.parse(e.ferramentas),
-							produtos: JSON.parse(e.produtos),
-							equipe: JSON.parse(e.equipe),
-							atualizacao: e.atualizacao
-						})
-					});
-					
-					(async function restaurar(){
-						await limparBD();
-						await restaurarBD(tabela)
-						
-						//mensagem
-						var icon = "img/imgOK.png"
-						var msg = "Restaurado"
-						var act = "Tarefas restauradas com sucesso!"
-						var modo = "conf"
-						var reload = "true"
-						var func = ""
-						openMSG(icon, msg, act, modo, reload,func);
-					})()
-							
-			}
-			reader.readAsArrayBuffer(file)	
-		}		
-	}else{
-		//mensagem
-		var icon = "img/imgAlert.png"
-		var msg = "Arquivo inválido"
-		var act = "selecione o arquivo correto!"
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);
-	}
-})
-
-
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
 
