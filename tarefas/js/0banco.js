@@ -79,7 +79,8 @@ DBRequest.onupgradeneeded = function(event) {
 			snGTM2: "",
 			inicio: "",
 			fim: "",
-			status: "inativo"
+			status: "inativo",
+			relatorio: ""
 		})
 		//tabela das configurações da linha 02 das tarefas
 		objectStore.put({
@@ -90,7 +91,8 @@ DBRequest.onupgradeneeded = function(event) {
 			snGTM2: "",
 			inicio: "",
 			fim: "",
-			status: "inativo"
+			status: "inativo",
+			relatorio: ""
 		})
 		//tabela das configurações da linha 03 das tarefas
 		objectStore.put({
@@ -101,7 +103,8 @@ DBRequest.onupgradeneeded = function(event) {
 			snGTM2: "",
 			inicio: "",
 			fim: "",
-			status: "inativo"
+			status: "inativo",
+			relatorio: ""
 		})
 	};
 	//------------------------------------------------------------------------------------

@@ -249,8 +249,17 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 
 //textarea avançado
 tinymce.init({
-	selector: '.textoAvancado'
+	selector: '#editor1',
+	// setup: (editor) => {
+    //     editor.on('input', (e) => {
+    //       console.log(tinymce.get('editor1').getContent())
+    //     })
+    //   },
 });
+document.getElementById("t1").addEventListener("click",()=>{
+	//tinymce.get("editor1").setContent("<p>Hello world!</p>");
+	console.log(tinymce.activeEditor.getContent())
+})
 
 //carregar configurações das linhas
 async function loadCnfTrfLin(iDB, nLin){//função chamada na folha: /tarefas/js/carregamento.js
