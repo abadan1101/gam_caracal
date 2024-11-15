@@ -20,12 +20,12 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 		
 			//cabeçalho da tabela--------------------------------------------
 			const cabecalho = document.getElementById('trf_tblTbHd').children
-			cabecalho[3].innerHTML = bdCfg.chave01[0]
-			cabecalho[4].innerHTML = bdCfg.chave00[0]
-			cabecalho[5].innerHTML = bdCfg.chave02[0]
-			cabecalho[6].innerHTML = bdCfg.chave03[0]
-			cabecalho[7].innerHTML = bdCfg.chave04[0]
-			cabecalho[8].innerHTML = bdCfg.chave05[0]
+			cabecalho[3].children[0].children[0].innerHTML = bdCfg.chave01[0]
+			cabecalho[4].children[0].children[0].innerHTML = bdCfg.chave00[0]
+			cabecalho[5].children[0].children[0].innerHTML = bdCfg.chave02[0]
+			cabecalho[6].children[0].children[0].innerHTML = bdCfg.chave03[0]
+			cabecalho[7].children[0].children[0].innerHTML = bdCfg.chave04[0]
+			cabecalho[8].children[0].children[0].innerHTML = bdCfg.chave05[0]
 			//---------------------------------------------------------------
 			
 
@@ -261,6 +261,14 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 					if(localStorage.getItem(x) == "false"){
 						e.checked = false
 						var y = [...document.getElementsByClassName(x)]
+
+						//desativar filtro
+						const elmt = y[0].children[1].children[0]
+						elmt.value = ""
+						localStorage.setItem(elmt.id,"")
+						y[0].children[0].style.background = "#555"
+						trfTbl_filtro()
+
 						y.map((c)=>{
 							c.style.display = "none"
 						})
@@ -1088,12 +1096,18 @@ function trfTbl_filtro(){
 		if(
 			e.children[1].innerHTML.includes(input[0].value) == false ||
 			e.children[2].innerHTML.includes(input[1].value) == false ||
-			e.children[9].innerHTML.includes(input[2].value) == false ||
-			e.children[10].innerHTML.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
-			e.children[11].firstChild.value.toLowerCase().includes(input[4].value.toLowerCase()) == false ||
-			e.children[12].innerHTML.toLowerCase().includes(input[5].value.toLowerCase()) == false ||
-			e.children[13].innerHTML.toLowerCase().includes(input[6].value.toLowerCase()) == false ||
-			e.children[14].innerHTML.includes(input[7].value) == false
+			e.children[3].innerHTML.toLowerCase().includes(input[2].value.toLowerCase()) == false ||
+			e.children[4].firstChild.value.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
+			e.children[5].firstChild.value.toLowerCase().includes(input[4].value.toLowerCase()) == false ||
+			e.children[6].firstChild.value.toLowerCase().includes(input[5].value.toLowerCase()) == false ||
+			e.children[7].firstChild.value.toLowerCase().includes(input[6].value.toLowerCase()) == false ||
+			e.children[8].firstChild.value.toLowerCase().includes(input[7].value.toLowerCase()) == false ||
+			e.children[9].innerHTML.includes(input[8].value) == false ||
+			e.children[10].innerHTML.toLowerCase().includes(input[9].value.toLowerCase()) == false ||
+			e.children[11].firstChild.value.toLowerCase().includes(input[10].value.toLowerCase()) == false ||
+			e.children[12].innerHTML.toLowerCase().includes(input[11].value.toLowerCase()) == false ||
+			e.children[13].innerHTML.toLowerCase().includes(input[12].value.toLowerCase()) == false ||
+			e.children[14].innerHTML.includes(input[13].value) == false
 		){
 			e.style.display = "none"
 		}else{
@@ -1111,12 +1125,18 @@ function trfTbl_filtroReload(){
 		//preencher input
 		input[0].value = localStorage.getItem("filtC2");
 		input[1].value = localStorage.getItem("filtC3");
-		input[2].value = localStorage.getItem("filtC10");
-		input[3].value = localStorage.getItem("filtC11");
-		input[4].value = localStorage.getItem("filtC12");
-		input[5].value = localStorage.getItem("filtC13");
-		input[6].value = localStorage.getItem("filtC14");
-		input[7].value = localStorage.getItem("filtC15");
+		input[2].value = localStorage.getItem("filtC4");
+		input[3].value = localStorage.getItem("filtC5");
+		input[4].value = localStorage.getItem("filtC6");
+		input[5].value = localStorage.getItem("filtC7");
+		input[6].value = localStorage.getItem("filtC8");
+		input[7].value = localStorage.getItem("filtC9");
+		input[8].value = localStorage.getItem("filtC10");
+		input[9].value = localStorage.getItem("filtC11");
+		input[10].value = localStorage.getItem("filtC12");
+		input[11].value = localStorage.getItem("filtC13");
+		input[12].value = localStorage.getItem("filtC14");
+		input[13].value = localStorage.getItem("filtC15");
 
 		//alarmes de filtro ativo
 		for(i=0;i < input.length;i++){
