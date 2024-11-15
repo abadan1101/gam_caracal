@@ -238,6 +238,9 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 			console.log("Erro ao carregar configurações gerais das tarefas! " + erro)	
 		}
 	}
+
+	//carregar relatórios das linhas
+	trfConf_relatorioCarregar()
 }
 //--------------------------------------------------------------------
 
@@ -247,35 +250,60 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 //------------------------CONFIGURAÇÕES DAS LINHAS----------------------
 //----------------------------------------------------------------------
 
-//textarea avançado
+//textarea avançado (TINYMCE)
 tinymce.init({
-	selector: '#editor1',
+	selector: '.textoAvancado',
 	width: 880,
-	setup: function (editor) {
-		editor.on('init', function (e) {
-			(async function obter(){
-				const rel = await obterTarefas(2)
-		  		editor.setContent(rel.relatorio);
-			})()
-		});
-	  }
+	setup: (editor) => {
+
+		//SALVAR TEXTO AUTOMATICAMENTE
+         editor.on('change', (e) => {
+			const val = tinymce.activeEditor.getContent()
+			var id = tinymce.activeEditor.id
+			if(id == "editor1"){id = 2}
+			if(id == "editor2"){id = 3}
+			if(id == "editor3"){id = 4}
+			AltTarefasConfBd(id, "relatorio", val)
+         })
+       },
 });
-//salvar relatório
-document.getElementById("t1").addEventListener("click",()=>{
-	(async function salvar(){
-		const val = tinymce.activeEditor.getContent()
-		await AltTarefasConfBd(2, "relatorio", val)
+//carregar texto do relatório
+function trfConf_relatorioCarregar(){
+	(async function obter(){
+		const rel1 = await obterTarefas(2)
+		const rel2 = await obterTarefas(3)
+		const rel3 = await obterTarefas(4)
+
+		if(rel1.relatorio != ""){
+			tinymce.get("editor1").setContent(rel1.relatorio);
+		}else{
+			tinymce.get("editor1").setContent(
+				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
+
+			);
+		}
+
+		if(rel2.relatorio != ""){
+			tinymce.get("editor2").setContent(rel2.relatorio);
+		}else{
+			tinymce.get("editor2").setContent(
+				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
+
+			);
+		}
+
+		if(rel3.relatorio != ""){
+			tinymce.get("editor3").setContent(rel3.relatorio);
+		}else{
+			tinymce.get("editor3").setContent(
+				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
+
+			);
+		}
 		
-		//quando o relatório for salvo com sucesso
-		var icon = "img/imgOK.png"
-		var msg = "Confirmado!"
-		var act = "Relatório salvo com sucesso!"
-		var modo = "conf"
-		var reload = "false"
-		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);	
 	})()
-})
+}
+
 
 //carregar configurações das linhas
 async function loadCnfTrfLin(iDB, nLin){//função chamada na folha: /tarefas/js/carregamento.js

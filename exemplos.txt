@@ -167,10 +167,28 @@ tinymce.init({
            console.log(tinymce.get('editor1').getContent())
          })
        },
+
+	   //CARREGAR TEXTO AUTOMATICAMENTE
+	   setup: function (editor) {
+		editor.on('init', function (e) {
+			(async function obter(){
+				const rel = await obterTarefas(2)
+		  		editor.setContent(rel.relatorio);
+			})()
+		});
+	  }
 });
 //CARREGAR TEXTO
+//com editor ativo
+tinymce.activeEditor.setContent("<p>Hello world!</p>");
+
+com id do editor
 tinymce.get("editor1").setContent("<p>Hello world!</p>");
 
 //SALVAR TEXTO
+//com editor ativo
 const val = tinymce.activeEditor.getContent()
+
+com id do editor
+const val = tinymce.get("myTextarea").getContent();
 ----------------------------------------

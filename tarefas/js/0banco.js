@@ -194,7 +194,7 @@ function obterTarefas(z){ //variável z se refere ao "id" da tarefa
 		var transaction = db.transaction(dbLinha, "readwrite");
 		var store = transaction.objectStore(dbLinha);
 		var request = store.get(z)
-		request.onsuccess = function () {
+		request.onsuccess = function (event) {
 			var find = event.target.result;
 			if(!find){find = "null"}
 			resolve(find)
