@@ -250,15 +250,31 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 //textarea avançado
 tinymce.init({
 	selector: '#editor1',
-	// setup: (editor) => {
-    //     editor.on('input', (e) => {
-    //       console.log(tinymce.get('editor1').getContent())
-    //     })
-    //   },
+	width: 880,
+	setup: function (editor) {
+		editor.on('init', function (e) {
+			(async function obter(){
+				const rel = await obterTarefas(2)
+		  		editor.setContent(rel.relatorio);
+			})()
+		});
+	  }
 });
+//salvar relatório
 document.getElementById("t1").addEventListener("click",()=>{
-	//tinymce.get("editor1").setContent("<p>Hello world!</p>");
-	console.log(tinymce.activeEditor.getContent())
+	(async function salvar(){
+		const val = tinymce.activeEditor.getContent()
+		await AltTarefasConfBd(2, "relatorio", val)
+		
+		//quando o relatório for salvo com sucesso
+		var icon = "img/imgOK.png"
+		var msg = "Confirmado!"
+		var act = "Relatório salvo com sucesso!"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);	
+	})()
 })
 
 //carregar configurações das linhas

@@ -340,6 +340,31 @@ function AltTarefasBd(n, col, val){
 		}
 	})
 }
+
+//alterar algum valor da configuração das tarefas------------------------
+function AltTarefasConfBd(n, col, val){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction("configTaref","readwrite");
+		var objectStore = transaction.objectStore("configTaref");
+		var request = objectStore.get(n);
+		request.onsuccess = function(){
+			request.result[col] = val
+			objectStore.put(request.result);
+			resolve()
+		}
+		request.onerror = (event) => {
+			//mensagem de rejeitado
+			var icon = "img/imgAlert.png"
+			var msg = "Erro ao salvar relatório!"
+			var act = event
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro na transação com o banco de dados");
+		}
+	})
+}
 //--------------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------------
 

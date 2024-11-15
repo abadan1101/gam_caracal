@@ -153,3 +153,24 @@ tfe.value = $(tfe).val("selecione um membro").select2();
 })();
 	
 ----------------------------------------
+
+
+
+----------------TINYMCE--------------------
+//textarea avançado
+tinymce.init({
+	selector: '#editor1',
+	 setup: (editor) => {
+
+		//SALVAR TEXTO AUTOMATICAMENTE
+         editor.on('input', (e) => {
+           console.log(tinymce.get('editor1').getContent())
+         })
+       },
+});
+//CARREGAR TEXTO
+tinymce.get("editor1").setContent("<p>Hello world!</p>");
+
+//SALVAR TEXTO
+const val = tinymce.activeEditor.getContent()
+----------------------------------------

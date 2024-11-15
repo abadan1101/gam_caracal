@@ -148,7 +148,6 @@ fileInput1.addEventListener('change', () => {
 						})
 					});
 					
-					//console.log(rows4);
 					var tabela4 = JSON.parse(rows4[0].configuracoes);
 					
 					(async function restaurar(){
