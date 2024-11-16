@@ -68,7 +68,7 @@ DBRequest.onupgradeneeded = function(event) {
 			chave03: ["Chave 02",false,"","","","","","","","","",""],
 			chave04: ["Chave 03",false],
 			chave05: ["Chave 04",false],
-			baixar: ["Baixar",true]
+			baixar: ["Baixar",false]
 		})
 		//tabela das configurações da linha 01 das tarefas
 		objectStore.put({

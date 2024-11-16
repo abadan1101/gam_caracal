@@ -254,6 +254,7 @@ async function loadCnfTrf(){//função chamada na folha: /tarefas/js/carregament
 tinymce.init({
 	selector: '.textoAvancado',
 	width: 880,
+	height: 445,
 	setup: (editor) => {
 
 		//SALVAR TEXTO AUTOMATICAMENTE
