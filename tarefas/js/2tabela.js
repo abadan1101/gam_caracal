@@ -1079,7 +1079,7 @@ async function trfTbl_quantidadesRodapé(){
 	})
 
 	//PROVISÓRIO
-	if(localStorage.getItem("trf_tblCBFechadas") == "false"){
+	if(localStorage.getItem("trf_tblCBFechadas") != "true"){
 		const tabela = [...document.getElementById("trf_tblTbBdy").children];
 		var valFec = 0
 		tabela.map((tb)=>{
