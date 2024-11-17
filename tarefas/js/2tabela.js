@@ -274,20 +274,9 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 						})
 					}
 			})
-			//---------------------------------------------------------------
-
-
-			//controles da tabela--------------------------------------------
 			trfTbl_menuColunas();//configuração do menu de contole das colunas
+			
 
-			//filtrar tarefas
-			(async function filt(){
-				await trfTbl_filtroReload();
-				trfTbl_filtro()
-			})()
-			//---------------------------------------------------------------
-			
-			
 			//fim da promisse------------------------------------------------
 			resolve()
 			//---------------------------------------------------------------
@@ -1035,7 +1024,7 @@ chbx.map((e)=>{
 		
 	})
 })
-//ocultar ou mostrar tarefas fechadas
+//ocultar ou mostrar tarefas fechadas 
 document.getElementById("trf_tblCBFechadas").addEventListener("change",(e)=>{
 	if(document.getElementById("trf_tblCBFechadas").checked == true){
 		localStorage.setItem("trf_tblCBFechadas",true)
@@ -1129,7 +1118,7 @@ trfTbl_input.map((evt)=>{
 })
 
 //função para realizar o filtro
-function trfTbl_filtro(){
+function trfTbl_filtro(){//função chamada na folha: /tarefas/js/carregamento.js
 	const tabela = [...document.getElementById("trf_tblTbBdy").children]
 	const input = [...document.getElementsByClassName("trfTblColInpt")]
 	
@@ -1149,7 +1138,8 @@ function trfTbl_filtro(){
 			e.children[11].firstChild.value.toLowerCase().includes(input[10].value.toLowerCase()) == false ||
 			e.children[12].innerHTML.toLowerCase().includes(input[11].value.toLowerCase()) == false ||
 			e.children[13].innerHTML.toLowerCase().includes(input[12].value.toLowerCase()) == false ||
-			e.children[14].innerHTML.includes(input[13].value) == false
+			e.children[14].innerHTML.includes(input[13].value) == false ||
+			(localStorage.getItem("trf_tblCBFechadas") == "false" && e.children[4].firstChild.value == "Fechado")
 		){
 			e.style.display = "none"
 		}else{
@@ -1160,7 +1150,7 @@ function trfTbl_filtro(){
 }
 
 //preencher input dos filtros na inicialização
-function trfTbl_filtroReload(){
+function trfTbl_filtroReload(){//função chamada na folha: /tarefas/js/carregamento.js
 	return new Promise((resolve)=>{
 		const input = [...document.getElementsByClassName("trfTblColInpt")]
 

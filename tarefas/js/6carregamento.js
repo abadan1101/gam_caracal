@@ -61,7 +61,10 @@ async function cnfgFormTrf(n){
 			//preenche a tabela principal
 			var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 			await TrfTbl_Load(bdTabela)//funções chamadas da folha: /tarefas/js/tabela.js
+			//filtrar tarefas
 			trfTbl_ocultFechadas()//pertence a folha: /tarefas/js/tabela.js
+			await trfTbl_filtroReload();//pertence a folha: /tarefas/js/tabela.js
+			trfTbl_filtro()//pertence a folha: /tarefas/js/tabela.js
 
 			pnlMunu1.remove()
 		}retardar()
