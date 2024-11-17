@@ -1035,6 +1035,35 @@ chbx.map((e)=>{
 		
 	})
 })
+//ocultar ou mostrar tarefas fechadas
+document.getElementById("trf_tblCBFechadas").addEventListener("change",(e)=>{
+	if(document.getElementById("trf_tblCBFechadas").checked == true){
+		localStorage.setItem("trf_tblCBFechadas",true)
+	}else{
+		localStorage.setItem("trf_tblCBFechadas",false)
+	}
+	trfTbl_ocultFechadas()
+})
+//função para ocultar ou mostrar tarefas fechadas
+function trfTbl_ocultFechadas(){//função chamada na folha: /tarefas/js/carregamento.js
+	const tabela = [...document.getElementById("trf_tblTbBdy").children];
+	if(localStorage.getItem("trf_tblCBFechadas") == "true"){
+		tabela.map((tb)=>{
+			if(tb.children[4].firstChild.value == "Fechado"){
+				tb.style.display = ""
+			}
+		})
+		document.getElementById("trf_tblCBFechadas").checked = true
+	}else{
+		tabela.map((tb)=>{
+			if(tb.children[4].firstChild.value == "Fechado"){
+				tb.style.display = "none"
+			}
+		})
+		document.getElementById("trf_tblCBFechadas").checked = false
+	}
+	trfTbl_quantidadesRodapé()
+}
 //-------------------------------------------------------------------
 
 //quantidade de tarefas mostradas no rodapé-------------------------------
@@ -1050,7 +1079,20 @@ async function trfTbl_quantidadesRodapé(){
 	})
 
 	//PROVISÓRIO
-	texto.innerText = "mostrando " + qtd + " de " + bdTabela.length + " tarefas cadastradas";
+	if(localStorage.getItem("trf_tblCBFechadas") == "false"){
+		const tabela = [...document.getElementById("trf_tblTbBdy").children];
+		var valFec = 0
+		tabela.map((tb)=>{
+			if(tb.children[4].firstChild.value == "Fechado"){
+				valFec++
+			}
+		})
+		texto.innerText = "mostrando " + qtd + " de " + bdTabela.length + " tarefas cadastradas" +
+		" (" + valFec + " tarefas fechadas)";
+	}else{
+		texto.innerText = "mostrando " + qtd + " de " + bdTabela.length + " tarefas cadastradas"
+	}
+	
 }
 //------------------------------------------------------------------------
 
@@ -1151,100 +1193,3 @@ function trfTbl_filtroReload(){
 	})
 }
 //------------------------------------------------------------------------
-
-
-
-//carregar caixas de seleção dos filtros das colunas da tabela principal
-function trfTbl_carregarCabecalho(){
-	// //buscar indices para criar os filtros
-	// const x = document.getElementsByClassName("trf_tblTbBdy")
-	// var y0=[], y1=[], y2=[], y3=[]
-	// for(i=0;i < x.length;i++){
-	// 	let a0 = y0.includes(x[i].children[4].firstChild.value)
-	// 	if(a0 == false){
-	// 		y0.push(x[i].children[4].firstChild.value)
-	// 	}
-	// 	let a1 = y1.includes(x[i].children[3].innerHTML)
-	// 	if(a1 == false){
-	// 		y1.push(x[i].children[3].innerHTML)
-	// 	}
-	// 	let a2 = y2.includes(x[i].children[5].firstChild.value)
-	// 	if(a2 == false){
-	// 		y2.push(x[i].children[5].firstChild.value)
-	// 	}
-	// 	let a3 = y3.includes(x[i].children[6].firstChild.value)
-	// 	if(a3 == false){
-	// 		y3.push(x[i].children[6].firstChild.value)
-	// 	}	
-	// }
-	// //popular a caixa de seleção
-	// const caixaSlct = [...document.querySelectorAll('#trf_tblTbHd .trf_tblSlct')]
-	// //popular a caixa de seleção tipo
-	// caixaSlct[0].addEventListener('focus',(e)=>{
-	// 	const cx0 = caixaSlct[0].firstChild
-	// 	caixaSlct[0].innerHTML = ""
-	// 	caixaSlct[0].appendChild(cx0)
-	// 	for(i=0;i<y1.length;i++){
-	// 		const z0 = document.createElement("option");
-	// 		var num = y1[i]
-	// 		if(num != ""){
-	// 			z0.innerHTML = y1[i]
-	// 			caixaSlct[0].appendChild(z0);
-	// 		}
-	// 	}
-	// })
-	// //popular a caixa de seleção andamento
-	// caixaSlct[1].addEventListener('focus',(e)=>{
-	// 	const cx0 = caixaSlct[1].firstChild
-	// 	caixaSlct[1].innerHTML = ""
-	// 	caixaSlct[1].appendChild(cx0)
-	// 	for(i=0;i<y0.length;i++){
-	// 		const z0 = document.createElement("option");
-	// 		var num = y0[i]
-	// 		if(num != ""){
-	// 			z0.innerHTML = y0[i]
-	// 			caixaSlct[1].appendChild(z0);
-	// 		}
-	// 	}
-	// })
-	// //popular a caixa de seleção chave 01
-	// caixaSlct[2].addEventListener('focus',(e)=>{
-	// 	const cx0 = caixaSlct[2].firstChild
-	// 	caixaSlct[2].innerHTML = ""
-	// 	caixaSlct[2].appendChild(cx0)
-	// 	for(i=0;i<y2.length;i++){
-	// 		const z0 = document.createElement("option");
-	// 		var num = y2[i]
-	// 		if(num != ""){
-	// 			z0.innerHTML = y2[i]
-	// 			caixaSlct[2].appendChild(z0);
-	// 		}
-	// 	}
-	// })
-	// //popular a caixa de seleção chave 02
-	// caixaSlct[3].addEventListener('focus',(e)=>{
-	// 	const cx0 = caixaSlct[3].firstChild
-	// 	caixaSlct[3].innerHTML = ""
-	// 	caixaSlct[3].appendChild(cx0)
-	// 	for(i=0;i<y3.length;i++){
-	// 		const z0 = document.createElement("option");
-	// 		var num = y3[i]
-	// 		if(num != ""){
-	// 			z0.innerHTML = y3[i]
-	// 			caixaSlct[3].appendChild(z0);
-	// 		}
-	// 	}
-	// })
-}
-//------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-

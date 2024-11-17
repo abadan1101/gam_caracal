@@ -82,6 +82,12 @@
 	width: 20px;
 	height: 20px;
 }
+#trf_tblCtrlFechados{
+	background: #2E8B57;
+}
+#trf_tblCtrlFechados label{
+	color:#fff;
+}
 /*______________________________________________________________________________________________*/
 
 
