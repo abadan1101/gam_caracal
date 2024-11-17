@@ -255,6 +255,8 @@ tinymce.init({
 	selector: '.textoAvancado',
 	width: 880,
 	height: 445,
+	menubar: '',
+	toolbar: 'print undo redo bold italic alignleft aligncenter alignright alignjustify indent outdent',
 	setup: (editor) => {
 
 		//SALVAR TEXTO AUTOMATICAMENTE
