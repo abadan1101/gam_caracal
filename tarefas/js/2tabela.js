@@ -961,6 +961,12 @@ async function trfTbl_menuColunas(){
 			document.getElementById(colunaMunu[i]).disabled = false
 		}
 	}
+	//checkbox "Fechados"
+	if(localStorage.getItem("trf_tblCBFechadas") == "true"){
+		document.getElementById("trf_tblCBFechadas").checked = true
+	}else{
+		document.getElementById("trf_tblCBFechadas").checked = false
+	}
 	
 	//nomear checkbox do menu de controles das colunas
 	document.getElementById('trf_tblCtrllb1').innerHTML = bdCfg.chave01[0]
@@ -968,7 +974,9 @@ async function trfTbl_menuColunas(){
 	document.getElementById('trf_tblCtrllb3').innerHTML = bdCfg.chave02[0]
 	document.getElementById('trf_tblCtrllb4').innerHTML = bdCfg.chave03[0]
 	document.getElementById('trf_tblCtrllb5').innerHTML = bdCfg.chave04[0]
-	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]		
+	document.getElementById('trf_tblCtrllb6').innerHTML = bdCfg.chave05[0]	
+	
+	
 }
 //ocultar ou mostrar menu		
 const trf_tblCtrlAct = document.getElementById('trf_tblCtrlAct')
@@ -1031,28 +1039,9 @@ document.getElementById("trf_tblCBFechadas").addEventListener("change",(e)=>{
 	}else{
 		localStorage.setItem("trf_tblCBFechadas",false)
 	}
-	trfTbl_ocultFechadas()
-})
-//função para ocultar ou mostrar tarefas fechadas
-function trfTbl_ocultFechadas(){//função chamada na folha: /tarefas/js/carregamento.js
-	const tabela = [...document.getElementById("trf_tblTbBdy").children];
-	if(localStorage.getItem("trf_tblCBFechadas") == "true"){
-		tabela.map((tb)=>{
-			if(tb.children[4].firstChild.value == "Fechado"){
-				tb.style.display = ""
-			}
-		})
-		document.getElementById("trf_tblCBFechadas").checked = true
-	}else{
-		tabela.map((tb)=>{
-			if(tb.children[4].firstChild.value == "Fechado"){
-				tb.style.display = "none"
-			}
-		})
-		document.getElementById("trf_tblCBFechadas").checked = false
-	}
+	trfTbl_filtro()
 	trfTbl_quantidadesRodapé()
-}
+})
 //-------------------------------------------------------------------
 
 //quantidade de tarefas mostradas no rodapé-------------------------------
