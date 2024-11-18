@@ -276,32 +276,36 @@ function trfConf_relatorioCarregar(){
 		const rel1 = await obterTarefas(2)
 		const rel2 = await obterTarefas(3)
 		const rel3 = await obterTarefas(4)
-
-		if(rel1.relatorio != ""){
-			tinymce.get("editor1").setContent(rel1.relatorio);
+		const relPadrao = "<p><strong>Relat&oacute;rio</strong> <em>Geral</em></p>"
+		
+		if(rel1.status == "inativo"){
+			tinyMCE.get('editor1').getBody().setAttribute('contenteditable', false);
 		}else{
-			tinymce.get("editor1").setContent(
-				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
-
-			);
+			if(rel1.relatorio != ""){
+				tinymce.get("editor1").setContent(rel1.relatorio);
+			}else{
+				tinymce.get("editor1").setContent(relPadrao);
+			}
 		}
 
-		if(rel2.relatorio != ""){
-			tinymce.get("editor2").setContent(rel2.relatorio);
+		if(rel2.status == "inativo"){
+			tinyMCE.get('editor2').getBody().setAttribute('contenteditable', false);
 		}else{
-			tinymce.get("editor2").setContent(
-				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
-
-			);
+			if(rel2.relatorio != ""){
+				tinymce.get("editor2").setContent(rel2.relatorio);
+			}else{
+				tinymce.get("editor2").setContent(relPadrao);
+			}
 		}
 
-		if(rel3.relatorio != ""){
-			tinymce.get("editor3").setContent(rel3.relatorio);
+		if(rel3.status == "inativo"){
+			tinyMCE.get('editor3').getBody().setAttribute('contenteditable', false);
 		}else{
-			tinymce.get("editor3").setContent(
-				"<p><strong>Relat&oacute;rio</strong> <em>Geral</em>&nbsp;</p>"
-
-			);
+			if(rel3.relatorio != ""){
+				tinymce.get("editor3").setContent(rel3.relatorio);
+			}else{
+				tinymce.get("editor3").setContent(relPadrao);
+			}
 		}
 		
 	})()
