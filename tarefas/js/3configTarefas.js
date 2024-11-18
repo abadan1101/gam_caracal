@@ -563,6 +563,7 @@ function excLin(nLin, iDB){
 		configTaref.inicio = ""
 		configTaref.fim = ""
 		configTaref.status = "inativo"
+		configTaref.relatorio = ""
 
 		//grava registros
 	    	var requestUpdate = store.put(configTaref);
