@@ -276,36 +276,31 @@ function trfConf_relatorioCarregar(){
 		const rel1 = await obterTarefas(2)
 		const rel2 = await obterTarefas(3)
 		const rel3 = await obterTarefas(4)
-		const relPadrao = "<p><strong>Relat&oacute;rio</strong> <em>Geral</em></p>"
+		const relPadrao = "<p style='text-align: center;'><strong>RELAT&Oacute;RIO DE ANDAMENTO DE INPE&Ccedil;&Atilde;O A/T (AVI&Ocirc;NICA)<br></strong></p>"+
+		"<p style='text-align: justify;'>AERONAVE: <strong>XXXX</strong></p>"+
+		"<p style='text-align: justify;'>ENTRADA DA ANV: <strong>XX/XX/XXXX</strong></p>"+
+		"<p style='text-align: justify;'>INSPE&Ccedil;&Atilde;O DE RECEBIMENTO: <strong>XX/XX/XXXX</strong></p>"+
+		"<p style='text-align: justify;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; A aeronave entrou no Hangar do GAERNAVMAN parcialmente desmontada, sem cumprir o voo de recebimento, e sem possibilidade de cumprir os testes iniciais de recebimento e identificar quais itens est&atilde;o faltando nos diversos sistemas.</p>"+
+		"<p style='text-align: justify;'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; No dia XX/XX/XXXX foi iniciado a inspe&ccedil;&atilde;o de recebimento e verificado as seguintes discrep&acirc;ncias:</p>"+
+		"<p style='text-align: justify;'>1- Faltando ...;</p>"+
+		"<p style='text-align: justify;'>2- Faltando ...;</p>";
 		
-		if(rel1.status == "inativo"){
-			tinyMCE.get('editor1').getBody().setAttribute('contenteditable', false);
-		}else{
-			if(rel1.relatorio != ""){
+		if(rel1.relatorio != ""){
 				tinymce.get("editor1").setContent(rel1.relatorio);
-			}else{
-				tinymce.get("editor1").setContent(relPadrao);
-			}
+		}else{
+			tinymce.get("editor1").setContent(relPadrao);
 		}
 
-		if(rel2.status == "inativo"){
-			tinyMCE.get('editor2').getBody().setAttribute('contenteditable', false);
-		}else{
-			if(rel2.relatorio != ""){
+		if(rel2.relatorio != ""){
 				tinymce.get("editor2").setContent(rel2.relatorio);
-			}else{
-				tinymce.get("editor2").setContent(relPadrao);
-			}
+		}else{
+			tinymce.get("editor2").setContent(relPadrao);
 		}
 
-		if(rel3.status == "inativo"){
-			tinyMCE.get('editor3').getBody().setAttribute('contenteditable', false);
-		}else{
-			if(rel3.relatorio != ""){
+		if(rel3.relatorio != ""){
 				tinymce.get("editor3").setContent(rel3.relatorio);
-			}else{
-				tinymce.get("editor3").setContent(relPadrao);
-			}
+		}else{
+			tinymce.get("editor3").setContent(relPadrao);
 		}
 		
 	})()
