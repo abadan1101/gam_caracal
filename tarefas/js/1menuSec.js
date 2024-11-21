@@ -492,6 +492,7 @@ trfTbl_Restaurar.addEventListener("click",(evt)=>{
 		const bdAtivo = dbLinha;
 		const nomeAba1 = "pedidos"
 		const nomeAba2 = "ferramentas"
+		const nomeAba3 = "produtos"
 		const nomePlanilha = "relatorio.ods"
 	
 		var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
@@ -505,8 +506,16 @@ trfTbl_Restaurar.addEventListener("click",(evt)=>{
 				"número","Ferramenta", "observação"
 			]
 		];
+		var produtos = [
+			[
+				"número","produto", "observação"
+			]
+		];
+
+
 		var pedidosAdd = []
 		var ferramentasAdd = []
+		var produtosAdd = []
 		
 		//montar arrays
 		bdTabela.map((evt)=>{
@@ -514,31 +523,49 @@ trfTbl_Restaurar.addEventListener("click",(evt)=>{
 			//pedidos
 			var pim = evt.pedidos
 			pim.map((e)=>{
-				pedidosAdd.push(evt.numero)
-				pedidosAdd.push(e.tipo)
-				pedidosAdd.push(e.quantidade)
-				pedidosAdd.push(e.PN)
-				pedidosAdd.push(e.pim)
-				pedidosAdd.push(e.nome)
-				pedidosAdd.push(e.observacao)
-
-				pedidos.push(pedidosAdd)
-				//limpar array
-				pedidosAdd = []
+				if(e.status == true){
+					pedidosAdd.push(evt.numero)
+					pedidosAdd.push(e.tipo)
+					pedidosAdd.push(e.quantidade)
+					pedidosAdd.push(e.PN)
+					pedidosAdd.push(e.pim)
+					pedidosAdd.push(e.nome)
+					pedidosAdd.push(e.observacao)
+	
+					pedidos.push(pedidosAdd)
+					//limpar array
+					pedidosAdd = []
+				}
+				
 			})
 
 			//ferramentas
 			var ferr = evt.ferramentas
 			ferr.map((e)=>{
-				ferramentasAdd.push(evt.numero)
-				ferramentasAdd.push(e.ferramenta)
-				ferramentasAdd.push("")
+				if(e.status == true){
+					ferramentasAdd.push(evt.numero)
+					ferramentasAdd.push(e.ferramenta)
+					ferramentasAdd.push("")
 
-				ferramentas.push(ferramentasAdd)
-				//limpar array
-				ferramentasAdd = []
+					ferramentas.push(ferramentasAdd)
+					//limpar array
+					ferramentasAdd = []
+				}
 			})
-			
+
+			//produtos
+			var prod = evt.produtos
+			prod.map((e)=>{
+				if(e.status == true){
+					produtosAdd.push(evt.numero)
+					produtosAdd.push(e.produto)
+					produtosAdd.push("")
+
+					produtos.push(produtosAdd)
+					//limpar array
+					produtosAdd = []
+				}
+			})
 		})
 		//----------------------------------------------
 	
@@ -546,8 +573,10 @@ trfTbl_Restaurar.addEventListener("click",(evt)=>{
 		var workbook = XLSX.utils.book_new();
 		var worksheet = XLSX.utils.aoa_to_sheet(pedidos);
 		var worksheet1 = XLSX.utils.aoa_to_sheet(ferramentas);
+		var worksheet2 = XLSX.utils.aoa_to_sheet(produtos);
 		XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
 		XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
+		XLSX.utils.book_append_sheet(workbook, worksheet2, nomeAba3);
 		XLSX.writeFile(workbook, nomePlanilha);
 		
 	})()
