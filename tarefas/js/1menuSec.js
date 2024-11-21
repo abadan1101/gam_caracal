@@ -486,14 +486,71 @@ async function exportarTarefas(){
 //--------------------------------------------------------------------------------------
 const trfTbl_Restaurar = document.getElementById("trf_menu_afRelatorios")	
 trfTbl_Restaurar.addEventListener("click",(evt)=>{
-	//mensagem
-	var icon = "img/imgOK.png"
-	var msg = "Em Desenvolvimento"
-	var act = "Aguarde, rotina em desenvolvimento!"
-	var modo = "conf"
-	var reload = "false"
-	var func = ""
-	openMSG(icon, msg, act, modo, reload,func);
+	(async function exportarRelatorio(){
+
+		//variáveis
+		const bdAtivo = dbLinha;
+		const nomeAba1 = "pedidos"
+		const nomeAba2 = "ferramentas"
+		const nomePlanilha = "relatorio.ods"
+	
+		var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+		var pedidos = [
+			[
+				"número","tipo","qtd","P/N","pim","nome", "observação"
+			]
+		];
+		var ferramentas = [
+			[
+				"número","Ferramenta", "observação"
+			]
+		];
+		var pedidosAdd = []
+		var ferramentasAdd = []
+		
+		//montar arrays
+		bdTabela.map((evt)=>{
+
+			//pedidos
+			var pim = evt.pedidos
+			pim.map((e)=>{
+				pedidosAdd.push(evt.numero)
+				pedidosAdd.push(e.tipo)
+				pedidosAdd.push(e.quantidade)
+				pedidosAdd.push(e.PN)
+				pedidosAdd.push(e.pim)
+				pedidosAdd.push(e.nome)
+				pedidosAdd.push(e.observacao)
+
+				pedidos.push(pedidosAdd)
+				//limpar array
+				pedidosAdd = []
+			})
+
+			//ferramentas
+			var ferr = evt.ferramentas
+			ferr.map((e)=>{
+				ferramentasAdd.push(evt.numero)
+				ferramentasAdd.push(e.ferramenta)
+				ferramentasAdd.push("")
+
+				ferramentas.push(ferramentasAdd)
+				//limpar array
+				ferramentasAdd = []
+			})
+			
+		})
+		//----------------------------------------------
+	
+		//gravar planilha
+		var workbook = XLSX.utils.book_new();
+		var worksheet = XLSX.utils.aoa_to_sheet(pedidos);
+		var worksheet1 = XLSX.utils.aoa_to_sheet(ferramentas);
+		XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
+		XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
+		XLSX.writeFile(workbook, nomePlanilha);
+		
+	})()
 })
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
