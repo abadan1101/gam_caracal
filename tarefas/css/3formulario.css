@@ -37,6 +37,13 @@
     width: 150px;
     padding-left: 3px;
 }
+#trf_form_bxrDv{
+    display: flex;
+    flex-direction: column;
+}
+#trf_form_bxrDv div{
+    margin: 0;
+}
 #trf_form_bxr{
     display: inline;
     width: 300px;
@@ -47,6 +54,14 @@
     font-weight: bold;  
 }
 #trf_form_bxrIcn:hover{
+    color: #00f;
+}
+#trf_form_slvIcn{
+    font-size: 25px;
+    cursor: pointer; 
+    
+}
+#trf_form_slvIcn:hover{
     color: #00f;
 }
 /*_______________________________________________________*/
@@ -209,6 +224,13 @@
     display: flex;
     width: 80px;
     align-items: end;
+}
+.tfdcsAddCbc{
+    display: flex;
+    justify-content: space-between;
+}
+.tfdcsAddCbcLb{
+    color: #00f;
 }
 
 /*GRUPO DOS PEDIDOS*/
