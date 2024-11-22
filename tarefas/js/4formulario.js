@@ -124,8 +124,27 @@ function LimpTaref(){
 	document.getElementById('trf_form_Ch03').value = "";
 	document.getElementById('trf_form_Ch04').value = "";
 	document.getElementById('trf_form_Ch05').value = "";
+	
+	//preencher select (baixar cartões de trabalho)
 	const bxr = document.getElementById('trf_form_bxr');
+	bxr.innerHTML = ""
+	const optLimp = document.createElement("option")
+	optLimp.innerHTML = "selecione um cartão"
+	bxr.append(optLimp);
+	
+	(async function cartoes(){
+			
+		//baixar cartões salvos
+		const cartoes = await loadCartaoGeral()
+		cartoes.map((e)=>{
+			const opt = document.createElement("option")
+			opt.innerHTML = e.nome
+			bxr.append(opt)
+		
+		})
 	bxr.value = $(bxr).val("selecione um cartão").select2();
+	})();
+	
 	
 	//caixas com textarea
 	document.getElementById('trf_form_txa1').value = "";
@@ -1252,3 +1271,258 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 })
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
+
+
+
+
+
+//--------------------------------------------BAIXAR CARTÕES---------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//inserir cartão no banco de dados
+function addCartao(modo, id){	
+	//criação da classe pedido
+	function pedido(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
+		this.pim = pim;
+		this.nome = nome;
+		this.tipo = tipo;
+		this.quantidade = quantidade;
+		this.PN = PN;
+		this.PNA = PNA;
+		this.manual = manual;
+		this.observacao = observacao;
+		this.status = status;
+	}
+
+	//popular pedidos no banco
+	var pdd = []
+	const tbPed = document.getElementById('trf_form_tblPed')
+	const x = tbPed.rows
+	const nRow = tbPed.rows.length;
+	for(let contador = 1; contador < nRow; contador++) {
+		var p1 = "00000"
+		var p2 = x[contador].cells[1].innerHTML
+		var p3 = x[contador].cells[2].innerHTML
+		var p4 = x[contador].cells[3].innerHTML
+		var p5 = x[contador].cells[4].innerHTML
+		var p6 = x[contador].cells[5].innerHTML
+		var p7 = x[contador].cells[6].innerHTML
+		var p8 = x[contador].cells[7].innerHTML
+		var p9 = x[contador].cells[8].firstChild.checked
+		var pedBd = new pedido(p1, p2, p3, p4, p5, p6, p7, p8, p9);
+		pdd.push(pedBd)
+	}
+
+	//criação da classe ferramentas
+	function ferramenta(ferramenta, status) {
+		this.ferramenta = ferramenta;
+		this.status = status;
+	}
+
+	//popular ferramentas no banco
+	var fer = []
+	const tbFer = document.getElementById('trf_form_tblFer')
+	const f = tbFer.rows
+	const fRow = tbFer.rows.length;
+	for(let contador = 1; contador < fRow; contador++) {
+		var f1 = f[contador].cells[0].innerHTML
+		var f2 = f[contador].cells[1].firstChild.checked
+		var ferBd = new ferramenta(f1, f2);
+		fer.push(ferBd)
+	}
+		
+	//criação da classe produtos
+	function produto(produto, status) {
+		this.produto = produto;
+		this.status = status;
+	}
+	
+	//popular produtos no banco
+	var prd = []
+	const tbPrd = document.getElementById('trf_form_tblPrd')
+	const pr = tbPrd.rows
+	const prRow = tbPrd.rows.length;
+	for(let contador = 1; contador < prRow; contador++) {
+		var pr1 = pr[contador].cells[0].innerHTML
+		var pr2 = pr[contador].cells[1].firstChild.checked
+		var prodBd = new produto(pr1, pr2);
+		prd.push(prodBd)
+	}
+	
+	//transação na tabela do banco
+	var tabela = []
+	
+	tabela.push({
+		nome: document.getElementById('ctrlPnlInput').value,
+		serviço: document.getElementById('trf_form_txa2').value,
+		pedidos: pdd,
+		ferramentas: fer,
+		produtos: prd,
+	})
+	
+	if(modo == "inserir"){addCartaoBd(tabela)};
+	if(modo == "alterar"){AltCartoesBd(id, tabela)};	
+		
+}
+
+//botão salvar novo cartão
+document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
+	const body = document.body
+	const caixa = document.createElement("div")
+	caixa.setAttribute("id","PnlmsgAlert1")
+	body.append(caixa)
+
+	const caixafull = 
+		"<div id='ctrlPnl'>"+
+			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
+			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja salvar esta tarefa como padrão?</h4></div>"+
+			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome identificador</p></div>"+
+			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+				"<input type='text' id='ctrlPnlInput' maxLength='30' required>"+
+			"</div>"+
+			"<div class='ctrlPnlBtn'>"+
+				"<button id='ctrlPnlBtnSlv'>salvar</button>"+
+				"<button id='ctrlPnlBtnCnc'>cancelar</button>"+
+			"</div>"+
+		"</div>"
+
+	caixa.innerHTML += caixafull
+	
+	//carregar input com valor atual do select 
+	var vlSlct = document.getElementById("trf_form_bxr").value
+	if(vlSlct == "selecione um cartão"){vlSlct = ""}
+	document.getElementById("ctrlPnlInput").value = vlSlct
+	
+	//botão cancelar
+	document.getElementById("ctrlPnlBtnCnc").addEventListener('click', function () {
+		document.getElementById("PnlmsgAlert1").remove();
+	})
+	
+	//botão salvar
+	document.getElementById("ctrlPnlBtnSlv").addEventListener('click', function () {
+		if(document.getElementById("ctrlPnlInput").value == ""){
+			document.getElementById("ctrlPnlInput").reportValidity()
+		}else{
+			(async function cartoes(){
+			
+				//baixar cartões salvos
+				const cartoes = await loadCartaoGeral()
+				
+				//procurar cartão igual
+				var vrfIgual = false
+				var idIgual = ""
+				cartoes.map((e)=>{
+					if(document.getElementById("ctrlPnlInput").value == e.nome){
+						vrfIgual = true
+						idIgual = e.id
+					}
+				})
+				
+				//salvar novo cartão
+				if(vrfIgual == false){
+					addCartao("inserir", "")
+					const bxr = document.getElementById("trf_form_bxr")
+					const opt = document.createElement("option")
+					opt.innerHTML = document.getElementById("ctrlPnlInput").value
+					bxr.append(opt)
+				}else{
+					addCartao("alterar", idIgual)
+				}
+				
+				//remover caixa de mensagem
+				document.getElementById("PnlmsgAlert1").remove();
+				
+				//mensagem de corfirmado
+				var icon = "img/imgOK.png"
+				var msg = "Confirmação"
+				var act = "cartão salvo com sucesso!"
+				var modo = "conf"
+				var reload = "false"
+				var func = ""
+				openMSG(icon, msg, act, modo, reload,func);
+				
+			})()
+		}
+	})
+})
+
+//botão baixar novo cartão
+document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
+	const slctBxrCrd = document.getElementById("trf_form_bxr")
+	if(slctBxrCrd.value != "" || slctBxrCrd.value == "selecione um cartão"){
+		(async function cartoes(){
+				
+			//baixar cartões salvos
+			const tabela = await loadCartaoGeral();
+
+			//procurar cartão igual
+			tabela.map((e)=>{
+				if(slctBxrCrd.value == e.nome){
+					
+					//caixas com textarea
+					document.getElementById('trf_form_txa2').value = "***" + e.serviço + "***\n" + document.getElementById('trf_form_txa2').value;
+
+					//caixa dos pedidos
+					const popularPedidos = e.pedidos
+					popularPedidos.map((e)=>{
+						var pedidos = []
+						pedidos.push(e.pim)
+						pedidos.push(e.nome)
+						pedidos.push(e.tipo)
+						pedidos.push(e.quantidade)
+						pedidos.push(e.PN)
+						pedidos.push(e.PNA)
+						pedidos.push(e.manual)
+						pedidos.push(e.observacao)
+						pedidos.push(e.status)
+						trfFrm_adicionarPedidos(pedidos)
+					})
+					
+					//caixa das ferramentas
+					const popularFerramentas = e.ferramentas
+					popularFerramentas.map((e)=>{
+						var ferramentas = []
+						ferramentas.push(e.ferramenta)
+						ferramentas.push(e.status)
+						trfFrm_adicionarFerramentas(ferramentas)
+					})
+
+					//caixa dos produtos
+					const popularProdutos = e.produtos
+					popularProdutos.map((e)=>{
+						var produtos = []
+						produtos.push(e.produto)
+						produtos.push(e.status)
+						trfFrm_adicionarProdutos(produtos)
+					})
+
+					//oculta colunas na tabela dos pedidos em telas pequenas
+					OcultColm()//função pertence a folha "geral/js/inicializacao
+					
+					//mensagem de corfirmado
+					var icon = "img/imgOK.png"
+					var msg = "Confirmação"
+					var act = "cartão baixado com sucesso!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}
+			})
+		})();
+
+	}else{
+		slctBxrCrd.reportValidity()
+	}
+})
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+

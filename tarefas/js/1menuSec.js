@@ -219,6 +219,7 @@ async function exportarTarefas(){
 	const nomeAba3 = "backup da linha 02"
 	const nomeAba4 = "backup da linha 03"
 	const nomeAba5 = "backup das configurações"
+	const nomeAba6 = "backup dos cartões"
 	const nomePlanilha = "vn.ods"
 
 	//array da aba tarefas da linha (pasta do planejamento)
@@ -452,11 +453,46 @@ async function exportarTarefas(){
 	//---------------------------------------------------
 
 
+
+
 	//array do backup das configurações
 	var bdTabelaConf = await loadTBCfgGeral()//pertence a folha: /tarefas/js/banco.js
 	var tarefasBK4 = [["configuracoes"]];
 	tarefasBK4.push([JSON.stringify(bdTabelaConf)])
 	//---------------------------------------------------
+	
+	
+	
+	//array do backup controles (cartoes)
+	var bdTabelaCartoes = await loadCartaoGeral()
+	var cartoesBK = [
+		[
+			"nome", "servico","pedidos","ferramentas","produtos",
+		]
+	];
+	var cartoesBKAdd = []
+
+	//montar arrays do backup da linha
+	bdTabelaCartoes.map((e)=>{
+		//nome
+		cartoesBKAdd.push(e.nome)
+		//serviço
+		cartoesBKAdd.push(e.serviço)
+		//pedidos
+		cartoesBKAdd.push(JSON.stringify(e.pedidos))
+		//ferramentas
+		cartoesBKAdd.push(JSON.stringify(e.ferramentas))
+		//produtos
+		cartoesBKAdd.push(JSON.stringify(e.produtos))
+		//popular array
+		cartoesBK.push(cartoesBKAdd)
+		//limpar array
+		cartoesBKAdd = []
+	})
+	//---------------------------------------------------
+	
+	
+	
 
 	//gravar planilha
 	var workbook = XLSX.utils.book_new();
@@ -465,11 +501,13 @@ async function exportarTarefas(){
 	var worksheet2 = XLSX.utils.aoa_to_sheet(tarefasBK2);
 	var worksheet3 = XLSX.utils.aoa_to_sheet(tarefasBK3);
 	var worksheet4 = XLSX.utils.aoa_to_sheet(tarefasBK4);
+	var worksheet5 = XLSX.utils.aoa_to_sheet(cartoesBK);
 	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
 	XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
 	XLSX.utils.book_append_sheet(workbook, worksheet2, nomeAba3);
 	XLSX.utils.book_append_sheet(workbook, worksheet3, nomeAba4);
 	XLSX.utils.book_append_sheet(workbook, worksheet4, nomeAba5);
+	XLSX.utils.book_append_sheet(workbook, worksheet5, nomeAba6);
 	XLSX.writeFile(workbook, nomePlanilha);
 
 
