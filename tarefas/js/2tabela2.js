@@ -74,115 +74,30 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				var andamento = linha.insertCell(4);
 				andamento.innerHTML = bdTabela[i].chave00;
 				andamento.classList.add('trfTblCol5');
-
-				// var andamento = linha.insertCell(4);
-				// andamento.classList.add('trfTblCol5');
-				// const slct = document.createElement("select")
-				// slct.classList.add('trf_tblSlctTbl');
-				// slct.classList.add('trf_tblSlctAdmt');
-				// const n = bdCfg.chave00.length
-				// for(f=2;f<n;f++){
-				// 	const z1 = document.createElement("option");
-				// 	var num = bdCfg.chave00[f]
-				// 	if(num != ""){
-				// 		z1.innerHTML = bdCfg.chave00[f]
-				// 		slct.appendChild(z1);
-				// 	}
-				// }
-				// andamento.appendChild(slct);
-				// andamento.firstChild.value = bdTabela[i].chave00
-				// //eventos do select andamento
-				// slct.addEventListener("focus", (e)=>{trfTbl_configAndamento(e.target)})
-				// slct.addEventListener("change", (e)=>{trfTbl_altetarAndamento(e.target)})
 				//-------------------------------------------------
 
 				//preencher coluna chave 01------------------------
 				var ch01 = linha.insertCell(5);
 				ch01.innerHTML = bdTabela[i].chave02;
 				ch01.classList.add('trfTblCol6');
-
-
-				// var ch01 = linha.insertCell(5);
-				// ch01.classList.add('trfTblCol6');
-				// const slct1 = document.createElement("select")
-				// slct1.classList.add('trf_tblSlctTbl');
-				// const h = document.createElement("option");
-				// h.innerHTML = ""
-				// slct1.appendChild(h);
-				// const n1 = bdCfg.chave02.length
-				// for(f=2;f<n1;f++){
-				// 	const z1 = document.createElement("option");
-				// 	var num = bdCfg.chave02[f]
-				// 	if(num != ""){
-				// 		z1.innerHTML = bdCfg.chave02[f]
-				// 		slct1.appendChild(z1);
-				// 	}
-				// }
-				// ch01.appendChild(slct1);
-				// ch01.firstChild.value = bdTabela[i].chave02
-				// //eventos do select chave 01
-				// slct1.addEventListener("change", (e)=>{trfTbl_altetarChave01(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna chave 02------------------------
 				var ch02 = linha.insertCell(6);
 				ch02.innerHTML = bdTabela[i].chave03;
 				ch02.classList.add('trfTblCol7');
-
-				// var ch02 = linha.insertCell(6);
-				// ch02.classList.add('trfTblCol7');
-				// const slct2 = document.createElement("select")
-				// slct2.classList.add('trf_tblSlctTbl');
-				// const h1 = document.createElement("option");
-				// h1.innerHTML = ""
-				// slct2.appendChild(h1);
-				// const n2 = bdCfg.chave02.length
-				// for(f=2;f<n2;f++){
-				// 	const z1 = document.createElement("option");
-				// 	var num = bdCfg.chave03[f]
-				// 	if(num != ""){
-				// 		z1.innerHTML = bdCfg.chave03[f]
-				// 		slct2.appendChild(z1);
-				// 	}
-				// }
-				// ch02.appendChild(slct2);
-				// ch02.firstChild.value = bdTabela[i].chave03
-				// //eventos do select chave 02
-				// slct2.addEventListener("change", (e)=>{trfTbl_altetarChave02(e.target)})
 				//-------------------------------------------------
 
 				//preencher chave 03-------------------------------
 				var ch03 = linha.insertCell(7);
 				ch03.innerHTML = bdTabela[i].chave04;
 				ch03.classList.add('trfTblCol8');
-
-				// var ch03 = linha.insertCell(7);
-				// ch03.classList.add('trfTblCol8');
-				// const cxText1 = document.createElement("INPUT");
-				// cxText1.type = "text";
-				// cxText1.setAttribute("maxLength","30")
-				// cxText1.classList.add('trfTbl_inputTxt');
-				// ch03.appendChild(cxText1);
-				// ch03.firstChild.value = bdTabela[i].chave04
-				// //eventos do select chave 02
-				// ch03.firstChild.addEventListener("change", (e)=>{trfTbl_altetarChave03(e.target)})
 				//-------------------------------------------------
 				
 				//preencher chave 04-------------------------------
 				var ch04 = linha.insertCell(8);
 				ch04.innerHTML = bdTabela[i].chave05;
 				ch04.classList.add('trfTblCol9');
-
-				// var ch04 = linha.insertCell(8);
-				// ch04.classList.add('trfTblCol9');
-				// const cxText2 = document.createElement("INPUT");
-				// cxText2.type = "text";
-				// cxText2.setAttribute("maxLength","30")
-				// cxText2.classList.add('trfTbl_inputTxt');
-				// ch04.appendChild(cxText2);
-				// ch04.firstChild.value = bdTabela[i].chave05
-				// //eventos do select chave 02
-				// ch04.firstChild.addEventListener("change", (e)=>{trfTbl_altetarChave04(e.target)})
 				//-------------------------------------------------
 				
 				//preencher porcentagem----------------------------
@@ -201,19 +116,6 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				var serv = linha.insertCell(11);
 				serv.innerHTML = bdTabela[i].serviço;
 				serv.classList.add('trfTblCol12');
-				
-				// var serv = linha.insertCell(11);
-				// serv.classList.add('trfTblCol12');
-				// const k = document.createElement("TEXTAREA");
-				// k.classList.add('trfTblCol12txa');
-				// serv.appendChild(k);
-				// serv.firstChild.value = bdTabela[i].serviço;
-				// //altura automática ao digitar
-				// trfTbl_auturaAutomaticaTXA(serv.firstChild)
-				// //altura automática ao focar
-				// serv.firstChild.addEventListener("focus",(e)=>{trfTbl_auturaAutomaticaTXAFoco(e.target)})
-				// //rotinas para salvar serviço executado
-				// serv.firstChild.addEventListener("focusout",(e)=>{trfTbl_salvarTarefaTXA(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna das pendencias------------------	
@@ -253,12 +155,6 @@ async function TrfTbl_Load(bdTabela){//função chamada na folha: /tarefas/js/ca
 				opcs.firstChild.children[0].addEventListener("click", (e)=>{trfTbl_alterarTarefas(e.target)})
 				//eventos do botão excluir
 				opcs.firstChild.children[1].addEventListener("click", (e)=>{trfTbl_excluirTarefas(e.target)})
-				//-------------------------------------------------
-
-				//altura automática das caixas de texto------------
-				// ch03.firstChild.style.height = linha.clientHeight + "px"
-				// ch04.firstChild.style.height = linha.clientHeight + "px"
-				// serv.firstChild.style.height = linha.clientHeight + "px"
 				//-------------------------------------------------
 
 				//adicionar cor da linha---------------------------
@@ -1082,7 +978,7 @@ async function trfTbl_quantidadesRodapé(){
 		const tabela = [...document.getElementById("trf_tblTbBdy").children];
 		var valFec = 0
 		tabela.map((tb)=>{
-			if(tb.children[4].firstChild.value == "Fechado"){
+			if(tb.children[4].innerHTML == "Fechado"){
 				valFec++
 			}
 		})
@@ -1129,34 +1025,34 @@ trfTbl_input.map((evt)=>{
 
 //função para realizar o filtro
 function trfTbl_filtro(){//função chamada na folha: /tarefas/js/carregamento.js
-	// const tabela = [...document.getElementById("trf_tblTbBdy").children]
-	// const input = [...document.getElementsByClassName("trfTblColInpt")]
+	const tabela = [...document.getElementById("trf_tblTbBdy").children]
+	const input = [...document.getElementsByClassName("trfTblColInpt")]
 	
-	// tabela.map((e)=>{
+	tabela.map((e)=>{
 
-	// 	if(
-	// 		e.children[1].innerHTML.includes(input[0].value) == false ||
-	// 		e.children[2].innerHTML.includes(input[1].value) == false ||
-	// 		e.children[3].innerHTML.toLowerCase().includes(input[2].value.toLowerCase()) == false ||
-	// 		e.children[4].firstChild.value.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
-	// 		e.children[5].firstChild.value.toLowerCase().includes(input[4].value.toLowerCase()) == false ||
-	// 		e.children[6].firstChild.value.toLowerCase().includes(input[5].value.toLowerCase()) == false ||
-	// 		e.children[7].firstChild.value.toLowerCase().includes(input[6].value.toLowerCase()) == false ||
-	// 		e.children[8].firstChild.value.toLowerCase().includes(input[7].value.toLowerCase()) == false ||
-	// 		e.children[9].innerHTML.includes(input[8].value) == false ||
-	// 		e.children[10].innerHTML.toLowerCase().includes(input[9].value.toLowerCase()) == false ||
-	// 		e.children[11].firstChild.value.toLowerCase().includes(input[10].value.toLowerCase()) == false ||
-	// 		e.children[12].innerHTML.toLowerCase().includes(input[11].value.toLowerCase()) == false ||
-	// 		e.children[13].innerHTML.toLowerCase().includes(input[12].value.toLowerCase()) == false ||
-	// 		e.children[14].innerHTML.includes(input[13].value) == false ||
-	// 		(localStorage.getItem("trf_tblCBFechadas") == "false" && e.children[4].firstChild.value == "Fechado")
-	// 	){
-	// 		e.style.display = "none"
-	// 	}else{
-	// 		e.style.display = ""
-	// 	}
-	// })
-	// trfTbl_quantidadesRodapé()
+		if(
+			e.children[1].innerHTML.includes(input[0].value) == false ||
+			e.children[2].innerHTML.includes(input[1].value) == false ||
+			e.children[3].innerHTML.toLowerCase().includes(input[2].value.toLowerCase()) == false ||
+			e.children[4].innerHTML.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
+			e.children[5].innerHTML.toLowerCase().includes(input[4].value.toLowerCase()) == false ||
+			e.children[6].innerHTML.toLowerCase().includes(input[5].value.toLowerCase()) == false ||
+			e.children[7].innerHTML.toLowerCase().includes(input[6].value.toLowerCase()) == false ||
+			e.children[8].innerHTML.toLowerCase().includes(input[7].value.toLowerCase()) == false ||
+			e.children[9].innerHTML.includes(input[8].value) == false ||
+			e.children[10].innerHTML.toLowerCase().includes(input[9].value.toLowerCase()) == false ||
+			e.children[11].innerHTML.toLowerCase().includes(input[10].value.toLowerCase()) == false ||
+			e.children[12].innerHTML.toLowerCase().includes(input[11].value.toLowerCase()) == false ||
+			e.children[13].innerHTML.toLowerCase().includes(input[12].value.toLowerCase()) == false ||
+			e.children[14].innerHTML.includes(input[13].value) == false ||
+			(localStorage.getItem("trf_tblCBFechadas") == "false" && e.children[4].innerHTML == "Fechado")
+		){
+			e.style.display = "none"
+		}else{
+			e.style.display = ""
+		}
+	})
+	trfTbl_quantidadesRodapé()
 }
 
 //preencher input dos filtros na inicialização
