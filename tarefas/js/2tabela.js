@@ -1021,7 +1021,13 @@ chbx.map((e)=>{
 			elmt.value = ""
 			localStorage.setItem(elmt.id,"")
 			y[0].children[0].style.background = "#555"
-			trfTbl_filtro()
+
+			if(tblPrincipal == "estatica"){
+				trfTbl_filtroStatic()
+			}else{
+				trfTbl_filtro()
+			}
+			
 
 			//ocultar coluna
 			y.map((c)=>{
@@ -1039,8 +1045,15 @@ document.getElementById("trf_tblCBFechadas").addEventListener("change",(e)=>{
 	}else{
 		localStorage.setItem("trf_tblCBFechadas",false)
 	}
-	trfTbl_filtro()
-	trfTbl_quantidadesRodapé()
+
+	if(tblPrincipal == "estatica"){
+		trfTbl_filtroStatic()
+		trfTbl_quantidadesRodapeStatic()
+	}else{
+		trfTbl_filtro()
+		trfTbl_quantidadesRodapé()
+	}
+	
 })
 //-------------------------------------------------------------------
 
