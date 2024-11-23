@@ -77,10 +77,12 @@ fileInput1.addEventListener('change', () => {
 					const worksheet2 = workbook.Sheets[workbook.SheetNames[2]]
 					const worksheet3 = workbook.Sheets[workbook.SheetNames[3]]
 					const worksheet4 = workbook.Sheets[workbook.SheetNames[4]]
+					const worksheet5 = workbook.Sheets[workbook.SheetNames[5]]
 					const rows = XLSX.utils.sheet_to_json(worksheet)
 					const rows2 = XLSX.utils.sheet_to_json(worksheet2)
 					const rows3 = XLSX.utils.sheet_to_json(worksheet3)
 					const rows4 = XLSX.utils.sheet_to_json(worksheet4)
+					const rows5 = XLSX.utils.sheet_to_json(worksheet5)
 
 					var tabela = [];
 					rows.map((e)=>{
@@ -149,6 +151,17 @@ fileInput1.addEventListener('change', () => {
 					});
 					
 					var tabela4 = JSON.parse(rows4[0].configuracoes);
+
+					var tabela5 = [];
+					rows5.map((e)=>{
+						tabela5.push({
+							nome: e.nome,
+							serviço: e.serviço,
+							pedidos: JSON.parse(e.pedidos),
+							ferramentas: JSON.parse(e.ferramentas),
+							produtos: JSON.parse(e.produtos),
+						})
+					});
 					
 					(async function restaurar(){
 						dbLinha = "linha01";
@@ -167,6 +180,10 @@ fileInput1.addEventListener('change', () => {
 						await limparBD();
 						await restaurarBD(tabela4)
 
+						dbLinha = "cartoes";
+						await limparBD();
+						await restaurarBD(tabela5)
+
 						//retornar banco ativo
 						dbLinha = bdAtivo
 						
@@ -181,6 +198,7 @@ fileInput1.addEventListener('change', () => {
 					})()
 							
 			}
+
 			reader.readAsArrayBuffer(file)	
 		}		
 	}else{
@@ -194,7 +212,6 @@ fileInput1.addEventListener('change', () => {
 		openMSG(icon, msg, act, modo, reload,func);
 	}
 })
-
 
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
