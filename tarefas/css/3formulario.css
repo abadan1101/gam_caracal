@@ -37,10 +37,6 @@
     width: 150px;
     padding-left: 3px;
 }
-#trf_form_bxrDv{
-    display: flex;
-    flex-direction: column;
-}
 #trf_form_bxrDv div{
     margin: 0;
     display: flex;
