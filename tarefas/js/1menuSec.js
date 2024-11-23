@@ -220,6 +220,9 @@ async function exportarTarefas(){
 	const nomeAba4 = "backup da linha 03"
 	const nomeAba5 = "backup das configurações"
 	const nomeAba6 = "backup dos cartões"
+	const nomeAba7 = "backup das ferramentas"
+	const nomeAba8 = "backup dos produtos"
+	const nomeAba9 = "backup da equipe"
 	const nomePlanilha = "vn.ods"
 
 	//array da aba tarefas da linha (pasta do planejamento)
@@ -463,7 +466,7 @@ async function exportarTarefas(){
 	
 	
 	
-	//array do backup controles (cartoes)
+	//array do backup cartoes
 	var bdTabelaCartoes = await loadCartaoGeral()
 	var cartoesBK = [
 		[
@@ -489,6 +492,54 @@ async function exportarTarefas(){
 		//limpar array
 		cartoesBKAdd = []
 	})
+
+
+	//array do backup ferramentas
+	var bdTabelaFerramentas = await loadFerramentasGeral()
+	var ferramentasBK = [["ferramentas"]];
+	var ferramentasBKAdd = []
+
+	//montar arrays do backup ferramentas
+	bdTabelaFerramentas.map((e)=>{
+		//ferramenta
+		ferramentasBKAdd.push(e.ferramenta)
+		//popular array
+		ferramentasBK.push(ferramentasBKAdd)
+		//limpar array
+		ferramentasBKAdd = []
+	})
+
+
+	//array do backup produtos
+	var bdTabelaProdutos = await loadProdutosGeral()
+	var ProdutosBK = [["produtos"]];
+	var produtosBKAdd = []
+
+	//montar arrays do backup produtos
+	bdTabelaProdutos.map((e)=>{
+		//ferramenta
+		produtosBKAdd.push(e.produto)
+		//popular array
+		ProdutosBK.push(produtosBKAdd)
+		//limpar array
+		produtosBKAdd = []
+	})
+
+
+	//array do backup equipe
+	var bdTabelaEquipe = await loadEquipeGeral()
+	var EquipeBK = [["equipe"]];
+	var equipeBKAdd = []
+
+	//montar arrays do backup equipe
+	bdTabelaEquipe.map((e)=>{
+		//ferramenta
+		equipeBKAdd.push(e.membro)
+		//popular array
+		EquipeBK.push(equipeBKAdd)
+		//limpar array
+		equipeBKAdd = []
+	})
 	//---------------------------------------------------
 	
 	
@@ -502,12 +553,18 @@ async function exportarTarefas(){
 	var worksheet3 = XLSX.utils.aoa_to_sheet(tarefasBK3);
 	var worksheet4 = XLSX.utils.aoa_to_sheet(tarefasBK4);
 	var worksheet5 = XLSX.utils.aoa_to_sheet(cartoesBK);
+	var worksheet6 = XLSX.utils.aoa_to_sheet(ferramentasBK);
+	var worksheet7 = XLSX.utils.aoa_to_sheet(ProdutosBK);
+	var worksheet8 = XLSX.utils.aoa_to_sheet(EquipeBK);
 	XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
 	XLSX.utils.book_append_sheet(workbook, worksheet1, nomeAba2);
 	XLSX.utils.book_append_sheet(workbook, worksheet2, nomeAba3);
 	XLSX.utils.book_append_sheet(workbook, worksheet3, nomeAba4);
 	XLSX.utils.book_append_sheet(workbook, worksheet4, nomeAba5);
 	XLSX.utils.book_append_sheet(workbook, worksheet5, nomeAba6);
+	XLSX.utils.book_append_sheet(workbook, worksheet6, nomeAba7);
+	XLSX.utils.book_append_sheet(workbook, worksheet7, nomeAba8);
+	XLSX.utils.book_append_sheet(workbook, worksheet8, nomeAba9);
 	XLSX.writeFile(workbook, nomePlanilha);
 
 

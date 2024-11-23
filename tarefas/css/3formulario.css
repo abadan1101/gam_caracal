@@ -500,7 +500,7 @@
 #msgAlertBtn:hover{
 	opacity: 1;
 }
-#ctrlPnlBtnSlv{
+.trfForm_addEspSlv{
 	border: solid 1px #006400;
 	border-radius: 5px;
 	width: 100px;
@@ -512,10 +512,10 @@
 	color: #fff;
 	opacity: 0.5;
 }
-#ctrlPnlBtnSlv:hover{
+.trfForm_addEspSlv:hover{
 	opacity: 1;
 }
-#ctrlPnlBtnCnc{
+.trfForm_addEspCnc{
 	border: solid 1px #222;
 	border-radius: 5px;
 	width: 100px;
@@ -527,10 +527,10 @@
 	color: #fff;
 	opacity: 0.5;
 }
-#ctrlPnlBtnCnc:hover{
+.trfForm_addEspCnc:hover{
 	opacity: 1;
 }
-#ctrlPnlInput{
+.ctrlPnlInput{
 	font-size: 20px;
 }
 /*______________________________________________________________________________________________*/

@@ -78,11 +78,17 @@ fileInput1.addEventListener('change', () => {
 					const worksheet3 = workbook.Sheets[workbook.SheetNames[3]]
 					const worksheet4 = workbook.Sheets[workbook.SheetNames[4]]
 					const worksheet5 = workbook.Sheets[workbook.SheetNames[5]]
+					const worksheet6 = workbook.Sheets[workbook.SheetNames[6]]
+					const worksheet7 = workbook.Sheets[workbook.SheetNames[7]]
+					const worksheet8 = workbook.Sheets[workbook.SheetNames[8]]
 					const rows = XLSX.utils.sheet_to_json(worksheet)
 					const rows2 = XLSX.utils.sheet_to_json(worksheet2)
 					const rows3 = XLSX.utils.sheet_to_json(worksheet3)
 					const rows4 = XLSX.utils.sheet_to_json(worksheet4)
 					const rows5 = XLSX.utils.sheet_to_json(worksheet5)
+					const rows6 = XLSX.utils.sheet_to_json(worksheet6)
+					const rows7 = XLSX.utils.sheet_to_json(worksheet7)
+					const rows8 = XLSX.utils.sheet_to_json(worksheet8)
 
 					var tabela = [];
 					rows.map((e)=>{
@@ -162,6 +168,29 @@ fileInput1.addEventListener('change', () => {
 							produtos: JSON.parse(e.produtos),
 						})
 					});
+
+					var tabela6 = [];
+					rows6.map((e)=>{
+						tabela6.push({
+							ferramenta: e.ferramentas,
+						})
+					});
+
+					var tabela7 = [];
+					rows7.map((e)=>{
+						console.log(e)
+						tabela7.push({
+							produto: e.produtos,
+						})
+					});
+
+					var tabela8 = [];
+					rows8.map((e)=>{
+						console.log(e)
+						tabela8.push({
+							membro: e.equipe,
+						})
+					});
 					
 					(async function restaurar(){
 						dbLinha = "linha01";
@@ -183,6 +212,18 @@ fileInput1.addEventListener('change', () => {
 						dbLinha = "cartoes";
 						await limparBD();
 						await restaurarBD(tabela5)
+
+						dbLinha = "ferramentas";
+						await limparBD();
+						await restaurarBD(tabela6)
+
+						dbLinha = "produtos";
+						await limparBD();
+						await restaurarBD(tabela7)
+
+						dbLinha = "equipe";
+						await limparBD();
+						await restaurarBD(tabela8)
 
 						//retornar banco ativo
 						dbLinha = bdAtivo

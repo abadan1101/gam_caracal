@@ -454,7 +454,7 @@ function restaurarBD(bancoBackup){
 
 
 
-//------------------------------FUNÇÕES DO MODULO CONTROLE------------------------------------
+//----------------------FUNÇÕES ESPECIAIS FO FORMULÁRIO  DAS TAREFAS--------------------------
 //--------------------------------------------------------------------------------------------
 
 //inserir cartão de trabalho--------------------------------
@@ -519,6 +519,140 @@ async function loadCartaoGeral(){
 		const tabela =  []
 		var transaction1 = db.transaction('cartoes', "readonly");
 		var store1 = transaction1.objectStore('cartoes');
+		var request1 = store1.openCursor();
+		request1.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				tabela.push(cursor.value)
+				cursor.continue();
+			}else{
+				resolve(tabela)
+			}
+		}
+	})
+}
+
+
+
+//inserir nova ferramenta--------------------------------
+function addFerramentaoBd(fer){
+	var transaction = db.transaction("ferramentas", "readwrite"); 
+	var tarefTable = transaction.objectStore("ferramentas")
+	tarefTable.put({
+			ferramenta: fer,
+	})
+	
+	//se hover erro na transação
+	transaction.onerror = (event) => {
+		//mensagem de rejeitado
+		var icon = "img/imgError.png"
+		var msg = "Erro ao salvar ferramenta!"
+		var act = error
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+		console.log("Erro ao salvar ferramenta! " + error)
+	}
+	
+};
+
+//baixar tabelas das ferramentas
+async function loadFerramentasGeral(){
+	await bdOK()
+	return new Promise((resolve)=>{
+		const tabela =  []
+		var transaction1 = db.transaction('ferramentas', "readonly");
+		var store1 = transaction1.objectStore('ferramentas');
+		var request1 = store1.openCursor();
+		request1.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				tabela.push(cursor.value)
+				cursor.continue();
+			}else{
+				resolve(tabela)
+			}
+		}
+	})
+}
+
+
+//inserir novo produto--------------------------------
+function addProdutosBd(prd){
+	var transaction = db.transaction("produtos", "readwrite"); 
+	var tarefTable = transaction.objectStore("produtos")
+	tarefTable.put({
+			produto: prd,
+	})
+	
+	//se hover erro na transação
+	transaction.onerror = (event) => {
+		//mensagem de rejeitado
+		var icon = "img/imgError.png"
+		var msg = "Erro ao salvar produto!"
+		var act = error
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+		console.log("Erro ao salvar produto! " + error)
+	}
+	
+};
+
+//baixar tabelas dos produtos
+async function loadProdutosGeral(){
+	await bdOK()
+	return new Promise((resolve)=>{
+		const tabela =  []
+		var transaction1 = db.transaction('produtos', "readonly");
+		var store1 = transaction1.objectStore('produtos');
+		var request1 = store1.openCursor();
+		request1.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				tabela.push(cursor.value)
+				cursor.continue();
+			}else{
+				resolve(tabela)
+			}
+		}
+	})
+}
+
+
+
+//inserir novo membro da equipe--------------------------------
+function addEquipeBd(mem){
+	var transaction = db.transaction("equipe", "readwrite"); 
+	var tarefTable = transaction.objectStore("equipe")
+	tarefTable.put({
+			membro: mem,
+	})
+	
+	//se hover erro na transação
+	transaction.onerror = (event) => {
+		//mensagem de rejeitado
+		var icon = "img/imgError.png"
+		var msg = "Erro ao salvar membro da equipe!"
+		var act = error
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+		console.log("Erro ao salvar membro da equipe! " + error)
+	}
+	
+};
+
+//baixar tabelas dos produtos
+async function loadEquipeGeral(){
+	await bdOK()
+	return new Promise((resolve)=>{
+		const tabela =  []
+		var transaction1 = db.transaction('equipe', "readonly");
+		var store1 = transaction1.objectStore('equipe');
 		var request1 = store1.openCursor();
 		request1.onsuccess = function (event) {
 			var cursor = event.target.result;

@@ -153,17 +153,62 @@ function LimpTaref(){
 	//caixa dos pedidos
 	tfPlimp()
 
-	//caixa das ferramentas
+	//preencher select (ferramentas)
 	const tff = document.getElementById('trf_form_Fer');
-	tff.value = $(tff).val("selecione uma ferramenta").select2();	
+	tff.innerHTML = ""
+	const optLimpFer = document.createElement("option")
+	optLimpFer.innerHTML = "selecione uma ferramenta"
+	tff.append(optLimpFer);
 	
-	//caixa dos produtos
+	(async function ferramentas(){
+		//baixar ferramentas salvas salvos
+		const ferramentas = await loadFerramentasGeral()
+		ferramentas.map((e)=>{
+			const opt1 = document.createElement("option")
+			opt1.innerHTML = e.ferramenta
+			tff.append(opt1)
+		
+		})
+		tff.value = $(tff).val("selecione uma ferramenta").select2();
+	})();
+	
+	//preencher select (produtos)
 	const tfp = document.getElementById('trf_form_Prd');
-	tfp.value = $(tfp).val("selecione um produto").select2();
+	tfp.innerHTML = ""
+	const optLimpProd = document.createElement("option")
+	optLimpProd.innerHTML = "selecione um produto"
+	tfp.append(optLimpProd);
 	
-	//caixa da equipe
+	(async function produtos(){
+		//baixar produtos salvos
+		const produtos = await loadProdutosGeral()
+		produtos.map((e)=>{
+			const opt1 = document.createElement("option")
+			opt1.innerHTML = e.produto
+			tfp.append(opt1)
+		
+		})
+		tfp.value = $(tfp).val("selecione um produto").select2();
+	})();
+	
+	//preencher select (equipe)
 	const tfe = document.getElementById('trf_form_EquMem');
-	tfe.value = $(tfe).val("selecione um membro").select2();
+	tfe.innerHTML = ""
+	const optLimpEqp = document.createElement("option")
+	optLimpEqp.innerHTML = "selecione um membro"
+	tfe.append(optLimpEqp);
+	
+	(async function equipe(){
+		//baixar produtos salvos
+		const equipe = await loadEquipeGeral()
+		equipe.map((e)=>{
+			const opt1 = document.createElement("option")
+			opt1.innerHTML = e.membro
+			tfe.append(opt1)
+		
+		})
+		tfe.value = $(tfe).val("selecione um membro").select2();
+	})();
 	
 	//limpar tabelas dos pedidos, ferramentas, produtos e equipe
 	const tfProv = [...document.querySelectorAll(".tfProv")]
@@ -1377,11 +1422,11 @@ document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
 			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja salvar esta tarefa como padrão?</h4></div>"+
 			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome identificador</p></div>"+
 			"<div class='ctrlPnl' id='cartaoAddDv'>"+
-				"<input type='text' id='ctrlPnlInput' maxLength='30' required>"+
+				"<input type='text' class='ctrlPnlInput' id='ctrlPnlInput' maxLength='30' required>"+
 			"</div>"+
 			"<div class='ctrlPnlBtn'>"+
-				"<button id='ctrlPnlBtnSlv'>salvar</button>"+
-				"<button id='ctrlPnlBtnCnc'>cancelar</button>"+
+				"<button class='trfForm_addEspSlv' id='ctrlPnlBtnSlv'>salvar</button>"+
+				"<button class='trfForm_addEspCnc' id='ctrlPnlBtnCnc'>cancelar</button>"+
 			"</div>"+
 		"</div>"
 
@@ -1513,6 +1558,278 @@ document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
 	}else{
 		slctBxrCrd.reportValidity()
 	}
+})
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+
+
+
+//------------------------------------ADICIONAR NOVA FERRAMENTA------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//botão adicionar nova ferramenta
+document.getElementById("trfForm_addFer").addEventListener("click",()=>{
+	const body = document.body
+	const caixa = document.createElement("div")
+	caixa.setAttribute("id","PnlmsgAlert1")
+	body.append(caixa)
+
+	const caixafull = 
+		"<div id='ctrlPnl'>"+
+			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
+			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma nova ferramenta?</h4></div>"+
+			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira os dados da ferramenta</p></div>"+
+			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+				"<input type='text' class='ctrlPnlInput' id='trfForm_novaFer' maxLength='70' required>"+
+			"</div>"+
+			"<div class='ctrlPnlBtn'>"+
+				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvFer'>salvar</button>"+
+				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanFer'>cancelar</button>"+
+			"</div>"+
+		"</div>"
+
+	caixa.innerHTML += caixafull
+
+	//botão cancelar
+	document.getElementById("trfForm_BtnCanFer").addEventListener('click', function () {
+		document.getElementById("PnlmsgAlert1").remove();
+	})
+
+	//botão salvar
+	document.getElementById("trfForm_BtnSlvFer").addEventListener('click', function () {
+		if(document.getElementById("trfForm_novaFer").value == ""){
+			document.getElementById("trfForm_novaFer").reportValidity()
+		}else{
+			
+			//baixar ferramentas salvos
+			(async function salvarFer(){
+				const ferramenta = await loadFerramentasGeral()
+
+				//procurar ferramenta igual
+				var vrfIgual = false
+				ferramenta.map((e)=>{
+					if(document.getElementById("trfForm_novaFer").value == e.ferramenta){
+						vrfIgual = true
+					}
+				})
+
+				//salvar novo cartão
+				if(vrfIgual == true){
+					document.getElementById("PnlmsgAlert1").remove();
+					//mensagem de corfirmado
+					var icon = "img/imgAlert.png"
+					var msg = "Repetido"
+					var act = "Ferramenta já existe!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					const fer = document.getElementById("trfForm_novaFer").value
+					addFerramentaoBd(fer)
+					
+					const cxSlct = document.getElementById("trf_form_Fer")
+					const opt = document.createElement("option")
+					opt.innerHTML = document.getElementById("trfForm_novaFer").value
+					cxSlct.append(opt)
+
+					document.getElementById("PnlmsgAlert1").remove();
+
+					//mensagem de corfirmado
+					var icon = "img/imgOK.png"
+					var msg = "Confirmação"
+					var act = "Ferramenta criada com sucesso!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}
+
+			})()
+			
+		}
+	})
+})
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------ADICIONAR NOVO PRODUTO------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//botão adicionar novo produto
+document.getElementById("trfForm_addProd").addEventListener("click",()=>{
+	const body = document.body
+	const caixa = document.createElement("div")
+	caixa.setAttribute("id","PnlmsgAlert1")
+	body.append(caixa)
+
+	const caixafull = 
+		"<div id='ctrlPnl'>"+
+			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
+			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma novo produto?</h4></div>"+
+			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira os dados do produto</p></div>"+
+			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+				"<input type='text' class='ctrlPnlInput' id='trfForm_novoProd' maxLength='70' required>"+
+			"</div>"+
+			"<div class='ctrlPnlBtn'>"+
+				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvPrd'>salvar</button>"+
+				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanPrd'>cancelar</button>"+
+			"</div>"+
+		"</div>"
+
+	caixa.innerHTML += caixafull
+
+	//botão cancelar
+	document.getElementById("trfForm_BtnCanPrd").addEventListener('click', function () {
+		document.getElementById("PnlmsgAlert1").remove();
+	})
+
+	//botão salvar
+	document.getElementById("trfForm_BtnSlvPrd").addEventListener('click', function () {
+		if(document.getElementById("trfForm_novoProd").value == ""){
+			document.getElementById("trfForm_novoProd").reportValidity()
+		}else{
+			
+			//baixar produtos salvos
+			(async function salvarPrd(){
+				const produto = await loadProdutosGeral()
+
+				//procurar produto igual
+				var vrfIgual = false
+				produto.map((e)=>{
+					if(document.getElementById("trfForm_novoProd").value == e.produto){
+						vrfIgual = true
+					}
+				})
+
+				//salvar novo produto
+				if(vrfIgual == true){
+					document.getElementById("PnlmsgAlert1").remove();
+					//mensagem de corfirmado
+					var icon = "img/imgAlert.png"
+					var msg = "Repetido"
+					var act = "Produto já existe!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					const prd = document.getElementById("trfForm_novoProd").value
+					addProdutosBd(prd)
+					
+					const cxSlct = document.getElementById("trf_form_Prd")
+					const opt = document.createElement("option")
+					opt.innerHTML = document.getElementById("trfForm_novoProd").value
+					cxSlct.append(opt)
+
+					document.getElementById("PnlmsgAlert1").remove();
+
+					//mensagem de corfirmado
+					var icon = "img/imgOK.png"
+					var msg = "Confirmação"
+					var act = "Ferramenta criada com sucesso!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}
+
+			})()
+			
+		}
+	})
+})
+//-------------------------------------------------------------------------------------------------------
+//-------------------------------------------------------------------------------------------------------
+
+
+
+
+//------------------------------------ADICIONAR NOVO MEMBRO DA EQUIPE------------------------------------
+//-------------------------------------------------------------------------------------------------------
+//botão adicionar novo produto
+document.getElementById("trfForm_addEqp").addEventListener("click",()=>{
+	const body = document.body
+	const caixa = document.createElement("div")
+	caixa.setAttribute("id","PnlmsgAlert1")
+	body.append(caixa)
+
+	const caixafull = 
+		"<div id='ctrlPnl'>"+
+			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
+			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma novo membro?</h4></div>"+
+			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome do membro</p></div>"+
+			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+				"<input type='text' class='ctrlPnlInput' id='trfForm_novoMem' maxLength='70' required>"+
+			"</div>"+
+			"<div class='ctrlPnlBtn'>"+
+				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvMem'>salvar</button>"+
+				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanMem'>cancelar</button>"+
+			"</div>"+
+		"</div>"
+
+	caixa.innerHTML += caixafull
+
+	//botão cancelar
+	document.getElementById("trfForm_BtnCanMem").addEventListener('click', function () {
+		document.getElementById("PnlmsgAlert1").remove();
+	})
+
+	//botão salvar
+	document.getElementById("trfForm_BtnSlvMem").addEventListener('click', function () {
+		if(document.getElementById("trfForm_novoMem").value == ""){
+			document.getElementById("trfForm_novoMem").reportValidity()
+		}else{
+			
+			//baixar equipe salva
+			(async function salvarEqp(){
+				const equipe = await loadEquipeGeral()
+
+				//procurar produto igual
+				var vrfIgual = false
+				equipe.map((e)=>{
+					if(document.getElementById("trfForm_novoMem").value == e.membro){
+						vrfIgual = true
+					}
+				})
+
+				//salvar novo produto
+				if(vrfIgual == true){
+					document.getElementById("PnlmsgAlert1").remove();
+					//mensagem de corfirmado
+					var icon = "img/imgAlert.png"
+					var msg = "Repetido"
+					var act = "Membro já existe!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					const mem = document.getElementById("trfForm_novoMem").value
+					addEquipeBd(mem)
+					
+					const cxSlct = document.getElementById("trf_form_EquMem")
+					const opt = document.createElement("option")
+					opt.innerHTML = document.getElementById("trfForm_novoMem").value
+					cxSlct.append(opt)
+
+					document.getElementById("PnlmsgAlert1").remove();
+
+					//mensagem de corfirmado
+					var icon = "img/imgOK.png"
+					var msg = "Confirmação"
+					var act = "Membro criado com sucesso!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}
+
+			})()
+			
+		}
+	})
 })
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
