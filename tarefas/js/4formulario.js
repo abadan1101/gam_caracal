@@ -1074,7 +1074,12 @@ salvTaref.forEach(function(e){
 							document.getElementById("trf_form_num").focus()
 						}
 						//adicionar nova tarefa na tabela
-						await TrfTbl_Load(tarefa)
+						if(tblPrincipal == "estatica"){
+							await TrfTbl_LoadStatic(tarefa)
+						}else{
+							await TrfTbl_Load(tarefa)
+						}
+						
 					}else{
 						//mensagem de rejeitado
 						var icon = "img/imgAlert.png"
@@ -1090,7 +1095,12 @@ salvTaref.forEach(function(e){
 			}else{
 				//gravar alterações da tarefa no banco de dados
 				editarTarefasBD(idTarefa,tabela).then(()=>{
-					trfTbl_alterarTarefa(tabela)//função pertence a folha: /tarefas/js/tabela.js
+					if(tblPrincipal == "estatica"){
+						trfTbl_alterarTarefaStatic(tabela)
+					}else{
+						trfTbl_alterarTarefa(tabela)//função pertence a folha: /tarefas/js/tabela.js
+					}
+					
 				})
 			}
 		}else{

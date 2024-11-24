@@ -290,22 +290,21 @@ async function trfTbl_alterarTarefaStatic(tabela){//função chamada na folha: /
 			}
 			trfTbl_EditarLinha.children[3].innerHTML = tarefaBD[0].chave01;
 			//preencher coluna andamento
-			trfTbl_EditarLinha.children[4].firstChild.value = tarefaBD[0].chave00;
+			trfTbl_EditarLinha.children[4].innerHTML = tarefaBD[0].chave00;
 			//preencher coluna chave 01
-			trfTbl_EditarLinha.children[5].firstChild.value = tarefaBD[0].chave02;
+			trfTbl_EditarLinha.children[5].innerHTML = tarefaBD[0].chave02;
 			//preencher coluna chave 02
-			trfTbl_EditarLinha.children[6].firstChild.value = tarefaBD[0].chave03;
+			trfTbl_EditarLinha.children[6].innerHTML = tarefaBD[0].chave03;
 			//preencher coluna chave 03
-			trfTbl_EditarLinha.children[7].firstChild.value= tarefaBD[0].chave04;
+			trfTbl_EditarLinha.children[7].innerHTML = tarefaBD[0].chave04;
 			//preencher coluna chave 04
-			trfTbl_EditarLinha.children[8].firstChild.value = tarefaBD[0].chave05;
+			trfTbl_EditarLinha.children[8].innerHTML = tarefaBD[0].chave05;
 			//preencher coluna porcentagem
 			trfTbl_EditarLinha.children[9].innerHTML = tarefaBD[0].porcentagem + "%";
 			//preencher coluna tarefa
 			trfTbl_EditarLinha.children[10].innerHTML = tarefaBD[0].tarefa;
 			//preencher coluna serviço
-			trfTbl_EditarLinha.children[11].firstChild.value = tarefaBD[0].serviço;
-			//trfTbl_EditarLinha.children[11].firstChild.style.height = trfTbl_EditarLinha.clientHeight + "px"
+			trfTbl_EditarLinha.children[11].innerHTML = tarefaBD[0].serviço;
 			
 			//preencher coluna das pendencias			
 			var t="";u="";v=""
@@ -326,7 +325,7 @@ async function trfTbl_alterarTarefaStatic(tabela){//função chamada na folha: /
 			}
 
 			//adicionar cor da linha
-			trfTbl_CorLinhaStatic(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+			trfTbl_CorLinhaStatic(trfTbl_EditarLinha.children[4].innerHTML, trfTbl_EditarLinha)
 
 			//filtro das tarefas
 			trfTbl_filtroStatic()
