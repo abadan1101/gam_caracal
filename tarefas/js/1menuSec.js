@@ -168,13 +168,25 @@ fileInput.addEventListener('change', () => {
 					}
 					
 				}
-			
+
+			//ajustar tipo da tarefa
+			var tipoDisp = ""
+			if(rows[0].TIPO == "i" || rows[0].TIPO == "I"){
+				tipoDisp = "Indisponível"
+			}
+			if(rows[0].TIPO == "d" || rows[0].TIPO == "D"){
+				tipoDisp = "Disponível"
+			}
+			if(rows[0].TIPO == "r" || rows[0].TIPO == "R"){
+				tipoDisp = "Restrito"
+			}
+
 			for(i = 1; i < rows.length; i++){
 				tabela.push({
 					numero: rows[0].NUMERO,
 					data: timestamp,
 					chave00: "Aberto",
-					chave01: rows[0].TIPO,
+					chave01: tipoDisp,
 					chave02: "",
 					chave03: "",
 					chave04: "",
