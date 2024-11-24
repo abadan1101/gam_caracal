@@ -13,5 +13,5 @@ var tipMenu = localStorage.getItem("tipoMenu");
 //variavel que difine tipo de tabela principal
 var tblPrincipal = localStorage.getItem("tipoTabela") 
 
-localStorage.setItem("tipoMenu", 800)
+localStorage.setItem("tipoMenu", 5000)
 localStorage.setItem("tipoTabela", "estatica")
