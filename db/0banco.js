@@ -236,7 +236,7 @@ function addTarefasBd(tabela, reiniciar){
 	var tarefTable = transaction.objectStore(dbLinha)
 	tabela.map((e)=>{
 		tarefTable.put({
-			numero: e.numero,
+			numero: parseInt(e.numero),
 			data: e.data,
 			chave00: e.chave00,
 			chave01: e.chave01,
