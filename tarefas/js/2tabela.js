@@ -515,17 +515,17 @@ async function trfTbl_configAndamento(select){
 	const pendente = trTbl_verificarPendencias(tarefa)
 
 	//verificar uso de andamento automático no textarea
-	const vlTXA = select.parentElement.parentElement.children[11].firstChild.value;
-	var usoTXA = false
-	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
-	for(i = 0; i < bdCfg.chave00.length; i++){
-		if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && vlTXA.includes(bdCfg.chave00[i] + "**")){
-			usoTXA = true
-		}
-	}
+	// const vlTXA = select.parentElement.parentElement.children[11].firstChild.value;
+	// var usoTXA = false
+	// var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	// for(i = 0; i < bdCfg.chave00.length; i++){
+	// 	if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && vlTXA.includes(bdCfg.chave00[i] + "**")){
+	// 		usoTXA = true
+	// 	}
+	// }
 
 	//caso alguma pendência
-	if(pendente == true || usoTXA == true){
+	if(pendente == true/* || usoTXA == true*/){
 		for(i=0;i<opcoes.length;i++){
 			opcoes[i].disabled = true
 			opcoes[i].style.color = "#ddd"
@@ -585,7 +585,14 @@ async function trfTbl_altetarAndamento(e){
 		trfTbl_CorLinha(e, y)
 
 		//ajustar porcentagem
-		trfTbl_autoPorcentagem(e.value, y)
+		if(e.value == "Fechado" || e.value == "Ag. Virada" || e.value == "Ag. Abrir"){
+			trfTbl_autoPorcentagem(e.value, y)
+		}else{
+			const prtgem = e.parentElement.parentElement.children[9]
+			if(prtgem.innerHTML == "100%"){
+				trfTbl_autoPorcentagem(e.value, y)
+			}
+		}	
 	}
 }
 
