@@ -1095,12 +1095,7 @@ salvTaref.forEach(function(e){
 			}else{
 				//gravar alterações da tarefa no banco de dados
 				editarTarefasBD(idTarefa,tabela).then(()=>{
-					if(tblPrincipal == "estatica"){
-						trfTbl_alterarTarefaStatic(tabela)
-					}else{
-						trfTbl_alterarTarefa(tabela)//função pertence a folha: /tarefas/js/tabela.js
-					}
-					
+					trfTbl_alterarTarefa(tabela)//função pertence a folha: /tarefas/js/tabela.js
 				})
 			}
 		}else{

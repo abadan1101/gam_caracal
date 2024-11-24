@@ -65,7 +65,7 @@ async function cnfgFormTrf(n){
 				await TrfTbl_LoadStatic(bdTabela)//funções chamadas da folha: /tarefas/js/tabela.js
 				//filtrar tarefas
 				await trfTbl_filtroReload();//pertence a folha: /tarefas/js/tabela.js
-				trfTbl_filtroStatic()//pertence a folha: /tarefas/js/tabela.js
+				trfTbl_filtro()//pertence a folha: /tarefas/js/tabela.js
 			}else{
 				await TrfTbl_Load(bdTabela)//funções chamadas da folha: /tarefas/js/tabela.js
 				//filtrar tarefas
