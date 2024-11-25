@@ -14,4 +14,4 @@ var tipMenu = localStorage.getItem("tipoMenu");
 var tblPrincipal = localStorage.getItem("tipoTabela") 
 
 localStorage.setItem("tipoMenu", 5000)
-localStorage.setItem("tipoTabela", "estatica")
+localStorage.setItem("tipoTabela", "normal")

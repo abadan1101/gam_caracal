@@ -111,7 +111,7 @@ fileInput.addEventListener('change', () => {
 				}
 				
 				//ajustar descrição da tarefa
-				var descricao = e.__EMPTY_5
+				var descricao = e.__EMPTY_4
 				
 				//ajuste para pular linhas não desejaveis da planilha baixada
 				if(e.__EMPTY == "" || e.__EMPTY == "NÚMERO" || e.__EMPTY == "Ordens de Serviço Pendentes - (Processamento Virtual)"){
