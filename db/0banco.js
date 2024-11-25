@@ -236,7 +236,7 @@ function addTarefasBd(tabela, reiniciar){
 	var tarefTable = transaction.objectStore(dbLinha)
 	tabela.map((e)=>{
 		tarefTable.put({
-			numero: parseInt(e.numero),
+			numero: e.numero.toString().toUpperCase(),
 			data: e.data,
 			chave00: e.chave00,
 			chave01: e.chave01,
@@ -298,7 +298,7 @@ function editarTarefasBD(n,tabela){
 		var objectStore = transaction.objectStore(dbLinha);
 		var request = objectStore.get(n);
 		request.onsuccess = function(){
-			request.result.numero = tabela[0].numero,
+			request.result.numero = tabela[0].numero.toString().toUpperCase(),
 			request.result.data = tabela[0].data
 			request.result.chave00 = tabela[0].chave00,
 			request.result.chave01 = tabela[0].chave01,

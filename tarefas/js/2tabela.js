@@ -1345,6 +1345,9 @@ chbx.map((e)=>{
 	})
 })
 //ocultar ou mostrar tarefas fechadas 
+if(!localStorage.getItem("trf_tblCBFechadas")){
+	localStorage.setItem("trf_tblCBFechadas",true)
+}
 document.getElementById("trf_tblCBFechadas").addEventListener("change",(e)=>{
 	if(document.getElementById("trf_tblCBFechadas").checked == true){
 		localStorage.setItem("trf_tblCBFechadas",true)
