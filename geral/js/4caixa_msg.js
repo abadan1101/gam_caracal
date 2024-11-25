@@ -83,7 +83,7 @@ function openMSG(icon, msg, act, modo, reload,func,senha){
 	//botão sim
 	document.getElementById("msgAlertBtnY").addEventListener('click', function () {
 		if(senha == true){
-			if(document.getElementById("msgAlertSenha").value == "1101"){//senha padrão "1101"
+			if(document.getElementById("msgAlertSenha").value == senhaAltAvancado){
 				document.getElementById("PnlmsgAlert").remove();
 				func();
 				if(reload == "true"){

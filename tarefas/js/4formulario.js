@@ -1416,153 +1416,179 @@ function addCartao(modo, id){
 
 //botão salvar novo cartão
 document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
-	const body = document.body
-	const caixa = document.createElement("div")
-	caixa.setAttribute("id","PnlmsgAlert1")
-	body.append(caixa)
+	//mensagem
+	var icon = "img/imgAlert.png"
+	var msg = "Atenção!"
+	var act = "Para continuar, digite a senha!"
+	var modo = "yn"
+	var reload = ""
+	var func = () => {salvarCartao()}
+	var senha = true
+	openMSG(icon, msg, act, modo, reload,func,senha);
+	
+	function salvarCartao(){
+		const body = document.body
+		const caixa = document.createElement("div")
+		caixa.setAttribute("id","PnlmsgAlert1")
+		body.append(caixa)
 
-	const caixafull = 
-		"<div id='ctrlPnl'>"+
-			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
-			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja salvar esta tarefa como padrão?</h4></div>"+
-			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome identificador</p></div>"+
-			"<div class='ctrlPnl' id='cartaoAddDv'>"+
-				"<input type='text' class='ctrlPnlInput' id='ctrlPnlInput' maxLength='30' required>"+
-			"</div>"+
-			"<div class='ctrlPnlBtn'>"+
-				"<button class='trfForm_addEspSlv' id='ctrlPnlBtnSlv'>salvar</button>"+
-				"<button class='trfForm_addEspCnc' id='ctrlPnlBtnCnc'>cancelar</button>"+
-			"</div>"+
-		"</div>"
+		const caixafull = 
+			"<div id='ctrlPnl'>"+
+				"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
+				"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja salvar esta tarefa como padrão?</h4></div>"+
+				"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome identificador</p></div>"+
+				"<div class='ctrlPnl' id='cartaoAddDv'>"+
+					"<input type='text' class='ctrlPnlInput' id='ctrlPnlInput' maxLength='30' required>"+
+				"</div>"+
+				"<div class='ctrlPnlBtn'>"+
+					"<button class='trfForm_addEspSlv' id='ctrlPnlBtnSlv'>salvar</button>"+
+					"<button class='trfForm_addEspCnc' id='ctrlPnlBtnCnc'>cancelar</button>"+
+				"</div>"+
+			"</div>"
 
-	caixa.innerHTML += caixafull
-	
-	//carregar input com valor atual do select 
-	var vlSlct = document.getElementById("trf_form_bxr").value
-	if(vlSlct == "selecione um cartão"){vlSlct = ""}
-	document.getElementById("ctrlPnlInput").value = vlSlct
-	
-	//botão cancelar
-	document.getElementById("ctrlPnlBtnCnc").addEventListener('click', function () {
-		document.getElementById("PnlmsgAlert1").remove();
-	})
-	
-	//botão salvar
-	document.getElementById("ctrlPnlBtnSlv").addEventListener('click', function () {
-		if(document.getElementById("ctrlPnlInput").value == ""){
-			document.getElementById("ctrlPnlInput").reportValidity()
-		}else{
-			(async function cartoes(){
-			
-				//baixar cartões salvos
-				const cartoes = await loadCartaoGeral()
+		caixa.innerHTML += caixafull
+		
+		//carregar input com valor atual do select 
+		var vlSlct = document.getElementById("trf_form_bxr").value
+		if(vlSlct == "selecione um cartão"){vlSlct = ""}
+		document.getElementById("ctrlPnlInput").value = vlSlct
+		
+		//botão cancelar
+		document.getElementById("ctrlPnlBtnCnc").addEventListener('click', function () {
+			document.getElementById("PnlmsgAlert1").remove();
+		})
+		
+		//botão salvar
+		document.getElementById("ctrlPnlBtnSlv").addEventListener('click', function () {
+			if(document.getElementById("ctrlPnlInput").value == ""){
+				document.getElementById("ctrlPnlInput").reportValidity()
+			}else{
+				(async function cartoes(){
 				
-				//procurar cartão igual
-				var vrfIgual = false
-				var idIgual = ""
-				cartoes.map((e)=>{
-					if(document.getElementById("ctrlPnlInput").value == e.nome){
-						vrfIgual = true
-						idIgual = e.id
+					//baixar cartões salvos
+					const cartoes = await loadCartaoGeral()
+					
+					//procurar cartão igual
+					var vrfIgual = false
+					var idIgual = ""
+					cartoes.map((e)=>{
+						if(document.getElementById("ctrlPnlInput").value == e.nome){
+							vrfIgual = true
+							idIgual = e.id
+						}
+					})
+					
+					//salvar novo cartão
+					if(vrfIgual == false){
+						addCartao("inserir", "")
+						const bxr = document.getElementById("trf_form_bxr")
+						const opt = document.createElement("option")
+						opt.innerHTML = document.getElementById("ctrlPnlInput").value
+						bxr.append(opt)
+					}else{
+						addCartao("alterar", idIgual)
 					}
-				})
-				
-				//salvar novo cartão
-				if(vrfIgual == false){
-					addCartao("inserir", "")
-					const bxr = document.getElementById("trf_form_bxr")
-					const opt = document.createElement("option")
-					opt.innerHTML = document.getElementById("ctrlPnlInput").value
-					bxr.append(opt)
-				}else{
-					addCartao("alterar", idIgual)
-				}
-				
-				//remover caixa de mensagem
-				document.getElementById("PnlmsgAlert1").remove();
-				
-				//mensagem de corfirmado
-				var icon = "img/imgOK.png"
-				var msg = "Confirmação"
-				var act = "cartão salvo com sucesso!"
-				var modo = "conf"
-				var reload = "false"
-				var func = ""
-				openMSG(icon, msg, act, modo, reload,func);
-				
-			})()
-		}
-	})
-})
-
-//botão baixar novo cartão
-document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
-	const slctBxrCrd = document.getElementById("trf_form_bxr")
-	if(slctBxrCrd.value != "" || slctBxrCrd.value == "selecione um cartão"){
-		(async function cartoes(){
-				
-			//baixar cartões salvos
-			const tabela = await loadCartaoGeral();
-
-			//procurar cartão igual
-			tabela.map((e)=>{
-				if(slctBxrCrd.value == e.nome){
 					
-					//caixas com textarea
-					document.getElementById('trf_form_txa2').value = "***" + e.serviço + "***\n" + document.getElementById('trf_form_txa2').value;
-
-					//caixa dos pedidos
-					const popularPedidos = e.pedidos
-					popularPedidos.map((e)=>{
-						var pedidos = []
-						pedidos.push(e.pim)
-						pedidos.push(e.nome)
-						pedidos.push(e.tipo)
-						pedidos.push(e.quantidade)
-						pedidos.push(e.PN)
-						pedidos.push(e.PNA)
-						pedidos.push(e.manual)
-						pedidos.push(e.observacao)
-						pedidos.push(e.status)
-						trfFrm_adicionarPedidos(pedidos)
-					})
-					
-					//caixa das ferramentas
-					const popularFerramentas = e.ferramentas
-					popularFerramentas.map((e)=>{
-						var ferramentas = []
-						ferramentas.push(e.ferramenta)
-						ferramentas.push(e.status)
-						trfFrm_adicionarFerramentas(ferramentas)
-					})
-
-					//caixa dos produtos
-					const popularProdutos = e.produtos
-					popularProdutos.map((e)=>{
-						var produtos = []
-						produtos.push(e.produto)
-						produtos.push(e.status)
-						trfFrm_adicionarProdutos(produtos)
-					})
-
-					//oculta colunas na tabela dos pedidos em telas pequenas
-					OcultColm()//função pertence a folha "geral/js/inicializacao
+					//remover caixa de mensagem
+					document.getElementById("PnlmsgAlert1").remove();
 					
 					//mensagem de corfirmado
 					var icon = "img/imgOK.png"
 					var msg = "Confirmação"
-					var act = "cartão baixado com sucesso!"
+					var act = "cartão salvo com sucesso!"
 					var modo = "conf"
 					var reload = "false"
 					var func = ""
 					openMSG(icon, msg, act, modo, reload,func);
-				}
-			})
-		})();
-
-	}else{
-		slctBxrCrd.reportValidity()
+					
+				})()
+			}
+		})
 	}
+	
+})
+
+//botão baixar novo cartão
+document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
+	//mensagem
+	var icon = "img/imgAlert.png"
+	var msg = "Atenção!"
+	var act = "Para continuar, digite a senha!"
+	var modo = "yn"
+	var reload = ""
+	var func = () => {baixarCartao()}
+	var senha = true
+	openMSG(icon, msg, act, modo, reload,func,senha);
+	
+	function baixarCartao(){
+		const slctBxrCrd = document.getElementById("trf_form_bxr")
+		if(slctBxrCrd.value != "" || slctBxrCrd.value == "selecione um cartão"){
+			(async function cartoes(){
+					
+				//baixar cartões salvos
+				const tabela = await loadCartaoGeral();
+
+				//procurar cartão igual
+				tabela.map((e)=>{
+					if(slctBxrCrd.value == e.nome){
+						
+						//caixas com textarea
+						document.getElementById('trf_form_txa2').value = "***" + e.serviço + "***\n" + document.getElementById('trf_form_txa2').value;
+
+						//caixa dos pedidos
+						const popularPedidos = e.pedidos
+						popularPedidos.map((e)=>{
+							var pedidos = []
+							pedidos.push(e.pim)
+							pedidos.push(e.nome)
+							pedidos.push(e.tipo)
+							pedidos.push(e.quantidade)
+							pedidos.push(e.PN)
+							pedidos.push(e.PNA)
+							pedidos.push(e.manual)
+							pedidos.push(e.observacao)
+							pedidos.push(e.status)
+							trfFrm_adicionarPedidos(pedidos)
+						})
+						
+						//caixa das ferramentas
+						const popularFerramentas = e.ferramentas
+						popularFerramentas.map((e)=>{
+							var ferramentas = []
+							ferramentas.push(e.ferramenta)
+							ferramentas.push(e.status)
+							trfFrm_adicionarFerramentas(ferramentas)
+						})
+
+						//caixa dos produtos
+						const popularProdutos = e.produtos
+						popularProdutos.map((e)=>{
+							var produtos = []
+							produtos.push(e.produto)
+							produtos.push(e.status)
+							trfFrm_adicionarProdutos(produtos)
+						})
+
+						//oculta colunas na tabela dos pedidos em telas pequenas
+						OcultColm()//função pertence a folha "geral/js/inicializacao
+						
+						//mensagem de corfirmado
+						var icon = "img/imgOK.png"
+						var msg = "Confirmação"
+						var act = "cartão baixado com sucesso!"
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
+					}
+				})
+			})();
+
+		}else{
+			slctBxrCrd.reportValidity()
+		}
+	}
+	
 })
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------

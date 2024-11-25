@@ -48,6 +48,98 @@ window.addEventListener('click', function (e) {
 
 
 
+//------------------------------BOTÃO CONFIGURAÇÕES-------------------------------------
+//--------------------------------------------------------------------------------------
+const configuracoesGerais = document.getElementById('trf_menu_afConfiguracoes')
+configuracoesGerais.addEventListener('click', () => {
+	//mensagem
+	var icon = "img/imgAlert.png"
+	var msg = "Atenção!"
+	var act = "Digite a senha para continuar!"
+	var modo = "yn"
+	var reload = ""
+	var func = () => {ConfigGeral()}
+	var senha = true 
+	openMSG(icon, msg, act, modo, reload,func,senha);
+	
+	function ConfigGeral(){
+		const body = document.body
+		const caixa = document.createElement("div")
+		caixa.setAttribute("id","PnlConfigGeral")
+		body.append(caixa)
+
+		const caixafull = 
+			"<div id='ctrlPnlCgeral'>"+
+				"<div class='ctrlPnlCgeralCbc'><h4 id='TextCgeral'>CONFIGURAÇÕES GERAIS</h4></div>"+
+				"<div class='ctrlPnlCgeral'>"+
+					"<div class='ConfigGeralPCP'><label>senha para configurações:</label><div><input id='cGeralSenha' type='password' maxlength='6' required><i class='bx bx-low-vision' id='cGeralOcultSenha'></i></div></div>" +
+					"<div class='ConfigGeralPCP'><label>tipo de menu:</label><select id='cGeralMenu'><option value='800'>fixo</option><option value='5000'>oculto</option><option value='1500'>responsivo</option></select></div>" +
+					"<div class='ConfigGeralPCP'><label>tipo de tabela principal:</label><select id='cGeralTabela'><option>estatica</option><option>normal</option></select></div>" +
+				"</div>"+
+				"<div class='BtnCgeral'>"+
+					"<button class='ConfigGeraladdEspSlv' id='ConfigGeraladdEspSlv'>salvar</button>"+
+					"<button class='ConfigGeraladdEspCnc' id='ConfigGeraladdEspCnc'>cancelar</button>"+
+				"</div>"+
+			"</div>"
+
+		caixa.innerHTML += caixafull
+		
+		//carregar caixas
+		//variável da senha para configurações gerais
+		document.getElementById("cGeralSenha").value = localStorage.getItem("senhaConfig"); 
+
+		//variavel do tamanho da tela padrão em px
+		document.getElementById("cGeralMenu").value = localStorage.getItem("tipoMenu"); 
+
+		//variavel que difine tipo de tabela principal
+		document.getElementById("cGeralTabela").value = localStorage.getItem("tipoTabela") 
+		
+		
+		
+		//botão mostrar senha
+		document.getElementById("cGeralOcultSenha").addEventListener('click', function () {
+			if(document.getElementById("cGeralSenha").type == "password"){
+				document.getElementById("cGeralSenha").type = "text"
+			}else{
+				document.getElementById("cGeralSenha").type = "password"
+			}
+			
+		})
+		
+		//botão cancelar
+		document.getElementById("ConfigGeraladdEspCnc").addEventListener('click', function () {
+			document.getElementById("PnlConfigGeral").remove();
+		})
+		
+		//botão salvar
+		document.getElementById("ConfigGeraladdEspSlv").addEventListener('click', function () {
+			if(document.getElementById("cGeralSenha").value != ""){
+				localStorage.setItem("senhaConfig", document.getElementById("cGeralSenha").value)
+				localStorage.setItem("tipoMenu", document.getElementById("cGeralMenu").value)
+				localStorage.setItem("tipoTabela", document.getElementById("cGeralTabela").value)
+				document.getElementById("PnlConfigGeral").remove();
+				
+				//mensagem
+				var icon = "img/imgOK.png"
+				var msg = "Confirmado"
+				var act = "A página será recarregada para efetivar as alterações!"
+				var modo = "conf"
+				var reload = "true"
+				var func = ""
+				openMSG(icon, msg, act, modo, reload,func);
+			}else{
+				document.getElementById("cGeralSenha").reportValidity();
+			}
+		})
+		
+	}
+})
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+
 //------------------------------BOTÃO RESTAURAR---------------------------------------
 //--------------------------------------------------------------------------------------
 let fileInput1 = document.getElementById('trf_menu_afRest')

@@ -1,17 +1,32 @@
 //---------------------CONFIGURAÇÕES DO USUÁRIO---------------------------
 //-----------------------------------------------------------------------
 
+//senha padrão para configurações gerais
+if(!localStorage.getItem("senhaConfig")){localStorage.setItem("senhaConfig", 1101)}
+
 //menu responsivo: 1500, recolhido: 5000 ou menu fixo: 800
 if(!localStorage.getItem("tipoMenu")){localStorage.setItem("tipoMenu", 5000)}
 
 //estatica: não é possivel editar a tabela sem o formulário; normal: tabela editavel.
 if(!localStorage.getItem("tipoTabela")){localStorage.setItem("tipoTabela", "normal")}
 
+
+
+
+
+
+
+//variável da senha para configurações gerais
+const senhaAltAvancado = localStorage.getItem("senhaConfig"); 
+
 //variavel do tamanho da tela padrão em px
-var tipMenu = localStorage.getItem("tipoMenu"); 
+const tipMenu = localStorage.getItem("tipoMenu"); 
 
 //variavel que difine tipo de tabela principal
-var tblPrincipal = localStorage.getItem("tipoTabela") 
+const tblPrincipal = localStorage.getItem("tipoTabela") 
 
-localStorage.setItem("tipoMenu", 5000)
-localStorage.setItem("tipoTabela", "normal")
+
+
+
+
+
