@@ -58,7 +58,7 @@ fileInput1.addEventListener('change', () => {
 	const bdAtivo = dbLinha;
 
 	
-	if(docSelect == "vn.ods"){
+	if(docSelect == "vn.xlsx" || docSelect == "vn.ods"){
 		//mensagem
 		var icon = "img/imgAlert.png"
 		var msg = "Atenção!"
@@ -92,6 +92,12 @@ fileInput1.addEventListener('change', () => {
 
 					var tabela = [];
 					rows.map((e)=>{
+						if(e.chave01 == undefined){e.chave01 = ""}
+						if(e.chave02 == undefined){e.chave02 = ""}
+						if(e.chave03 == undefined){e.chave03 = ""}
+						if(e.chave04 == undefined){e.chave04 = ""}
+						if(e.servico == undefined){e.servico = ""}
+
 						tabela.push({
 							numero: e.numero,
 							data: e.data,

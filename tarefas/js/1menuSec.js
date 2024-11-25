@@ -235,7 +235,7 @@ async function exportarTarefas(){
 	const nomeAba7 = "backup das ferramentas"
 	const nomeAba8 = "backup dos produtos"
 	const nomeAba9 = "backup da equipe"
-	const nomePlanilha = "vn.ods"
+	const nomePlanilha = "vn.xlsx"
 
 	//array da aba tarefas da linha (pasta do planejamento)
 	var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
@@ -600,7 +600,7 @@ trfTbl_Restaurar.addEventListener("click",(evt)=>{
 		const nomeAba1 = "pedidos"
 		const nomeAba2 = "ferramentas"
 		const nomeAba3 = "produtos"
-		const nomePlanilha = "relatorio.ods"
+		const nomePlanilha = "relatorio.xlsx"
 	
 		var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
 		var pedidos = [
