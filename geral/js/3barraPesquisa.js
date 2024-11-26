@@ -72,7 +72,7 @@ configuracoesGerais.addEventListener('click', () => {
 			"<div id='ctrlPnlCgeral'>"+
 				"<div class='ctrlPnlCgeralCbc'><h4 id='TextCgeral'>CONFIGURAÇÕES GERAIS</h4></div>"+
 				"<div class='ctrlPnlCgeral'>"+
-					"<div class='ConfigGeralPCP'><label>senha para configurações:</label><div><input id='cGeralSenha' type='password' maxlength='6' required><i class='bx bx-low-vision' id='cGeralOcultSenha'></i></div></div>" +
+					"<div class='ConfigGeralPCP'><label>senha geral:</label><div><input id='cGeralSenha' type='password' maxlength='6' required><i class='bx bx-low-vision' id='cGeralOcultSenha'></i></div></div>" +
 					"<div class='ConfigGeralPCP'><label>tipo de menu:</label><select id='cGeralMenu'><option value='800'>fixo</option><option value='5000'>oculto</option><option value='1500'>responsivo</option></select></div>" +
 					"<div class='ConfigGeralPCP'><label>tipo de tabela principal:</label><select id='cGeralTabela'><option>estatica</option><option>normal</option></select></div>" +
 				"</div>"+
