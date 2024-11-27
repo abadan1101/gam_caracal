@@ -20,6 +20,6 @@
     "lang":"pt-BR",
     "name":"GAM-Caracal",
     "short_name":"GAM-Caracal",
-    "start_url":"/",
-    "scope":"/"
+    "start_url":"https://abadan1101.github.io/gam_caracal",
+    "scope":"https://abadan1101.github.io/gam_caracal/"
 }
