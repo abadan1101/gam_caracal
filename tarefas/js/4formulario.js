@@ -1529,8 +1529,6 @@ document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
 	
 	function baixarCartao(){
 		
-		
-
 		(async function cartoes(){
 					
 			//baixar cartões salvos
