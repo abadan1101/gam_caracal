@@ -15,7 +15,7 @@
         }
     ],
     "orientation":"any",
-    "display":"fullscreen",
+    "display":"minimal-ui",
     "dir":"auto",
     "lang":"pt-BR",
     "name":"GAM-Caracal",
