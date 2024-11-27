@@ -20,6 +20,6 @@
     "lang":"pt-BR",
     "name":"GAM-Caracal",
     "short_name":"GAM-Caracal",
-    "start_url":"abadan1101/gam_caracal/",
-    "scope":"abadan1101/gam_caracal/"
+    "start_url":"/",
+    "scope":"/"
 }
