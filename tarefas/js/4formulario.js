@@ -1510,85 +1510,88 @@ document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
 
 //botão baixar novo cartão
 document.getElementById("trf_form_bxrIcn").addEventListener("click",()=>{
-	//mensagem
-	var icon = "img/imgAlert.png"
-	var msg = "Atenção!"
-	var act = "Para continuar, digite a senha!"
-	var modo = "yn"
-	var reload = ""
-	var func = () => {baixarCartao()}
-	var senha = true
-	openMSG(icon, msg, act, modo, reload,func,senha);
 	
-	function baixarCartao(){
-		const slctBxrCrd = document.getElementById("trf_form_bxr")
-		if(slctBxrCrd.value != "" || slctBxrCrd.value == "selecione um cartão"){
-			(async function cartoes(){
-					
-				//baixar cartões salvos
-				const tabela = await loadCartaoGeral();
+	const slctBxrCrd = document.getElementById("trf_form_bxr")
+	if(slctBxrCrd.value != "" || slctBxrCrd.value == "selecione um cartão"){
+		//mensagem
+		var icon = "img/imgAlert.png"
+		var msg = "Atenção!"
+		var act = "Para continuar, digite a senha!"
+		var modo = "yn"
+		var reload = ""
+		var func = () => {baixarCartao()}
+		var senha = true
+		openMSG(icon, msg, act, modo, reload,func,senha);
 
-				//procurar cartão igual
-				tabela.map((e)=>{
-					if(slctBxrCrd.value == e.nome){
-						
-						//caixas com textarea
-						document.getElementById('trf_form_txa2').value = "***" + e.serviço + "***\n" + document.getElementById('trf_form_txa2').value;
-
-						//caixa dos pedidos
-						const popularPedidos = e.pedidos
-						popularPedidos.map((e)=>{
-							var pedidos = []
-							pedidos.push(e.pim)
-							pedidos.push(e.nome)
-							pedidos.push(e.tipo)
-							pedidos.push(e.quantidade)
-							pedidos.push(e.PN)
-							pedidos.push(e.PNA)
-							pedidos.push(e.manual)
-							pedidos.push(e.observacao)
-							pedidos.push(e.status)
-							trfFrm_adicionarPedidos(pedidos)
-						})
-						
-						//caixa das ferramentas
-						const popularFerramentas = e.ferramentas
-						popularFerramentas.map((e)=>{
-							var ferramentas = []
-							ferramentas.push(e.ferramenta)
-							ferramentas.push(e.status)
-							trfFrm_adicionarFerramentas(ferramentas)
-						})
-
-						//caixa dos produtos
-						const popularProdutos = e.produtos
-						popularProdutos.map((e)=>{
-							var produtos = []
-							produtos.push(e.produto)
-							produtos.push(e.status)
-							trfFrm_adicionarProdutos(produtos)
-						})
-
-						//oculta colunas na tabela dos pedidos em telas pequenas
-						OcultColm()//função pertence a folha "geral/js/inicializacao
-						
-						//mensagem de corfirmado
-						var icon = "img/imgOK.png"
-						var msg = "Confirmação"
-						var act = "cartão baixado com sucesso!"
-						var modo = "conf"
-						var reload = "false"
-						var func = ""
-						openMSG(icon, msg, act, modo, reload,func);
-					}
-				})
-			})();
-
-		}else{
-			slctBxrCrd.reportValidity()
-		}
+	}else{
+		slctBxrCrd.reportValidity()
 	}
 	
+	function baixarCartao(){
+		
+		
+
+		(async function cartoes(){
+					
+			//baixar cartões salvos
+			const tabela = await loadCartaoGeral();
+
+			//procurar cartão igual
+			tabela.map((e)=>{
+				if(slctBxrCrd.value == e.nome){
+					
+					//caixas com textarea
+					document.getElementById('trf_form_txa2').value = "***" + e.serviço + "***\n" + document.getElementById('trf_form_txa2').value;
+
+					//caixa dos pedidos
+					const popularPedidos = e.pedidos
+					popularPedidos.map((e)=>{
+						var pedidos = []
+						pedidos.push(e.pim)
+						pedidos.push(e.nome)
+						pedidos.push(e.tipo)
+						pedidos.push(e.quantidade)
+						pedidos.push(e.PN)
+						pedidos.push(e.PNA)
+						pedidos.push(e.manual)
+						pedidos.push(e.observacao)
+						pedidos.push(e.status)
+						trfFrm_adicionarPedidos(pedidos)
+					})
+					
+					//caixa das ferramentas
+					const popularFerramentas = e.ferramentas
+					popularFerramentas.map((e)=>{
+						var ferramentas = []
+						ferramentas.push(e.ferramenta)
+						ferramentas.push(e.status)
+						trfFrm_adicionarFerramentas(ferramentas)
+					})
+
+					//caixa dos produtos
+					const popularProdutos = e.produtos
+					popularProdutos.map((e)=>{
+						var produtos = []
+						produtos.push(e.produto)
+						produtos.push(e.status)
+						trfFrm_adicionarProdutos(produtos)
+					})
+
+					//oculta colunas na tabela dos pedidos em telas pequenas
+					OcultColm()//função pertence a folha "geral/js/inicializacao
+					
+					//mensagem de corfirmado
+					var icon = "img/imgOK.png"
+					var msg = "Confirmação"
+					var act = "cartão baixado com sucesso!"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}
+			})
+		})();
+	}
 })
 //-------------------------------------------------------------------------------------------------------
 //-------------------------------------------------------------------------------------------------------
