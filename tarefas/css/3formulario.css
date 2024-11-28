@@ -57,10 +57,11 @@
 #trf_form_slvIcn{
     font-size: 25px;
     cursor: pointer; 
+    color: #f55
     
 }
 #trf_form_slvIcn:hover{
-    color: #00f;
+    color: #f00
 }
 /*_______________________________________________________*/
 
@@ -437,7 +438,7 @@
 	background-color: rgba(0,0,0,0.7);
 	z-index: 9999999999;
 }
-#ctrlPnl{
+#ctrlPnl1{
   	border: solid 3px var(--blue);
   	border-radius: 15px;
 	padding: 20px 0 0 0;
@@ -445,18 +446,18 @@
 	min-width: 350px;
 	max-width: 500px;
 }
-.ctrlPnl{
+.ctrlPnl1{
 	display: flex;
 	align-items: center;
 	justify-content: center;
 	height:auto;
 	margin-bottom: 20px;
 }
-#msgAlertText{
+#msgAlertText1{
 	padding: 0 20px 10px 20px;
 	text-align: center;
 }
-#msgAlertAct{
+#msgAlertAct1{
 	padding: 0 20px 0 20px;
 	text-align: center;
 }
@@ -471,7 +472,7 @@
 	display: none;
 	color: #f00;
 }
-.ctrlPnlBtn{
+.ctrlPnlBtn1{
 	display: flex;
 	height: 60px;
 	width: 100%;
@@ -480,22 +481,7 @@
 	align-items: center;
 	margin: 50px 0 0 0;
 }
-#ctrlPnlBtn{
-	display:none;
-	border: solid 1px #555;
-	border-radius: 5px;
-	width: 100px;
-	height: 25px;
-	margin-bottom: 0;
-	cursor: pointer;
-	font-size: 15px;
-	background: #555;
-	color: #fff;
-	opacity: 0.5;
-}
-#msgAlertBtn:hover{
-	opacity: 1;
-}
+
 .trfForm_addEspSlv{
 	border: solid 1px #006400;
 	border-radius: 5px;

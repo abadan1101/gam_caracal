@@ -1410,7 +1410,21 @@ function addCartao(modo, id){
 	})
 	
 	if(modo == "inserir"){addCartaoBd(tabela)};
-	if(modo == "alterar"){AltCartoesBd(id, tabela)};	
+	if(modo == "alterar"){
+		AltCartoesBd(id, tabela)
+
+		//remover caixa de mensagem
+		document.getElementById("PnlmsgAlert1").remove();
+					
+		//mensagem de corfirmado
+		var icon = "img/imgOK.png"
+		var msg = "Confirmação"
+		var act = "cartão salvo com sucesso!"
+		var modo = "conf"
+		var reload = "false"
+		var func = ""
+		openMSG(icon, msg, act, modo, reload,func);
+	};	
 		
 }
 
@@ -1433,14 +1447,14 @@ document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
 		body.append(caixa)
 
 		const caixafull = 
-			"<div id='ctrlPnl'>"+
-				"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
-				"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja salvar esta tarefa como padrão?</h4></div>"+
-				"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome identificador</p></div>"+
-				"<div class='ctrlPnl' id='cartaoAddDv'>"+
+			"<div id='ctrlPnl1'>"+
+				"<div class='ctrlPnl1'><img src='img/imgInter.png' alt='Logo' id='iconAlert1'></div>"+
+				"<div class='ctrlPnl1'><h4 id='msgAlertText1'>deseja salvar esta tarefa como padrão?</h4></div>"+
+				"<div class='ctrlPnl1'><p id='msgAlertAct1'>Insira o nome identificador</p></div>"+
+				"<div class='ctrlPnl1' id='cartaoAddDv'>"+
 					"<input type='text' class='ctrlPnlInput' id='ctrlPnlInput' maxLength='30' required>"+
 				"</div>"+
-				"<div class='ctrlPnlBtn'>"+
+				"<div class='ctrlPnlBtn1'>"+
 					"<button class='trfForm_addEspSlv' id='ctrlPnlBtnSlv'>salvar</button>"+
 					"<button class='trfForm_addEspCnc' id='ctrlPnlBtnCnc'>cancelar</button>"+
 				"</div>"+
@@ -1485,21 +1499,31 @@ document.getElementById("trf_form_slvIcn").addEventListener("click",()=>{
 						const opt = document.createElement("option")
 						opt.innerHTML = document.getElementById("ctrlPnlInput").value
 						bxr.append(opt)
+
+						//remover caixa de mensagem
+						document.getElementById("PnlmsgAlert1").remove();
+						
+						//mensagem de corfirmado
+						var icon = "img/imgOK.png"
+						var msg = "Confirmação"
+						var act = "cartão salvo com sucesso!"
+						var modo = "conf"
+						var reload = "false"
+						var func = ""
+						openMSG(icon, msg, act, modo, reload,func);
 					}else{
-						addCartao("alterar", idIgual)
+						//mensagem
+						var icon = "img/imgAlert.png"
+						var msg = "Atenção, cartão já existente!"
+						var act = "Deseja sobrescrever?"
+						var modo = "yn"
+						var reload = ""
+						var func = () => {addCartao("alterar", idIgual)}
+						openMSG(icon, msg, act, modo, reload,func);
+						
 					}
 					
-					//remover caixa de mensagem
-					document.getElementById("PnlmsgAlert1").remove();
 					
-					//mensagem de corfirmado
-					var icon = "img/imgOK.png"
-					var msg = "Confirmação"
-					var act = "cartão salvo com sucesso!"
-					var modo = "conf"
-					var reload = "false"
-					var func = ""
-					openMSG(icon, msg, act, modo, reload,func);
 					
 				})()
 			}
@@ -1606,14 +1630,14 @@ document.getElementById("trfForm_addFer").addEventListener("click",()=>{
 	body.append(caixa)
 
 	const caixafull = 
-		"<div id='ctrlPnl'>"+
-			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
-			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma nova ferramenta?</h4></div>"+
-			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira os dados da ferramenta</p></div>"+
-			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+		"<div id='ctrlPnl1'>"+
+			"<div class='ctrlPnl1'><img src='img/imgInter.png' alt='Logo' id='iconAlert1'></div>"+
+			"<div class='ctrlPnl1'><h4 id='msgAlertText1'>deseja adicionar uma nova ferramenta?</h4></div>"+
+			"<div class='ctrlPnl1'><p id='msgAlertAct1'>Insira os dados da ferramenta</p></div>"+
+			"<div class='ctrlPnl1' id='cartaoAddDv'>"+
 				"<input type='text' class='ctrlPnlInput' id='trfForm_novaFer' maxLength='70' required>"+
 			"</div>"+
-			"<div class='ctrlPnlBtn'>"+
+			"<div class='ctrlPnlBtn1'>"+
 				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvFer'>salvar</button>"+
 				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanFer'>cancelar</button>"+
 			"</div>"+
@@ -1697,14 +1721,14 @@ document.getElementById("trfForm_addProd").addEventListener("click",()=>{
 	body.append(caixa)
 
 	const caixafull = 
-		"<div id='ctrlPnl'>"+
-			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
-			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma novo produto?</h4></div>"+
-			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira os dados do produto</p></div>"+
-			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+		"<div id='ctrlPnl1'>"+
+			"<div class='ctrlPnl1'><img src='img/imgInter.png' alt='Logo' id='iconAlert1'></div>"+
+			"<div class='ctrlPnl1'><h4 id='msgAlertText1'>deseja adicionar uma novo produto?</h4></div>"+
+			"<div class='ctrlPnl1'><p id='msgAlertAct1'>Insira os dados do produto</p></div>"+
+			"<div class='ctrlPnl1' id='cartaoAddDv'>"+
 				"<input type='text' class='ctrlPnlInput' id='trfForm_novoProd' maxLength='70' required>"+
 			"</div>"+
-			"<div class='ctrlPnlBtn'>"+
+			"<div class='ctrlPnlBtn1'>"+
 				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvPrd'>salvar</button>"+
 				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanPrd'>cancelar</button>"+
 			"</div>"+
@@ -1788,14 +1812,14 @@ document.getElementById("trfForm_addEqp").addEventListener("click",()=>{
 	body.append(caixa)
 
 	const caixafull = 
-		"<div id='ctrlPnl'>"+
-			"<div class='ctrlPnl'><img src='img/imgInter.png' alt='Logo' id='iconAlert'></div>"+
-			"<div class='ctrlPnl'><h4 id='msgAlertText'>deseja adicionar uma novo membro?</h4></div>"+
-			"<div class='ctrlPnl'><p id='msgAlertAct'>Insira o nome do membro</p></div>"+
-			"<div class='ctrlPnl' id='cartaoAddDv'>"+
+		"<div id='ctrlPnl1'>"+
+			"<div class='ctrlPnl1'><img src='img/imgInter.png' alt='Logo' id='iconAlert1'></div>"+
+			"<div class='ctrlPnl1'><h4 id='msgAlertText1'>deseja adicionar uma novo membro?</h4></div>"+
+			"<div class='ctrlPnl1'><p id='msgAlertAct1'>Insira o nome do membro</p></div>"+
+			"<div class='ctrlPnl1' id='cartaoAddDv'>"+
 				"<input type='text' class='ctrlPnlInput' id='trfForm_novoMem' maxLength='70' required>"+
 			"</div>"+
-			"<div class='ctrlPnlBtn'>"+
+			"<div class='ctrlPnlBtn1'>"+
 				"<button class='trfForm_addEspSlv' id='trfForm_BtnSlvMem'>salvar</button>"+
 				"<button class='trfForm_addEspCnc' id='trfForm_BtnCanMem'>cancelar</button>"+
 			"</div>"+
