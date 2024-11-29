@@ -950,16 +950,18 @@ salvTaref.forEach(function(e){
 			//inserir tarefa no banco de dados
 			
 			//criação da classe pedido
-			function pedido(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
-				this.pim = pim;
-				this.nome = nome;
-				this.tipo = tipo;
-				this.quantidade = quantidade;
-				this.PN = PN;
-				this.PNA = PNA;
-				this.manual = manual;
-				this.observacao = observacao;
-				this.status = status;
+			class pedido {
+				constructor(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
+					this.pim = pim
+					this.nome = nome
+					this.tipo = tipo
+					this.quantidade = quantidade
+					this.PN = PN
+					this.PNA = PNA
+					this.manual = manual
+					this.observacao = observacao
+					this.status = status
+				}
 			}
 
 			//popular pedidos no banco
@@ -982,9 +984,11 @@ salvTaref.forEach(function(e){
 			}
 
 			//criação da classe ferramentas
-			function ferramenta(ferramenta, status) {
-				this.ferramenta = ferramenta;
-				this.status = status;
+			class ferramenta {
+				constructor(ferramenta, status) {
+					this.ferramenta = ferramenta
+					this.status = status
+				}
 			}
 
 			//popular ferramentas no banco
@@ -1000,9 +1004,11 @@ salvTaref.forEach(function(e){
 			}
 				
 			//criação da classe produtos
-			function produto(produto, status) {
-				this.produto = produto;
-				this.status = status;
+			class produto {
+				constructor(produto, status) {
+					this.produto = produto
+					this.status = status
+				}
 			}
 			
 			//popular produtos no banco
@@ -1331,16 +1337,18 @@ trfFrm_selectAndamento.addEventListener("focus",()=>{
 //inserir cartão no banco de dados
 function addCartao(modo, id){	
 	//criação da classe pedido
-	function pedido(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
-		this.pim = pim;
-		this.nome = nome;
-		this.tipo = tipo;
-		this.quantidade = quantidade;
-		this.PN = PN;
-		this.PNA = PNA;
-		this.manual = manual;
-		this.observacao = observacao;
-		this.status = status;
+	class pedido {
+		constructor(pim, nome, tipo, quantidade, PN, PNA, manual, observacao, status) {
+			this.pim = pim
+			this.nome = nome
+			this.tipo = tipo
+			this.quantidade = quantidade
+			this.PN = PN
+			this.PNA = PNA
+			this.manual = manual
+			this.observacao = observacao
+			this.status = status
+		}
 	}
 
 	//popular pedidos no banco
@@ -1363,9 +1371,11 @@ function addCartao(modo, id){
 	}
 
 	//criação da classe ferramentas
-	function ferramenta(ferramenta, status) {
-		this.ferramenta = ferramenta;
-		this.status = status;
+	class ferramenta {
+		constructor(ferramenta, status) {
+			this.ferramenta = ferramenta
+			this.status = status
+		}
 	}
 
 	//popular ferramentas no banco
@@ -1381,9 +1391,11 @@ function addCartao(modo, id){
 	}
 		
 	//criação da classe produtos
-	function produto(produto, status) {
-		this.produto = produto;
-		this.status = status;
+	class produto {
+		constructor(produto, status) {
+			this.produto = produto
+			this.status = status
+		}
 	}
 	
 	//popular produtos no banco
@@ -1420,10 +1432,10 @@ function addCartao(modo, id){
 		var icon = "img/imgOK.png"
 		var msg = "Confirmação"
 		var act = "cartão salvo com sucesso!"
-		var modo = "conf"
+		var modo1 = "conf"
 		var reload = "false"
 		var func = ""
-		openMSG(icon, msg, act, modo, reload,func);
+		openMSG(icon, msg, act, modo1, reload,func);
 	};	
 		
 }
