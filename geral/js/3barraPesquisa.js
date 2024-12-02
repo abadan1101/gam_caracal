@@ -50,6 +50,36 @@ window.addEventListener('click', function (e) {
 
 //------------------------------BOTÃO CONFIGURAÇÕES-------------------------------------
 //--------------------------------------------------------------------------------------
+const cx_pesquisa = document.getElementById("barrPesc_pesquisa")
+
+cx_pesquisa.addEventListener('input', ()=>{
+
+	(async function pesquisar(){
+		var bdTabela = await loadTBLin()//pertence a folha: /tarefas/js/banco.js
+
+		const vlPessquisa = cx_pesquisa.value
+
+		bdTabela.map((e)=>{
+			const itemJson = JSON.stringify(e)
+
+			if(itemJson.includes(vlPessquisa) == true){
+				console.log("teste")
+			}
+
+		})
+	})()
+	
+	
+})
+
+
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
+
+
+
+//------------------------------BOTÃO CONFIGURAÇÕES-------------------------------------
+//--------------------------------------------------------------------------------------
 const configuracoesGerais = document.getElementById('trf_menu_afConfiguracoes')
 configuracoesGerais.addEventListener('click', () => {
 	//mensagem
