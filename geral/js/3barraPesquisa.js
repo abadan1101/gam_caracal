@@ -95,12 +95,20 @@ async function pesquisar(){
 			div.innerHTML = "<div style='background: #fff;width:200px;height: 50px; display: flex; justify-content: center;align-items:center; border-radius:10px;'>carregando...</div>"
 			body.prepend(div)
 
-			await TrfTbl_LoadStatic(tabela)//funções chamadas da folha: /tarefas/js/tabela.js
-			//filtrar tarefas
-			await trfTbl_filtroReload();//pertence a folha: /tarefas/js/tabela.js
-			trfTbl_filtro()//pertence a folha: /tarefas/js/tabela.js
-			
+			if(tblPrincipal == "estatica"){
+				await TrfTbl_LoadStatic(tabela)//funções chamadas da folha: /tarefas/js/tabela.js
+				//filtrar tarefas
+				await trfTbl_filtroReload();//pertence a folha: /tarefas/js/tabela.js
+				trfTbl_filtro()//pertence a folha: /tarefas/js/tabela.js
+			}else{
+				await TrfTbl_Load(tabela)//funções chamadas da folha: /tarefas/js/tabela.js
+				//filtrar tarefas
+				await trfTbl_filtroReload();//pertence a folha: /tarefas/js/tabela.js
+				trfTbl_filtro()//pertence a folha: /tarefas/js/tabela.js
+			}
+
 			pnlMunu1.remove()
+
 		}retardar()
 		
 	},500)
