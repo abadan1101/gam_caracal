@@ -53,8 +53,10 @@ window.addEventListener('click', function (e) {
 //pressionar "enter" na caixa de pesquisa
 const cx_pesquisa = document.getElementById("barrPesc_pesquisa")
 cx_pesquisa.addEventListener('keypress', (event)=>{
-	event.preventDefault();
-	if (event.key === 'Enter') {pesquisar()}
+	if (event.key === 'Enter') {
+		event.preventDefault();
+		pesquisar()
+	}
 })
 
 //botão "lupa"
