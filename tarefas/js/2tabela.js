@@ -1442,7 +1442,7 @@ function trfTbl_filtro(){//função chamada na folha: /tarefas/js/carregamento.j
 		tabela.map((e)=>{
 
 			if(
-				e.children[1].innerHTML.includes(input[0].value) == false ||
+				e.children[1].innerHTML.toLowerCase().includes(input[0].value.toLowerCase()) == false ||
 				e.children[2].innerHTML.includes(input[1].value) == false ||
 				e.children[3].innerHTML.toLowerCase().includes(input[2].value.toLowerCase()) == false ||
 				e.children[4].innerHTML.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
@@ -1467,7 +1467,7 @@ function trfTbl_filtro(){//função chamada na folha: /tarefas/js/carregamento.j
 		tabela.map((e)=>{
 
 			if(
-				e.children[1].innerHTML.includes(input[0].value) == false ||
+				e.children[1].innerHTML.toLowerCase().includes(input[0].value.toLowerCase()) == false ||
 				e.children[2].innerHTML.includes(input[1].value) == false ||
 				e.children[3].innerHTML.toLowerCase().includes(input[2].value.toLowerCase()) == false ||
 				e.children[4].firstChild.value.toLowerCase().includes(input[3].value.toLowerCase()) == false ||
