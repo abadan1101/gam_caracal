@@ -111,7 +111,12 @@ fileInput.addEventListener('change', () => {
 				}
 				
 				//ajustar descrição da tarefa
-				var descricao = e.__EMPTY_4
+				if(docSelect.includes("OSVirtualAbertaAeronave")){
+					var descricao = e.__EMPTY_4;
+				};
+				if(docSelect.includes("OSVirtualPendenteAeronave")){
+					var descricao = e.__EMPTY_5;
+				}
 				
 				//ajuste para pular linhas não desejaveis da planilha baixada
 				if(e.__EMPTY == "" || e.__EMPTY == "NÚMERO" || e.__EMPTY == "Ordens de Serviço Pendentes - (Processamento Virtual)"){
