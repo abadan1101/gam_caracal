@@ -727,7 +727,12 @@ async function trfTbl_alterarTarefa(tabela){//função chamada na folha: /tarefa
 			}
 			
 			//adicionar cor da linha
-			trfTbl_CorLinha(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+			if(tblPrincipal == "estatica"){
+				trfTbl_CorLinha(trfTbl_EditarLinha.children[4].innerHTML, trfTbl_EditarLinha)
+			}else{
+				trfTbl_CorLinha(trfTbl_EditarLinha.children[4].firstChild, trfTbl_EditarLinha)
+			}
+			
 
 			//filtro das tarefas
 			trfTbl_filtro()
