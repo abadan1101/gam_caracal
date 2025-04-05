@@ -7,6 +7,9 @@ function openControles(){
 	if(sessionStorage.getItem("reloadCtrl") == "ctrlFerramentas"){
 		openTableControles()//metodo contido na folha: controles/js/0ferramentas.js
 	}
+	if(sessionStorage.getItem("reloadCtrl") == "ctrlProdutos"){
+		openTableControlesProd()//metodo contido na folha: controles/js/1produtos.js
+	}
 	
 	//configuração para reload
 	sessionStorage.setItem("reload", "controles")

@@ -502,7 +502,7 @@ async function exportarTarefas(){
 	//montar arrays do backup ferramentas
 	bdTabelaFerramentas.map((e)=>{
 		//ferramenta
-		ferramentasBKAdd.push(e.ferramenta)
+		ferramentasBKAdd.push(JSON.stringify(e))
 		//popular array
 		ferramentasBK.push(ferramentasBKAdd)
 		//limpar array
@@ -518,7 +518,7 @@ async function exportarTarefas(){
 	//montar arrays do backup produtos
 	bdTabelaProdutos.map((e)=>{
 		//ferramenta
-		produtosBKAdd.push(e.produto)
+		produtosBKAdd.push(JSON.stringify(e))
 		//popular array
 		ProdutosBK.push(produtosBKAdd)
 		//limpar array

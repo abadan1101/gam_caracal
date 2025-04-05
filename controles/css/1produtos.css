@@ -1,0 +1,172 @@
+
+/*------------------------MODULO CONTROLES------------------------------*/
+#ctrlProdutos{
+	overflow-x: auto;
+}
+.ctrlTblDivProd{
+	margin-top: 20px;
+
+}
+.ctrlTblDivProd table{
+	border: solid 1px #ccc;
+	border-collapse: collapse;
+
+}
+.ctrlTblDivProd th{
+	background: #808000;
+	color: #fff;
+	height: 30px;
+}
+.ctrlTblDivProd td{
+	border-bottom: solid 1px #ccc;
+}
+.ctrlTblDivProd tr:hover{
+	background: #ddd;
+}
+.controlesCol01Prod{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+.controlesCol02Prod{
+	padding: 0 40px 0 5px;
+	text-align: left;
+	min-width: 500px;
+	width: 500px;
+}
+.controlesCol03Prod{
+	padding: 0 40px 0 0;
+	text-align: left;
+	min-width: 200px;
+	width: 200px;
+}
+.controlesCol04Prod{
+	padding: 0 40px 0 0;
+	text-align: left;
+	min-width: 500px;
+	width: 500px;
+}
+.controlesCol05Prod{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+.controlesCol05Prod i{
+	margin: 0 10px 0 10px;
+	cursor: pointer;
+}
+.ctrlEditBtnProd{
+	color: #00c;
+}
+.ctrlDeleteBtnProd{
+	color: #f00;
+}
+#controlesTabelaProd tfoot{
+	height: 80px;
+	text-align: center;
+	background: #ddd;
+}
+#controlesTabelaFootLbProd{
+	padding: 20px;
+	
+}
+#ctrlProdutoNova{
+	width: 120px;
+	margin-top: 20px;
+	border: none;
+	font-size: 18px;
+	padding: 5px;
+	background: #5F9EA0;
+	color: #fff;
+}
+#ctrlProdutoNova:hover{
+	background: #2F4F4F;
+	cursor: pointer;
+}
+
+#ctrlProdutosRelatorio{
+	width: 120px;
+	margin-top: 20px;
+	margin-left: 20px;
+	border: none;
+	font-size: 18px;
+	padding: 5px;
+	background: #D3D3D3;
+	color: #333;
+}
+#ctrlProdutosRelatorio:hover{
+	background: #808080;
+	cursor: pointer;
+}
+
+/*formulário*/
+#formProd{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+}
+#formProdCBCdiv{
+	display: flex;
+	justify-content: space-between;
+}
+#formProdCBCdiv label{
+	color: #ccc;
+}
+#formProd h3{
+	margin-bottom: 30px;
+}
+#formProdPNL{
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+	padding: 30px 40px;
+	border-radius: 5px;
+	background: #fff;	
+}
+#formProdPNLdiv div{
+	margin-bottom: 20px;
+}
+#formProdPNL label{
+	display: block;
+}
+#formProdPNL input{
+	display: block;
+	font-size: 16px;
+	padding: 3px;
+	width: 300px;
+}
+#formProdPNL section{
+	margin-top: 40px;
+}
+#formProdPNL input[type=button]{
+	margin-bottom: 10px;
+}
+
+#frmProdCncl{
+	border: none;
+	background: #FFA07A;
+}
+#frmProdCncl:hover{
+	background: #FF6347;
+	cursor: pointer;
+}
+
+#frmProdSlvr{
+	background: #BDB76B;
+	border: none;
+}
+
+#frmProdSlvr:hover{
+	background: #556B2F;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+

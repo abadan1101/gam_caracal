@@ -182,14 +182,18 @@ fileInput1.addEventListener('change', () => {
 					var tabela6 = [];
 					rows6.map((e)=>{
 						tabela6.push({
-							ferramenta: e.ferramentas,
+							ferramenta: JSON.parse(e.ferramentas).ferramenta,
+							local: JSON.parse(e.ferramentas).local,
+							observacao: JSON.parse(e.ferramentas).observacao
 						})
 					});
 
 					var tabela7 = [];
 					rows7.map((e)=>{
 						tabela7.push({
-							produto: e.produtos,
+							produto: JSON.parse(e.produtos).produto,
+							local: JSON.parse(e.produtos).local,
+							observacao: JSON.parse(e.produtos).observacao
 						})
 					});
 

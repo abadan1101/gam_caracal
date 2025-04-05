@@ -915,6 +915,35 @@
 						<div id="ctrlProdutos" class="ocultPainel">
 							<div>
 								<h3>PRODUTOS CADASTRADOS</h3>
+								<div>
+									<button id="ctrlProdutoNova" onClick='criarProduto()'>adicionar</button>
+									<button id="ctrlProdutosRelatorio">relatório</button>
+									
+								</div>
+								<div class="ctrlTblDivProd">
+									<table id="controlesTabelaProd">
+										<thead id="controlesTabelaHeadProd">
+											<tr>
+												<th class="controlesCol01Prod">id</th>
+												<th class="controlesCol02Prod">nome</th>
+												<th class="controlesCol03Prod">local</th>
+												<th class="controlesCol04Prod">Observação</th>
+												<th class="controlesCol05Prod">opções</th>
+											</tr>
+											
+										</thead>
+										<tbody id="controlesTabelaBodyProd">							
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="5">
+													<label id="controlesTabelaFootLbProd">100 produtos cadastradas</label>
+												</td>
+											</tr>
+										</tfoot>
+										
+									</table>
+								</div>
 							</div>
 						</div>
 						<div id="ctrlEquipe" class="ocultPainel">
@@ -1038,6 +1067,7 @@
 	
 	<!-- script do modulo controles -->
 	<script src="controles/js/0ferramentas.js"></script>
+	<script src="controles/js/1produtos.js"></script>
 	<script src="controles/js/4carregamento.js"></script>
 	
 	<!-- script do modulo das configurações -->

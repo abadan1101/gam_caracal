@@ -590,11 +590,13 @@ async function loadFerramentasGeral(){
 
 
 //inserir novo produto--------------------------------
-function addProdutosBd(prd){
+function addProdutosBd(prd, loc, obs){
 	var transaction = db.transaction("produtos", "readwrite"); 
 	var tarefTable = transaction.objectStore("produtos")
 	tarefTable.put({
-			produto: prd,
+		produto: prd,
+		local: loc,
+		observacao: obs,
 	})
 	
 	//se hover erro na transação
@@ -728,6 +730,62 @@ function alterarFerramentasDB(n, e){
 			//mensagem de rejeitado
 			var icon = "img/imgAlert.png"
 			var msg = "Erro ao alterar ferramenta!"
+			var act = event
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro na transação com o banco de dados");
+		}
+	})
+}
+
+
+//------------------FUNÇÕES ESPECIAIS DA TABELA DE CONTROLE DOS PRODUTOS-------------------
+//--------------------------------------------------------------------------------------------
+//excluir ferramenta
+function excluirProdutoDB(z){
+	
+	return new Promise((resolve)=>{
+		var transaction = db.transaction('produtos', "readwrite");
+		var store = transaction.objectStore('produtos');
+		var request = store.delete(z)
+		resolve()
+	})
+}
+
+//obter ferramenta
+function obterProdutosDB(id){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction('produtos', "readwrite");
+		var store = transaction.objectStore('produtos');
+		var request = store.get(id)
+		request.onsuccess = function (event) {
+			var find = event.target.result;
+			if(!find){find = "null"}
+			resolve(find)
+		}
+	})
+}
+
+//alterar ferramenta
+
+function alterarProdutosDB(n, e){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction("produtos","readwrite");
+		var objectStore = transaction.objectStore("produtos");
+		var request = objectStore.get(n);
+		request.onsuccess = function(){
+			request.result["produtos"] = e[0].produtos;
+			request.result["local"] = e[0].local;
+			request.result["observacao"] = e[0].observacao;
+			objectStore.put(request.result);
+			resolve()
+		}
+		request.onerror = (event) => {
+			//mensagem de rejeitado
+			var icon = "img/imgAlert.png"
+			var msg = "Erro ao alterar produto!"
 			var act = event
 			var modo = "conf"
 			var reload = "false"

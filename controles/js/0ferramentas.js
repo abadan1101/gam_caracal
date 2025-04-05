@@ -266,7 +266,7 @@ function salvarFormFerramenta(){
 				//mensagem de corfirmado
 				var icon = "img/imgOK.png"
 				var msg = "Confirmação"
-				var act = "Ferramenta criada com sucesso!"
+				var act = "Ferramenta editada com sucesso!"
 				var modo = "conf"
 				var reload = "true"
 				var func = ""
