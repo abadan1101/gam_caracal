@@ -1,0 +1,4 @@
+proximo passo
+
+1- criar rotina para importar planilha dos cartões de inspeção
+2- criar rotina para adicionar tarefas em lote

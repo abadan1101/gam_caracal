@@ -1,0 +1,106 @@
+/*------------------------CAIXA DE DIALOGO DE ALERTAS E MENSAGENS------------------------------*/
+#PnlmsgAlert{
+	display:none;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 9999999999;
+}
+#msgAlert{
+  	border: solid 3px var(--blue);
+  	border-radius: 15px;
+	padding: 20px 0 0 0;
+	background: #fff;
+	min-width: 350px;
+	max-width: 500px;
+}
+.msgAlert{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height:auto;
+	margin-bottom: 20px;
+}
+#msgAlertText{
+	padding: 0 20px 10px 20px;
+	text-align: center;
+}
+#msgAlertAct{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+#msgAlertSenhaDv{
+	display: none;
+	flex-direction: column;
+}
+#msgAlertSenhaLb{
+	display: none;
+	color: #f00;
+}
+#msgAlertSenha{
+	font-size: 18px;
+	text-align: center;
+}
+.msgAlertBtn{
+	display: flex;
+	height: 60px;
+	width: 100%;
+	border-top: solid 1px #ccc;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 50px 0 0 0;
+}
+#msgAlertBtn{
+	display:none;
+	border: solid 1px #555;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #555;
+	color: #fff;
+	opacity: 0.5;
+}
+#msgAlertBtn:hover{
+	opacity: 1;
+}
+#msgAlertBtnY{
+	display:none;
+	border: solid 1px #006400;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #006400;
+	color: #fff;
+	opacity: 0.5;
+}
+#msgAlertBtnY:hover{
+	opacity: 1;
+}
+#msgAlertBtnN{
+	display:none;
+	border: solid 1px #FF6347;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #FF6347;
+	color: #fff;
+	opacity: 0.5;
+}
+#msgAlertBtnN:hover{
+	opacity: 1;
+}
+/*______________________________________________________________________________________________*/

@@ -1,0 +1,199 @@
+---------------GITHUB----------------
+instruções para fazer commit
+
+git init 
+
+git add README.md 
+
+ou
+
+git add .
+
+git status
+
+git commit -m "commit" 
+
+git branch -M main 
+
+git remote add origin https://github.com/abadan1101/gam_caracal.git
+
+git push -u origin main
+
+ou.
+
+git pull origin main
+-----------------------------------------
+
+
+
+-----------COMPRAR PAGINAS PRONTAS-------
+https://themeforest.net/
+https://wrapbootstrap.com/
+
+
+---------------ASYNC AWAIT---------------
+function teste1(){
+	return new Promise((resolve)=>{
+		console.log("teste1")
+		resolve()
+	})
+}
+(async function teste2(){
+	await teste1()
+	console.log("teste2")
+})()
+-----------------------------------------
+
+
+
+----------FUNÇÃO COMO VARIÁVEL-----------
+var func = () => {minhaFuncao()}
+func()
+
+ou 
+
+var func = () => {console.log("teste")}
+(function x(){
+	func()
+})()
+----------------------------------------
+
+
+
+--------------------SETTIMEOUT-----------
+setTimeout(()=>{console.log('teste')}, 2000)
+
+ou
+setTimeout(minhaFuncao, 2000)
+----------------------------------------
+
+
+
+--------------------SETINTERVAL-----------
+var x = 0
+var intervalo = setInterval(()=>{
+	x++
+	console.log(x + " em andamento")
+	if(x==10){
+		console.log("fim")
+		clearInterval(intervalo)
+	}
+},1000)
+----------------------------------------
+
+
+
+--------------------METODO MAP-----------
+const x = [...document.getElementsByClassName("x")]
+const y = [...document.getElementsByClassName("y")]
+x.map((e,index)=>{
+	e.addEventListener("change", ()=>{
+			if(e.value == ""){
+				y[index].disabled = true
+				y[index].checked = false
+			}else{
+				y[index].disabled = false
+			}
+	})	
+})
+----------------------------------------
+
+
+
+----------------IDEXED DB--------------------
+OBTER TODOS OS ITENS
+var transaction = db.transaction('configTaref', "readonly");
+var store = transaction.objectStore('configTaref');
+var request = store.openCursor();
+request.onsuccess = function (event) {
+	var cursor = event.target.result;
+	if (cursor) {;
+	cursor.continue();
+	variavel = cursor.value
+	console.log('Configurações gerais das tarefas obtidas com sucesso!');
+	}	
+}
+----------------------------------------
+
+
+
+----------------SELECT 2--------------------
+alterar valor
+const tfe = document.getElementById('trf_form_EquMem');
+tfe.value = $(tfe).val("selecione um membro").select2();
+----------------------------------------
+
+
+----------------STRING--------------------
+//verificar se a palavra está sa string
+//if(variavel.includes("palavraProcurada")){console.log("true")}
+----------------------------------------
+
+
+
+----------------TEXTAREA AUTOMÁTICO--------------------
+//configurar textarea para altura automática
+(function () {
+	"use strict";
+
+	function addEvent(textarea) {
+		textarea.style.minHeight = textarea.parentElement.clientHeight + "px";
+		function updateHeight() {
+			var offset = textarea.offsetHeight - textarea.clientHeight;
+			textarea.style.height = "auto";
+			textarea.style.height = textarea.scrollHeight + offset + "px";
+		}
+		textarea.addEventListener("keyup", updateHeight);
+		textarea.addEventListener("input", updateHeight);
+	}
+
+	document
+	.querySelectorAll(".trfTblCol12txa")
+	.forEach(addEvent);
+})();
+	
+----------------------------------------
+
+
+
+----------------TINYMCE--------------------
+//textarea avançado
+tinymce.init({
+	selector: '#editor1',
+	 setup: (editor) => {
+
+		//SALVAR TEXTO AUTOMATICAMENTE
+         editor.on('input', (e) => {
+           console.log(tinymce.get('editor1').getContent())
+         })
+       },
+
+	   //CARREGAR TEXTO AUTOMATICAMENTE
+	   setup: function (editor) {
+		editor.on('init', function (e) {
+			(async function obter(){
+				const rel = await obterTarefas(2)
+		  		editor.setContent(rel.relatorio);
+			})()
+		});
+	  }
+});
+//CARREGAR TEXTO
+//com editor ativo
+tinymce.activeEditor.setContent("<p>Hello world!</p>");
+
+com id do editor
+tinymce.get("editor1").setContent("<p>Hello world!</p>");
+
+//SALVAR TEXTO
+//com editor ativo
+const val = tinymce.activeEditor.getContent()
+
+com id do editor
+const val = tinymce.get("myTextarea").getContent();
+----------------------------------------
+
+
+
+
+

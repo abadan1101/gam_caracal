@@ -1,0 +1,172 @@
+
+/*------------------------MODULO CONTROLES------------------------------*/
+#ctrlFerramentas{
+	overflow-x: auto;
+}
+.ctrlTblDiv{
+	margin-top: 20px;
+
+}
+.ctrlTblDiv table{
+	border: solid 1px #ccc;
+	border-collapse: collapse;
+
+}
+.ctrlTblDiv th{
+	background: #808000;
+	color: #fff;
+	height: 30px;
+}
+.ctrlTblDiv td{
+	border-bottom: solid 1px #ccc;
+}
+.ctrlTblDiv tr:hover{
+	background: #ddd;
+}
+.controlesCol01{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+.controlesCol02{
+	padding: 0 40px 0 5px;
+	text-align: left;
+	min-width: 500px;
+	width: 500px;
+}
+.controlesCol03{
+	padding: 0 40px 0 0;
+	text-align: left;
+	min-width: 200px;
+	width: 200px;
+}
+.controlesCol04{
+	padding: 0 40px 0 0;
+	text-align: left;
+	min-width: 500px;
+	width: 500px;
+}
+.controlesCol05{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+.controlesCol05 i{
+	margin: 0 10px 0 10px;
+	cursor: pointer;
+}
+.ctrlEditBtn{
+	color: #00c;
+}
+.ctrlDeleteBtn{
+	color: #f00;
+}
+#controlesTabela tfoot{
+	height: 80px;
+	text-align: center;
+	background: #ddd;
+}
+#controlesTabelaFootLb{
+	padding: 20px;
+	
+}
+#ctrlFerramentasNova{
+	width: 120px;
+	margin-top: 20px;
+	border: none;
+	font-size: 18px;
+	padding: 5px;
+	background: #5F9EA0;
+	color: #fff;
+}
+#ctrlFerramentasNova:hover{
+	background: #2F4F4F;
+	cursor: pointer;
+}
+
+#ctrlFerramentasRelatorio{
+	width: 120px;
+	margin-top: 20px;
+	margin-left: 20px;
+	border: none;
+	font-size: 18px;
+	padding: 5px;
+	background: #D3D3D3;
+	color: #333;
+}
+#ctrlFerramentasRelatorio:hover{
+	background: #808080;
+	cursor: pointer;
+}
+
+/*formulário*/
+#formFerr{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0,0,0,0.7);
+}
+#formFerrCBCdiv{
+	display: flex;
+	justify-content: space-between;
+}
+#formFerrCBCdiv label{
+	color: #ccc;
+}
+#formFerr h3{
+	margin-bottom: 30px;
+}
+#formFerrPNL{
+	display: flex;
+	flex-direction: column;
+	max-width: 600px;
+	padding: 30px 40px;
+	border-radius: 5px;
+	background: #fff;	
+}
+#formFerrPNLdiv div{
+	margin-bottom: 20px;
+}
+#formFerrPNL label{
+	display: block;
+}
+#formFerrPNL input{
+	display: block;
+	font-size: 16px;
+	padding: 3px;
+	width: 300px;
+}
+#formFerrPNL section{
+	margin-top: 40px;
+}
+#formFerrPNL input[type=button]{
+	margin-bottom: 10px;
+}
+
+#frmFerCncl{
+	border: none;
+	background: #FFA07A;
+}
+#frmFerCncl:hover{
+	background: #FF6347;
+	cursor: pointer;
+}
+
+#frmFerSlvr{
+	background: #BDB76B;
+	border: none;
+}
+
+#frmFerSlvr:hover{
+	background: #556B2F;
+	cursor: pointer;
+}
+
+
+
+
+
+
+
+

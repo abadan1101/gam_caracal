@@ -1,0 +1,538 @@
+/*---------------------------------------FORMULÁRIO--------------------------------------------*/
+/* ---------------------GERAL--------------------------- */
+#trf_form{
+    display: none;
+    background: #fff;
+}
+#trf_form_tit{
+    color: #555;
+    margin-left: 20px;
+    margin-top: 10px;
+}
+/*_______________________________________________________*/
+
+
+
+
+/* -------------------CABEÇALHO------------------------- */
+#trf_form_cbc{
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 10px 0px 0px 20px;
+    color: var(--blue);
+    border-bottom: solid 1px #ccc;
+}
+#trf_form_cbc div{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+#trf_form_cbc label{
+    display:block;
+    margin-right: 10px;
+}
+#trf_form_cbc input, select{
+    font-size: 18px;
+    margin-right: 40px;
+    width: 150px;
+    padding-left: 3px;
+}
+#trf_form_bxrDv div{
+    margin: 0;
+    display: flex;
+}
+#trf_form_bxr{
+    display: inline;
+    width: 300px;
+}
+#trf_form_bxrIcn{
+    font-size: 25px;
+    cursor: pointer;
+    font-weight: bold;
+    padding: 0 5px 0 5px;
+}
+#trf_form_bxrIcn:hover{
+    color: #00f;
+    font-size: 30px;
+}
+#trf_form_slvIcn{
+    font-size: 25px;
+    cursor: pointer; 
+    color: #8FBC8F
+    
+}
+#trf_form_slvIcn:hover{
+    color: #006400;
+    font-size: 30px;
+}
+#trf_form_deleteIcn{
+    font-size: 23px;
+    cursor: pointer; 
+    color: #FF7F50;
+    padding: 1px 5px 0 5px; 
+    
+}
+#trf_form_deleteIcn:hover{
+    color: #f00;
+    font-size: 30px;
+}
+/*_______________________________________________________*/
+
+
+
+
+/* ----------------CONTEÚDO PRINCIPAL------------------- */
+/*ÁREA PRINCIPAL DO FORMULÁRIO*/
+#trf_form_pcp{
+    display: flex;
+    flex-wrap: wrap;
+    height: auto;
+    padding: 20px 2px 10px 2px;
+}
+
+
+/*COMUM A TODOS OS GRUPOS DA ÁREA PRINCIPAL*/
+.trf_form_pcp{
+    width: 50%;
+    min-width: 400px;
+    flex-grow: 1;
+    height: auto;
+    min-height: 200px;
+    padding: 10px 20px 40px 20px;
+    color: #555;
+}
+.trf_form_tit{
+    width: 100%;
+    background: #555;
+    color: #fff;
+    border: solid 1px #555;
+    border-radius: 5px 5px 0px 0px;
+    padding-left: 3px;
+}
+.trf_form_div{
+    width: 100%;
+    height: calc(100% - 20px);
+    border-radius: 0px 0px 5px 5px;
+    border: solid 2px #555;
+}
+
+
+/*COMUM AOS GRUPOS COM TEXTAREA*/
+.trf_form_txa{
+    resize: none;
+    width: 100%;
+    height: calc(100% - 20px);
+    border-radius: 0px 0px 5px 5px;
+    border: solid 1px #ccc;
+    padding: 3px;
+    border: solid 2px #555;
+}
+
+
+/*COMUM AOS DEMAIS GRUPOS*/
+.trf_form_div_cbc, .trf_form_div_cbcSlct{
+    border-bottom: solid 1px #ccc;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 0px 5px 20px 5px;
+    width: 100%;
+}
+.trf_form_div_cbc div{
+    margin-right: 10px;
+    margin-top: 5px;
+}
+.trf_form_div_cbc input{
+    height: 30px;
+    margin-right: 10px;
+    padding-left: 3px;
+    font-size: 18px;
+}
+.trf_form_div_cbc label, .trf_form_div_cbcSlct{
+    display: block;
+    margin-right: 10px;
+}
+.trf_form_div_cbc button, .trf_form_div_cbcSlct button{
+    background: #11ccff;
+    height: 30px;
+    width: 80px;
+    border-radius: 10px;
+    border: solid 1px #11ccff;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+}
+.trf_form_div_cbc button:hover, .trf_form_div_cbcSlct button:hover{
+	background: var(--blue);
+	border: solid 1px var(--blue);
+}
+.trf_form_div_cbc button:active, .trf_form_div_cbcSlct button:active{
+	border: solid 3px #11ccff;
+}
+.tftcenter{
+	text-align: center;
+}
+
+/*tabelas*/
+.trf_form_tbl{
+    width: 100%;
+    background: #fff;
+    border-collapse: collapse;
+}
+.trf_form_tbl tr{
+    border-bottom: solid 1px #ccc;
+}
+.trf_form_tbl tbody tr:hover{
+    background: #eee;
+}
+.trf_form_tbl td{
+	height: 30px;
+}
+.trf_form_tbl input[type=checkbox]{
+	height: 20px;
+	width: 20px
+}
+.trf_form_tbl td, th{
+    padding-left: 4px;
+}
+.trf_form_tblCbc{
+    background: #ddd;
+    text-align: left;
+}
+.trf_form_tblMsg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+}
+.trf_form_tblMsg h4{
+    margin-left: 10px;
+}
+.trf_form_tbl button{
+    border-radius: 5px;
+    width: 50px;
+    cursor: pointer;
+    border: solid 1px #999;
+}
+.trf_form_tbl button:hover{
+    background: #999;
+}
+.trf_form_tbl button:active{
+    background: #ccc;
+}
+
+/*COMUM AOS GRUPOS COM SELECT*/
+.tfdcs0{
+    display: flex;	
+    margin-right: 10px;
+    margin-top: 5px;
+    width: 100%;  
+}
+.tfdcs1{
+    display: block;
+    width: 100%;
+    padding-right: 10px;
+}
+.tfdcs2{
+    display: flex;
+    width: 80px;
+    align-items: end;
+}
+.tfdcsAddCbc{
+    display: flex;
+    justify-content: space-between;
+}
+.tfdcsAddCbcLb{
+    color: #00f;
+}
+
+/*GRUPO DOS PEDIDOS*/
+/*geral*/
+.trf_form_div_cbc input{
+    width: 100%;
+}
+/*cabeçalho*/
+#trf_form_pedTip{
+    width: calc(100% - 100px);
+    margin-right: 10px;
+}
+#tfdc1{
+    width: 10%;
+    min-width: 80px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+#tfdc2{
+    width: 40%;
+    min-width: 120px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+#tfdc3{
+    display: flex;
+    align-items: end;
+    width: 200px;
+    padding: 0 0 5px 5px;
+}
+#tfdc3 button{
+    min-width: 80px;
+}
+/*cabeçalho avançado*/
+#trf_form_pedAvd select{
+    margin-right: 0px;
+    width: 100%;
+}
+.tfdca1{
+    width: 25%;
+    min-width: 200px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+.tfdca2{
+    width: 10%;
+    min-width: 80px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+.tfdca3{
+    width: 20%;
+    min-width: 200px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+.tfdca4{
+    width: 50%;
+    min-width: 300px;
+    flex-grow: 1;
+    padding: 0 0 5px 5px;
+}
+.tfdca6{
+    display: flex;
+    width: 100%;
+    padding: 10px 0 10px 0;
+    justify-content: right;
+    background: #eee;
+}
+.tfdca6 button{
+    border-radius: 0px;
+    margin-right: 20px;
+}
+#tfdca6Cn{
+    background: #aaa;
+    border: solid 3px #aaa;
+
+}
+#tfdca6Cn:hover{
+    border: solid 3px #555;
+}
+#tfdca6Ex{
+    background: #FF6347;
+    border: solid 3px #FF6347;
+}
+#tfdca6Ex:hover{
+    border: solid 3px #A52A2A;
+}
+#tfdca6Sv{
+    background: #8FBC8F;
+    border: solid 3px #8FBC8F;
+}
+#tfdca6Sv:hover{
+    border: solid 3px #556B2F;
+}
+/*tabela dos pedidos realizados*/
+#trf_form_tblPed td{
+    cursor: pointer;
+}
+.tfpOcult{
+    display: none;
+}
+.tftClin{
+    background: #aabbcc;
+}
+/*_______________________________________________________*/
+
+
+
+
+/* -----------------------RODAPÉ------------------------ */
+#trf_form_rdp{
+    display: flex;
+    margin-bottom: 10px;
+    width: 100%;
+    height: 80px;
+    justify-content: right;
+    align-items: center;
+    padding: 30px 0px 60px 0px;
+    border-top: solid 1px #aaa;
+}
+.trf_form_btn{
+    width: 110px;
+    height: 40px;
+    font-size: 18px;
+    border: solid 1px #eee;
+    margin-right: 20px;
+    cursor: pointer;
+    background: #55cc88;
+    color: #fff;
+    font-weight: bold;
+    border-radius: 5px;
+}
+.trf_form_btn:active{
+    border: solid 3px #050;
+}
+.trf_form_btn:hover{
+    background: #33aa66;
+}
+#trf_form_cnc{
+    background: #bbb;
+    color: #fff;
+    margin-left: 0px;
+}
+#trf_form_cnc:hover{
+    background: #999;
+}
+#trf_form_cnc:active{
+    border: solid 3px #555;
+}
+/*_______________________________________________________*/
+
+
+
+
+/* -----------------------PERCENTUAL-------------------- */
+#trfForm_Percentual{
+	display: flex;
+	width: 100%;
+	padding: 4px 20px 4px 20px;
+	justify-content: right;
+}
+#trfForm_Percentual label{
+	margin: 0 10px 0 4px;
+}
+#trfForm_Percentual input{
+	width: 40px;
+	border-radius: 5px;
+	border: solid 1px #ccc;
+	font-size: 16px;
+	padding-left: 8px;
+}
+/*_______________________________________________________*/
+
+
+
+
+/* -----------------------INFO------------------------ */
+#trf_form_inf{
+    width: 100%;
+	display:flex;
+	color:#999;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+#trf_form_inf label{
+	margin-right: 5px;
+}
+/*_______________________________________________________*/
+
+
+
+
+
+
+/*------------------------CAIXA DE DIALOGO PARA INSERIR CARTÕES------------------------------*/
+#PnlmsgAlert1{
+	display:flex;
+	justify-content: center;
+	align-items: center;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100vh;
+	background-color: rgba(0,0,0,0.7);
+	z-index: 9999999999;
+}
+#ctrlPnl1{
+  	border: solid 3px var(--blue);
+  	border-radius: 15px;
+	padding: 20px 0 0 0;
+	background: #fff;
+	min-width: 350px;
+	max-width: 500px;
+}
+.ctrlPnl1{
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height:auto;
+	margin-bottom: 20px;
+}
+#msgAlertText1{
+	padding: 0 20px 10px 20px;
+	text-align: center;
+}
+#msgAlertAct1{
+	padding: 0 20px 0 20px;
+	text-align: center;
+}
+
+
+
+#cartaoAddDv{
+	display: flex;
+	flex-direction: column;
+}
+#msgAlertSenhaLb{
+	display: none;
+	color: #f00;
+}
+.ctrlPnlBtn1{
+	display: flex;
+	height: 60px;
+	width: 100%;
+	border-top: solid 1px #ccc;
+	justify-content: space-evenly;
+	align-items: center;
+	margin: 50px 0 0 0;
+}
+
+.trfForm_addEspSlv{
+	border: solid 1px #006400;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #006400;
+	color: #fff;
+	opacity: 0.5;
+}
+.trfForm_addEspSlv:hover{
+	opacity: 1;
+}
+.trfForm_addEspCnc{
+	border: solid 1px #222;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #555;
+	color: #fff;
+	opacity: 0.5;
+}
+.trfForm_addEspCnc:hover{
+	opacity: 1;
+}
+.ctrlPnlInput{
+	font-size: 20px;
+}
+/*______________________________________________________________________________________________*/
+/*______________________________________________________________________________________________*/
+
+
+
+
+
+

@@ -1,0 +1,1055 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="shortcut icon" href="img/logo7.png" type="image/x-icon">
+	<link rel="stylesheet" href="geral/css/0geral.css"><!--não mudar de lugar-->
+	<link rel="manifest" href="pwa/manifest.json"><!--configurações pwa-->
+	<title>GAM-Caracal</title>
+</head>
+<body>
+	<!------------------------ MENU PRINCIPAL --------------------------->
+	<section class="menuRecolhido" id='sidebar'>
+		<a href='#' class='brand'>
+	    		<img src='img/logo1.png' alt='Logo'>
+		    	<div>
+				<p id='nome_app'>GAM_Caracal</p>
+		       	<p id='func_app'>Controle de tarefas avançado</p>
+		   	</div>
+	   	</a>
+		<ul class='side-menu'>
+			<li class="noSB"><a href='#' class='inicio' id='home'><i class='bx bxs-home icon'></i> Início</a><ul class='side-dropdown'></ul></li>
+			<li class='divider' data-text='Principal'>Principal</li>
+			<li id="sbTarefas">
+				<a href='#' class='mSus'><i class='bx bx-task icon mSus' ></i> Tarefas <i class='bx bx-chevron-right icon-right mSus' ></i></a>
+				<ul class='side-dropdown'>
+	 				<li><a href='#' altSB id='linha1'>Linha 1</a></li>
+					<li><a href='#' altSB id='linha2'>Linha 2</a></li>
+					<li><a href='#' altSB id='linha3'>Linha 3</a></li>
+					<li><a href='#' altSB id='cfgTarf'>Definições</a></li>
+				</ul>
+			</li>
+			<li id="sbControles">
+				<a href='#' class='mSus'><i class='bx bxs-widget icon mSus' ></i> Controles<i class='bx bx-chevron-right icon-right mSus' ></i></a>
+				<ul class='side-dropdown'>
+						<li><a href='#' altSB id='controle01'>Ferramentas</a></li>
+						<li><a href='#' altSB id='controle02'>Produtos</a></li>
+						<li><a href='#' altSB id='controle03'>Equipe</a></li>
+				</ul>
+			</li>	
+			<li class='divider' data-text='Diversos'>Diversos</li>
+			<li class="noSB"><a href='#' id="trf_menu_afConfiguracoes"><i class='bx bx-cog icon'></i> Configurações</a><ul class='side-dropdown'></ul></li>
+		</ul>
+		<div class='ads'>
+		    <div class='wrapper'>
+			<a href='#' class='btn-upgrade'>MANUAL DO USUÁRIO</a>
+			<p>Bem vindo ao <span>PROJETO UH-15.</span><br> Manutenção de 3º escalão</p>
+		    </div>
+		</div>
+	</section>
+	<!-------------------------------------------------------------------->
+
+
+
+
+	<!----------------------- BARRA DE PESQUISA ------------------------->
+	<section id="content">
+		<nav>
+			<i class='bx bxl-flutter toggle-sidebar' id='iconRM'></i>
+			<form action='#'>
+				<div class='form-group'>
+					<input id="barrPesc_pesquisa" type='text' placeholder='Buscar...'>
+					<i id="barrPesc_Ipesquisa" class='bx bx-search icon' ></i>
+				</div>
+			</form>
+		</nav>
+	</section>
+	<!-------------------------------------------------------------------->
+	
+	
+	
+
+	<!------------------------ ÁREA PRINCIPAL ------------------------->
+	<section id="areaPcp">
+			<!-- ---------------------MODULO INÍCIO-------------------- --> 
+			<main class="modulo" id="inicio">
+				<div class="confMen">
+					<div class="menuSec">
+						<h1>INÍCIO</h1>
+					</div>
+					<section class="configModul">
+						<h1>Aguardando desenvolvimento</h1>
+					</section>
+				</div>
+			</main>
+			<!-- ----------------------------------------------------- --> 
+
+
+
+
+			<!-- -------------------MODULO TAREFAS--------------------- --> 
+			<main class="modulo ocultPainel" id="tarefas">
+				<!-- -------ÁREA PRINCIPAL-------- --> 
+				<div class="confMen">
+					<!--MENU--> 
+					<div class="menuSec" id="menuSecTrf">
+						<div class="menuMolulos">
+							<i class='bx bx-menu toggle-sidebar icon' id="trf_menu"></i>
+							<ul id="trf_mn">
+								<li class="tipAcs"><a href="#" id="trf_menu_afNew"><i class='bx bx-layer-plus'></i>nova tarefa</a></li>
+								<li class="tipAcs"><a href="#" id="trf_menu_afLote"><i class='bx bx-layer'></i>add em lote</a></li>
+								<li class="tipAcs">
+									<input type="file" id="trf_menu_afImp" accept=".xlsx, .ODS, .XLS">
+									<a href="#"><i class='bx bx-import'></i>importar</a>
+								</li>
+								<li><a href="#" id="exportarLinha"><i class='bx bx-export'></i>exportar</a></li>
+								<li><a href="#" id="trf_menu_afRelatorios"><i class='bx bxs-report' ></i>relatórios</a></li>
+							</ul>
+						</div>
+						<h1 id="trf_titulo"></h1><h1 id=trfANV></h1><h1 id=trfSn></h1>
+					</div>
+
+					<!--ÁREA DOS SUB-MODULOS-->
+					<section class="configModul">
+						<!-- -------TABELA------------ --> 
+						<div id="trf_tbl">
+							<div id="trf_tblCbc" >
+								<div id="dadosANV">
+									<p>MGB S/N:</p>
+									<p>MOTOR #1 S/N:</p>
+									<p>MOTOR #2 S/N:</p>
+								</div>
+								<div id="trf_tblPnlmsg">
+									<div id="trf_tblCtrlAct" class="trf_tblCtrl">
+										<label>controles</label>
+										<i class='bx bx-chevron-down' ></i>
+									</div>
+									<div id="trf_tblmsgSec">
+										<img src='img/imgOK.png' alt='Logo'>
+										<p>Alteração realizada com sucesso!</p>
+									</div>
+								</div>
+								<div id="trf_tblCtrl" class="trf_tblCtrl">
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol3" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Data</label>
+									</div>	
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol4" class="trf_tblcbs" type="checkbox" checked="true">
+										<label id="trf_tblCtrllb1"></label>
+									</div>								
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol5" class="trf_tblcbs" type="checkbox" checked="true">
+										<label id="trf_tblCtrllb2"></label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol6" class="trf_tblcbs" type="checkbox" checked="true">
+										<label  id="trf_tblCtrllb3"></label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol7" class="trf_tblcbs" type="checkbox" checked="true">
+										<label  id="trf_tblCtrllb4"></label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol8" class="trf_tblcbs" type="checkbox" checked="true">
+										<label id="trf_tblCtrllb5"></label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol9" class="trf_tblcbs" type="checkbox" checked="true">
+										<label id="trf_tblCtrllb6"></label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol10" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>%</label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol11" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Descrição</label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol12" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Serviço</label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol13" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Pendências</label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol14" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Equipe</label>
+									</div>
+									<div class="trf_tblCtrl">
+										<input id="trfTblCol15" class="trf_tblcbs" type="checkbox" checked="true">
+										<label>Atualização</label>
+									</div>
+									<div id="trf_tblCtrlFechados" class="trf_tblCtrl">
+										<input id="trf_tblCBFechadas" type="checkbox" checked="true">
+										<label>Fechados</label>
+									</div>
+								</div>
+							</div>
+							<div id="trf_tblDv" >
+								<table id="trf_tblTb">
+									<thead>
+										<tr id="trf_tblTbHd">
+											<th class="trfTblCol1">Id</th>
+											<th class="trfTblCol2">
+												<div class="trfTblColDv1"><a class="filt">Número</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC2" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol3">
+												<div class="trfTblColDv1"><a class="filt">Data</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC3" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol4">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC4" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol5">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC5" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol6">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC6" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol7">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC7" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol8">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC8" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol9">
+												<div class="trfTblColDv1"><a class="filt"></a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC9" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol10">
+												<div class="trfTblColDv1"><a class="filt">%</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC10" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol11">
+												<div class="trfTblColDv1"><a class="filt">Descrição da tarefa</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC11" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol12">
+												<div class="trfTblColDv1"><a class="filt">Serviço executado</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC12" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol13">
+												<div class="trfTblColDv1"><a class="filt">Pendências</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC13" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol14">
+												<div class="trfTblColDv1"><a class="filt">Equipe</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC14" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol15">
+												<div class="trfTblColDv1"><a class="filt">Atualização</a><i class='bx bx-chevron-down filt'></i></div>
+												<div class="trfTblColDv2">
+													<input id="filtC15" class="trfTblColInpt" type="text" placeholder='Buscar...' maxLength="200">
+												</div>
+											</th>
+											<th class="trfTblCol16">Opções</th>
+										</tr>
+									</thead>
+									<tbody id="trf_tblTbBdy">							
+									</tbody>
+									<tfoot>
+										<tr>
+											<td colspan="15">
+												<label id="trfTblQtd"></label>
+											</td>
+										</tr>
+									</tfoot>
+								</table>
+							</div>
+						</div>
+						
+						<!-- -------CONFIGURAÇÕES DAS TAREFAS------------ --> 
+						<div id="trf_conf">
+							<!--abas --> 
+							<div id="trf_confTabs">
+								<div class="trf_confTabAtv">geral</div>
+								<div class="trf_confTabInt">linha 1</div>
+								<div class="trf_confTabInt">linha 2</div>
+								<div class="trf_confTabInt">linha 3</div>
+							</div>
+							<!--painel principal --> 
+							<div id="trf_confPnl">
+								<!--painel geral --> 
+								<form id="trf_confPnl0">
+									<div class="trf_confPnlHead">
+										<p>Controles do formulário</p>
+									</div>
+									<main>
+										<table id="trf_confPnlTbl">
+											<tr>
+												<th>Controle</th>
+												<th>ativo</th>
+												<th>valor 01</th>
+												<th>valor 02</th>
+												<th>valor 03</th>
+												<th>valor 04</th>
+												<th>valor 05</th>
+												<th>valor 06</th>
+												<th>valor 07</th>
+												<th>valor 08</th>
+												<th>valor 09</th>
+												<th>valor 10</th>
+											</tr>
+											<tr id="trf_confPcp">
+												<td><input type="text" value="Andamento" disabled></td>
+												<td><input type="checkbox" checked="true" disabled></td>
+												<td id="trf_confVl1"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl2"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl3"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl4"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl5"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl6"><input type="text" disabled><div>-</div></td>
+												<td id="trf_confVl7"><input type="text" maxlength="10"><div>-</div></td>
+												<td id="trf_confVl8"><input type="text" maxlength="10"><div>-</div></td>
+												<td id="trf_confVl9"><input type="text" maxlength="10"><div>-</div></td>
+												<td id="trf_confVl10"><input type="text" maxlength="10"><div>-</div></td>
+											</tr>
+											<tr>
+												<td><input type="text" value="Disp." disabled></td>
+												<td><input type="checkbox" checked="true" disabled></td>
+												<td><input type="text" value="Indisponível" disabled></td>
+												<td><input type="text" value="Disponível" disabled></td>
+												<td><input type="text" value="Restrito" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+												<td><input type="text" disabled></td>
+											</tr>	
+											<tr>
+												<td><input class="trf_confCb" type="text" maxlength="10"></td>
+												<td><input class="trf_confCbx" type="checkBox" checked="false"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+											</tr>
+											<tr>
+												<td><input class="trf_confCb" type="text" maxlength="10"></td>
+												<td><input class="trf_confCbx" type="checkBox" checked="false"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+												<td><input type="text" maxlength="10"></td>
+											</tr>
+											<tr>
+												<td><input class="trf_confCb" type="text" maxlength="10"></td>
+												<td><input class="trf_confCbx" type="checkBox" checked="false"></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+											</tr>
+											<tr>
+												<td><input class="trf_confCb" type="text" maxlength="10"></td>
+												<td><input class="trf_confCbx" type="checkBox" checked="false"></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+											</tr>
+											<tr>
+												<td><input type="text" value="Baixar" disabled></td>
+												<td><input type="checkBox" checked="true"></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+												<td><input type="text" value="" disabled></td>
+											</tr>										
+										</table>
+									</main>
+									<div id="trf_confPnlFtr">
+										<input id="trf_confSlv" type="submit" value="salvar">
+									</div>
+								</form>
+								<!--painel linha 01 --> 
+								<form class="ocultPainel">
+									<main class="trf_confPCP">
+										<div>
+											<div class="trf_confPnlHead">
+												<p>Linha de manutenção nº 01</p>
+											</div>
+											<div class="trf_confPnlBody">
+												<div>
+													<label>Nº Aeronave:</label><a class="obrigat">*</a>
+													<select class="trfConf_L1">
+														<option>VAGO</option>
+														<option>N-7101</option>
+														<option>N-7102</option>
+														<option>N-7103</option>
+														<option>N-7104</option>
+														<option>N-7105</option>
+														<option>N-7106</option>
+														<option>N-7107</option>
+														<option>N-7108</option>
+														<option>N-7201</option>
+														<option>N-7202</option>
+														<option>N-7203</option>
+														<option>N-4101</option>
+														<option>N-4102</option>
+														<option>N-4103</option>													
+													</select>
+												</div>
+												<div>
+													<label>S/N Aeronave:</label>
+													<input class="trfConf_L1" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N MGB:</label>
+													<input class="trfConf_L1" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#1:</label>
+													<input class="trfConf_L1"  type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#2:</label>
+													<input class="trfConf_L1"  type="text" maxLength="15">
+												</div>
+												<div>
+													<label>Início da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L1"  type="date">
+												</div>
+												<div>
+													<label>Fim da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L1"  type="date">
+												</div>
+												<div>
+													<label>Status:</label>
+													<span class="trfConf_L1" ></span>
+												</div>
+												<section>
+													<input class="tfpbAtv" id="tfpbAtv1" type="submit" value="ativar">
+													<input class="tfpbEdt" id="tfpbEdt1" type="button" value="editar">
+													<input class="tfpbArq" id="tfpbArq1"  type="submit" value="arquivar">
+													<input class="tfpbExc" id="tfpbExc1"  type="reset" value="excluir">
+													<input class="tfpbSlv" id="tfpbSlv1"  type="button" value="salvar">
+													<input class="tfpbCan" id="tfpbCan1"  type="button" value="cancelar">
+												</section>
+											</div>
+										</div>
+										<div>
+											<p class="trf_confPnlHead">Relatório Geral</p>
+											<textarea class="textoAvancado" id="editor1"></textarea>
+										</div>
+									</main>					
+								</form>
+								<!--painel linha 02 -->
+								<form class="ocultPainel">
+									<main class="trf_confPCP">
+										<div>
+											<div class="trf_confPnlHead">
+												<p>Linha de manutenção nº 02</p>
+											</div>
+											<div class="trf_confPnlBody">
+												<div>
+													<label>Nº Aeronave:</label><a class="obrigat">*</a>
+													<select class="trfConf_L2">
+														<option>VAGO</option>
+														<option>N-7101</option>
+														<option>N-7102</option>
+														<option>N-7103</option>
+														<option>N-7104</option>
+														<option>N-7105</option>
+														<option>N-7106</option>
+														<option>N-7107</option>
+														<option>N-7108</option>
+														<option>N-7201</option>
+														<option>N-7202</option>
+														<option>N-7203</option>
+														<option>N-4101</option>
+														<option>N-4102</option>
+														<option>N-4103</option>
+													</select>
+												</div>
+												<div>
+													<label>S/N Aeronave:</label>
+													<input class="trfConf_L2" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N MGB:</label>
+													<input class="trfConf_L2" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#1:</label>
+													<input class="trfConf_L2" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#2:</label>
+													<input class="trfConf_L2" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>Início da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L2" type="date">
+												</div>
+												<div>
+													<label>Fim da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L2" type="date">
+												</div>
+												<div>
+													<label>Status:</label>
+													<span class="trfConf_L2"></span>
+												</div>
+												<section>
+													<input class="tfpbAtv" id="tfpbAtv2" type="submit" value="ativar">
+													<input class="tfpbEdt" id="tfpbEdt2" type="button" value="editar">
+													<input class="tfpbArq" id="tfpbArq2"  type="submit" value="arquivar">
+													<input class="tfpbExc" id="tfpbExc2"  type="reset" value="excluir">
+													<input class="tfpbSlv" id="tfpbSlv2"  type="button" value="salvar">
+													<input class="tfpbCan" id="tfpbCan2"  type="button" value="cancelar">
+												</section>
+											</div>
+										</div>
+										<div>
+											<p class="trf_confPnlHead">Relatório Geral</p>
+											<textarea class="textoAvancado" id="editor2"></textarea>
+										</div>
+									</main>									
+								</form>
+								<!--painel linha 03 -->
+								<form class="ocultPainel">
+									
+									<main class="trf_confPCP">
+										<div>
+											<div class="trf_confPnlHead">
+												<p>Linha de manutenção nº 03</p>
+											</div>
+											<div class="trf_confPnlBody">
+												<div>
+													<label>Nº Aeronave:</label><a class="obrigat">*</a>
+													<select class="trfConf_L3">
+														<option>VAGO</option>
+														<option>N-7101</option>
+														<option>N-7102</option>
+														<option>N-7103</option>
+														<option>N-7104</option>
+														<option>N-7105</option>
+														<option>N-7106</option>
+														<option>N-7107</option>
+														<option>N-7108</option>
+														<option>N-7201</option>
+														<option>N-7202</option>
+														<option>N-7203</option>
+														<option>N-4101</option>
+														<option>N-4102</option>
+														<option>N-4103</option>
+													</select>
+												</div>
+												<div>
+													<label>S/N Aeronave:</label>
+													<input class="trfConf_L3" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N MGB:</label>
+													<input class="trfConf_L3" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#1:</label>
+													<input class="trfConf_L3" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>S/N Motor#2:</label>
+													<input class="trfConf_L3" type="text" maxLength="15">
+												</div>
+												<div>
+													<label>Início da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L3" type="date">
+												</div>
+												<div>
+													<label>Fim da inspeção:</label><a class="obrigat">*</a>
+													<input class="trfConf_L3" type="date">
+												</div>
+												<div>
+													<label>Status:</label>
+													<span class="trfConf_L3"></span>
+												</div>
+												<section>
+													<input class="tfpbAtv" id="tfpbAtv3" type="submit" value="ativar">
+													<input class="tfpbEdt" id="tfpbEdt3" type="button" value="editar">
+													<input class="tfpbArq" id="tfpbArq3"  type="submit" value="arquivar">
+													<input class="tfpbExc" id="tfpbExc3"  type="reset" value="excluir">
+													<input class="tfpbSlv" id="tfpbSlv3"  type="button" value="salvar">
+													<input class="tfpbCan" id="tfpbCan3"  type="button" value="cancelar">
+												</section>
+											</div>
+										</div>
+										<div>
+											<p class="trf_confPnlHead">Relatório Geral</p>
+											<textarea class="textoAvancado" id="editor3"></textarea>
+										</div>
+									</main>								
+								</form>
+							</div>
+						</div>
+						
+						<!-- -------FORMULÁRIO-------- --> 
+						<div id="trf_form">
+							<h1 id="trf_form_tit">Adicionar nova tarefa</h1>
+							<!--CABEÇALHO--> 
+							<header id="trf_form_cbc">
+								<div><label>Número:<a class="obrigat">*</a></label><input maxlength="10" id="trf_form_num" type="text"></div>
+								<div><label>Data:<a class="obrigat">*</a></label><input id="trf_form_dat" type="date"></div>
+								<div id="trf_form_Ch00Dv">
+									<label id="trf_form_Ch00Lb">Chave 00:</label>
+									<select id="trf_form_Ch00">
+									</select>
+								</div>	
+								<div id="trf_form_Ch01Dv">
+									<label id="trf_form_Ch01Lb">Chave 01:</label>
+									<select id="trf_form_Ch01">
+									</select>
+								</div>
+								<div id="trf_form_Ch02Dv">
+									<label id="trf_form_Ch02Lb">Chave 02:</label>
+									<select id="trf_form_Ch02">
+									</select>
+								</div>										
+								<div id="trf_form_Ch03Dv">
+									<label id="trf_form_Ch03Lb">Chave 03:</label>
+									<select id="trf_form_Ch03">
+									</select>
+								</div>
+								<div id="trf_form_Ch04Dv">
+									<label id="trf_form_Ch04Lb">Chave 04:</label>
+									<input id="trf_form_Ch04" type="text" maxLength="30">
+								</div>
+								<div id="trf_form_Ch05Dv">
+									<label id="trf_form_Ch05Lb">Chave 05:</label>
+									<input id="trf_form_Ch05" type="text" maxLength="30">
+								</div>
+								<div id="trf_form_bxrDv">
+									<label>Baixar:</label>
+									<div>
+										<select id="trf_form_bxr" class="pesq_formBxr" required></select>
+										<i class='bx bx-download' id="trf_form_bxrIcn"></i>
+										<i class='bx bxs-save' id="trf_form_slvIcn"></i>
+										<i class='bx bxs-trash' id="trf_form_deleteIcn"></i>
+									</div>
+								</div>						
+							</header>
+							<!--ÁREA PRINCIPAL--> 
+							<main id="trf_form_pcp">
+								<!--tarefa-->	
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">descrição da tarefa<a class="obrigat">*</a></h1>
+									<textarea class="trf_form_txa" id="trf_form_txa1" placeholder="Digite aqui..."></textarea>
+								</div>	
+								<!--serviço-->		
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">serviços executados</h1>
+									<textarea class="trf_form_txa" id="trf_form_txa2" placeholder="Digite aqui..."></textarea>
+								</div>	
+								<!--pedidos-->				
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">pedidos</h1>
+									<div class="trf_form_div">
+										<div class="trf_form_div_cbc">
+											<div id="tfdc1"><label>PIM:<a class="obrigat">*</a></label><input id="trf_form_pedPim" type="text" class="maskNumeros" required></div>	
+											<div id="tfdc2"><label>nome:<a class="obrigat">*</a></label><input id="trf_form_pedNom" type="text" maxLength="30" required></div>
+											<div id="tfdc3">
+												<input type="checkbox" id="trf_form_pedCB">
+												<label>detalhar</label>
+												<button id="trf_form_pedAdd">adicionar</button>
+											</div>
+										</div>
+										<div class="trf_form_div_cbc" id="trf_form_pedAvd">
+											<div class="tfdca1">
+												<label>tipo:</label>
+												<select id="trf_form_pedTip">
+													<option>sobressalente</option>
+													<option>equipamento</option>
+												</select>
+											</div>
+											<div class="tfdca2"><label>quantidade:</label><input id="trf_form_pedQtd" type="text" class="maskNumeros"></div>
+											<div class="tfdca1"><label>P/N:</label><input id="trf_form_pedPN" type="text" maxLength="30"></div>
+											<div class="tfdca1"><label>P/N alt:</label><input id="trf_form_pedPNA" type="text" maxLength="30"></div>
+											<div class="tfdca3"><label>manual:</label><input id="trf_form_pedMan" type="text" maxLength="30"></div>
+											<div class="tfdca4"><label>observação:</label><input id="trf_form_pedObs" type="text" maxLength="50"></div>
+											<div class="tfdca6" id="tfdca6">
+												<button id="tfdca6Cn">cancelar</button>
+												<button id="tfdca6Ex">excluir</button>
+												<button id="tfdca6Sv">alterar</button>
+											</div>
+										</div>
+										<table class="trf_form_tbl" id="trf_form_tblPed">
+											<thead class="trf_form_tblCbc">
+												<th>PIM</th>
+												<th>nome</th>
+												<th class="geralOcultTD">tipo</th>
+												<th class="tfpOcult">qtd</th>
+												<th class="tfpOcult">p/n</th>
+												<th class="tfpOcult">p/n alt</th>
+												<th class="tfpOcult">manual</th>
+												<th class="tfpOcult">observação</th>
+												<th class="tftcenter">pendente</th>
+											</thead>
+											<tbody id="tftpB">
+											</tbody>												
+										</table>
+										<div class="ocultPainel" id="trf_form_tblPedMsg">
+											<img src="#" alt="Logo" id="tfpmsg">
+											<h4 id="tfpmsgTx"></h4>
+										</div>	
+									</div>
+								</div>	
+								<!--ferramentas-->					
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">ferramentas</h1>
+									<div class="trf_form_div">
+										<div class="trf_form_div_cbcSlct">
+											<div class="tfdcs0">
+												<div class="tfdcs1">
+													<div class="tfdcsAddCbc">
+														<label>ferramenta:</label>
+														<a href="#" class="tfdcsAddCbcLb" id="trfForm_addFer">nova ferramenta</a>
+													</div>
+													<select class="pesq_formFer" id="trf_form_Fer" style="width: 100%;"></select>
+												</div>	
+											</div>
+										</div>	
+										<table class="trf_form_tbl" id="trf_form_tblFer">
+											<thead class="trf_form_tblCbc">
+												<th>ferramenta</th>
+												<th class="tftcenter">pendente</th>
+												<th></th>
+											</thead>
+											<tbody id="tftfB">
+											</tbody>														
+										</table>
+										<div class="ocultPainel" id="trf_form_tblFerMsg">
+											<img src="#" alt="Logo" id="tffmsg">
+											<h4 id="tffmsgTx"></h4>
+										</div>													
+									</div>
+								</div>
+								<!--produtos-->	
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">produtos</h1>
+									<div class="trf_form_div">
+										<div class="trf_form_div_cbcSlct">
+											<div class="tfdcs0">
+												<div class="tfdcs1">
+													<div class="tfdcsAddCbc">
+														<label>produtos:</label>
+														<a href="#" class="tfdcsAddCbcLb" id="trfForm_addProd">novo produto</a>
+													</div>
+													<select class="pesq_formProd" id="trf_form_Prd" style="width: 100%;"></select>
+												</div>	
+											</div>
+										</div>	
+										<table class="trf_form_tbl" id="trf_form_tblPrd">
+											<thead class="trf_form_tblCbc">
+												<th>produto</th>
+												<th class="tftcenter">pendente</th>
+												<th></th>
+											</thead>
+											<tbody id="tftprB">
+											</tbody>			
+										</table>
+										<div class="ocultPainel" id="trf_form_tblPrdMsg">
+											<img src="#" alt="Logo" id="tfprmsg">
+											<h4 id="tfprmsgTx"></h4>
+										</div>												
+									</div>
+								</div>	
+								<!--equipe-->	
+								<div class="trf_form_pcp">
+									<h1 class="trf_form_tit">equipe</h1>
+									<div class="trf_form_div">
+										<div class="trf_form_div_cbcSlct">
+											<div class="tfdcs0">
+												<div class="tfdcs1">
+													<div class="tfdcsAddCbc">
+														<label>equipe:</label>
+														<a href="#" class="tfdcsAddCbcLb" id="trfForm_addEqp">novo membro</a>
+													</div>
+													<select class="pesq_formEqu" id="trf_form_EquMem" style="width: 100%;"></select>
+												</div>	
+											</div>
+										</div>	
+										<table class="trf_form_tbl" id="trf_form_tblEqp">
+											<thead class="trf_form_tblCbc">
+												<th>membro da equipe</th>
+												<th></th>
+											</thead>
+											<tbody id="tdteB">
+											</tbody>					
+										</table>
+										<div class="ocultPainel" id="trf_form_tblEqpMsg">
+											<img src="#" alt="Logo" id="tfeqmsg">
+											<h4 id="tfeqmsgTx"></h4>
+										</div>												
+									</div>
+								</div>
+							<!--PERCENTUAL-->
+							<div id="trfForm_Percentual">
+								<label>andamento:</label><input type="text" id="trfForm_vlPorcentagem" class="maskNum02" required><label>%</label><a class="obrigat">*</a>
+							</div>		
+							<!--RODAPÉ--> 
+							<footer id="trf_form_rdp">
+								<button class="trf_form_btn" id="trf_form_cnc">cancelar</button>
+								<button class="trf_form_btn" id="trf_form_slv">salvar</button>
+								<button class="trf_form_btn" id="trf_form_slN">salv. e novo</button>
+							</footer>
+							<div id="trf_form_inf">
+								<div><label>id:</label><span>0</span></div>
+								<div><label>atualizado em:</label><span>...</span></div>
+								<div><label>percentual:</label><span>0%</span></div>	
+							</div>
+						</div>
+					</section>						
+				</div>
+			</main>
+			<!-- ----------------------------------------------------- --> 
+			
+			
+			<!-- ---------------------MODULO CONTROLES-------------------- --> 
+			<main class="modulo ocultPainel" id="controles">
+				<div class="confMen">
+					<div class="menuSec">
+						<h1>CONTROLES</h1>
+					</div>
+					<section class="configModul">
+						<div id="ctrlFerramentas" class="ocultPainel">
+							<div>
+								<h3>FERRAMENTAS CADASTRADAS</h3>
+								<div>
+									<button id="ctrlFerramentasNova" onClick='criarFerramenta()'>adicionar</button>
+									<button id="ctrlFerramentasRelatorio">relatório</button>
+									
+								</div>
+								<div class="ctrlTblDiv">
+									<table id="controlesTabela">
+										<thead id="controlesTabelaHead">
+											<tr>
+												<th class="controlesCol01">id</th>
+												<th class="controlesCol02">nome</th>
+												<th class="controlesCol03">local</th>
+												<th class="controlesCol04">Observação</th>
+												<th class="controlesCol05">opções</th>	
+											</tr>
+											
+										</thead>
+										<tbody id="controlesTabelaBody">							
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="5">
+													<label id="controlesTabelaFootLb">100 ferramentas cadastradas</label>
+												</td>
+											</tr>
+										</tfoot>
+										
+									</table>
+								</div>
+							</div>
+						</div>
+						<div id="ctrlProdutos" class="ocultPainel">
+							<div>
+								<h3>PRODUTOS CADASTRADOS</h3>
+							</div>
+						</div>
+						<div id="ctrlEquipe" class="ocultPainel">
+							<div>
+								<h3>EQUIPE DE TRABALHO</h3>
+							</div>
+						</div>
+					</section>
+				</div>
+			</main>
+			<!-- ----------------------------------------------------- -->
+			
+			
+			
+			<!-- ---------------------MODULO CONFIGURAÇÕES-------------------- --> 
+			<main class="modulo ocultPainel" id="configuracoes">
+				<div class="confMen">
+					<div class="menuSec">
+						<h1>CONFIGURAÇÕES</h1>
+					</div>
+					<section class="configModul">
+						<div id='ctrlPnlCgeral'>
+							<div class='ctrlPnlCgeralCbc'><h4 class='TextCgeral'>CONFIGURAÇÕES GERAIS</h4></div>
+							<div class='ctrlPnlCgeral'>
+								<div class='ConfigGeralPCP'>
+									<label>senha geral:</label>
+									<div>
+										<input id='cGeralSenha' type='password' maxlength='6' required>
+									</div>
+								</div>
+								<div class='ConfigGeralPCP'>
+										<label>tipo de menu:</label>
+										<select id='cGeralMenu'>
+											<option value='800'>fixo</option>
+											<option value='5000'>oculto</option>
+											<option value='1500'>responsivo</option>
+										</select>
+								</div>
+								<div class='ConfigGeralPCP'>
+									<label>tipo de tabela principal:</label>
+									<select id='cGeralTabela'>
+										<option>estatica</option>
+										<option>normal</option>
+									</select>
+								</div>
+								<div class='BtnCgeral'>
+									<div></div>
+									<button class='ConfigGeraladdEspSlv' id='ConfigGeraladdEspSlv'>salvar</button>
+								</div>
+								
+							</div>
+							
+							
+							<div class='ctrlPnlCgeralCbc'><h4 class='TextCgeral'>RESTAURAÇÃO</h4></div>
+							<ul>
+									<p>selecione o arquivo de backup</p>
+									<input type="file" id="trf_menu_afRest" accept=".xlsx, .ODS, .XLS">			
+							</ul>
+							
+						</div>
+						
+					</section>
+				</div>
+			</main>
+			<!-- ----------------------------------------------------- --> 
+			
+	</section>
+	<!-------------------------------------------------------------------->
+	
+	
+	
+	
+	<!---------------------CAIXAS DE MENSAGENS---------------------------->
+	<div id="trfTbl_pnlPercentual">
+		<div>
+			<h5>atualize o percentual</h5>
+			<section>
+				<input id="trfTbl_novoPercentual" type='text' class="maskNum02" required>
+				<label>%<label>
+			</section>
+			<button id="trfTbl_confirmarPercentual">confirmar</button>
+					
+		</div>
+	</div>
+	<!-------------------------------------------------------------------->
+
+
+
+
+	<!-------------------- IMPORTAÇÕES DOS SCRIPTS ---------------------->
+	<!-- importação dos componentes externos -->
+	<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script><!-- instalação do jquery -->	
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.16/jquery.mask.min.js"></script><!-- cdn das mascaras de input -->
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script><!-- cdn das pesquisas simples de input -->
+	<script src="tinymce/tinymce.min.js"></script><!-- editor de texto avançado -->
+	
+	
+	<!-- script do banco de dados -->
+	<script src="db/0banco.js"></script>
+	
+
+	<!-- script das configurações básicas -->
+	<script src="geral/js/1configUsuario.js"></script>
+	<script src="geral/js/2menuPrincipal.js"></script>
+	<script src="geral/js/3barraPesquisa.js"></script>
+	<script src="geral/js/4caixa_msg.js"></script>
+	<script src="geral/js/5inicializacao.js"></script>
+	<script src="geral/js/6cdnjsPlanilhas.js"></script>
+
+
+	<!-- script do modulo inicio -->
+	<script src="inicio/js/0carregamento.js"></script>
+
+
+	<!-- script do modulo das tarefas -->
+	<script src="tarefas/js/1menuSec.js"></script>
+	<script src="tarefas/js/2tabela.js"></script>
+	<script src="tarefas/js/3configTarefas.js"></script>
+	<script src="tarefas/js/4formulario.js"></script>
+	<script src="tarefas/js/6carregamento.js"></script>
+	
+	<!-- script do modulo controles -->
+	<script src="controles/js/0ferramentas.js"></script>
+	<script src="controles/js/4carregamento.js"></script>
+	
+	<!-- script do modulo das configurações -->
+	<script src="configuracoes/js/0carregamento.js"></script>
+	<script src="configuracoes/js/1configuracoes.js"></script>
+
+
+	<!-- script de configurações pwa -->
+	<script src="pwa/app.js"></script>
+
+
+	<!-------------------------------------------------------------------->
+
+</body>
+</html>

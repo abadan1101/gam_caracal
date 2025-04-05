@@ -1,0 +1,26 @@
+{
+    "theme_color":"#8936FF",
+    "background_color":"#fff",
+    "icons":[
+        {
+            "purpose":"maskable",
+            "sizes":"512x512",
+            "src":"icon512_maskable.png",
+            "type":"image/png"
+        },
+        {
+            "purpose":"any",
+            "sizes":"512x512",
+            "src":"icon512_rounded.png",
+            "type":"image/png"
+        }
+    ],
+    "orientation":"any",
+    "display":"standalone",
+    "dir":"auto",
+    "lang":"pt-BR",
+    "name":"GAM-Caracal",
+    "short_name":"GAM-Caracal",
+    "start_url":"https://abadan1101.github.io/gam_caracal/",
+    "scope":"https://abadan1101.github.io/gam_caracal"
+}

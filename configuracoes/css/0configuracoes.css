@@ -1,0 +1,91 @@
+
+/*------------------------CAIXA DE DIALOGO DAS CONFIGURAÇÕES------------------------------*/
+
+#ctrlPnlCgeral{
+  	border: solid 3px var(--blue);
+  	border-radius: 15px;
+	background: #fff;
+	width: 100%;
+
+	padding: 20px;
+}
+.ctrlPnlCgeralCbc{
+	display: flex;
+	align-items: start;
+	justify-content: center;
+	height:auto;
+	margin-bottom: 20px;
+	flex-direction: column;
+}
+.TextCgeral{
+	padding: 0 20px 10px 20px;
+	text-align: center;
+}
+
+.ctrlPnlCgeral{
+	display: flex;
+	align-items: space-between;
+	justify-content: space-between;
+	height:auto;
+	margin-bottom: 20px;
+	flex-direction: column;
+	height: auto;
+}
+.ConfigGeralPCP{
+	max-width: 400px;
+	display: flex;
+    	flex-wrap: wrap;
+}
+.ctrlPnlCgeral div{
+	display: flex;
+	align-items: space-between;
+	justify-content: space-between;
+}
+.ctrlPnlCgeral select{
+	margin: 0 0 20px 0;
+
+}
+.ctrlPnlCgeral label{
+	margin-right: 20px;
+	margin-bottom: 20px;
+}
+.ctrlPnlCgeral input{
+	font-size: 18px;
+	width: 150px;
+	padding-left: 5px;
+	margin: 0 0 20px 0;
+}
+.ctrlPnlCgeral i{
+	margin: 5px;
+	cursor: pointer;
+}
+.BtnCgeral{
+	display: flex;
+	align-items: space-between;
+	justify-content: space-between;
+	height: auto;
+	max-width: 400px;
+	border-bottom: solid 1px #ccc;
+	margin: 20px 0 50px 0;
+	padding-bottom: 15px;
+}
+.ConfigGeraladdEspSlv{
+	border: solid 1px #006400;
+	border-radius: 5px;
+	width: 100px;
+	height: 25px;
+	margin-bottom: 0;
+	cursor: pointer;
+	font-size: 15px;
+	background: #006400;
+	color: #fff;
+	opacity: 0.5;
+}
+.ConfigGeraladdEspSlv:hover{
+	opacity: 1;
+}
+
+
+
+/*______________________________________________________________________________________________*/
+

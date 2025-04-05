@@ -1,0 +1,142 @@
+/*----------------------------------------------IMPORTAÇÕES-------------------------------------*/
+/*--componentes externos--*/
+@import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;500;600;700&display=swap');
+@import url('https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css');
+@import url('https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css');
+
+/*--componentes internos--*/
+@import '1menuPrincipal.css';
+@import '2barraPesquisa.css';
+@import '3caixa_msg.css';
+
+/*--importação do modulo tarefas--*/
+@import '../../tarefas/css/0menuSec.css';
+@import '../../tarefas/css/1tabela.css';
+@import '../../tarefas/css/2configTarefas.css';
+@import '../../tarefas/css/3formulario.css';
+
+/*--importação do modulo controles--*/
+@import '../../controles/css/0ferramentas.css';
+
+/*--importação do modulo configurações--*/
+@import '../../configuracoes/css/0configuracoes.css';
+/*______________________________________________________________________________________________*/
+
+
+
+
+/*----------------------------------------CONFIGURAÇÕES GERAIS----------------------------------*/
+* {
+	font-family: 'Open Sans', sans-serif;
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+:root {
+	--grey: #F1F0F6;
+	--dark-gray: #8D8D8D;
+	--dark-gray2:#575555;
+	--light: #fff;
+	--dark: #000;
+	--green: #81D43A;
+	--light-green: #E3FFCB;
+	--blue: #1775F1;
+	--light-blue: #D0E4FF;
+	--dark-blue: #0C5FCD;
+	--red: #FC3B56;
+}
+html {
+	overflow-x: hidden;
+}
+body {
+	background: var(--grey);
+	overflow-x: hidden;
+}
+a {
+	text-decoration: none;
+}
+
+li {
+	list-style: none;
+}
+/*______________________________________________________________________________________________*/
+
+
+
+
+/*-------------------------------CONFIGURAÇÕES COMUNS AOS MODULOS------------------------------*/
+.borda{
+	border: solid 1px #000;/*provisório.*/
+}
+.ocultPainel{
+	display: none;
+}
+.obrigat{
+	color: #f00;
+}
+#areaPcp {
+	position: fixed;
+	width: 100%;
+	left: 2px;
+	transition: all .3s ease;
+	height: 100%;
+	margin-top: 65px;
+	overflow-y: auto;
+	scrollbar-width:thin;
+	scrollbar-color: #999 #fff;
+}
+#areaPcp.menuRecolhido + #areaPcp{
+	width: 100%;
+	left: 2px;
+}
+.configModul{
+	display: flex;
+	position: relative;
+	margin-top: 10px;
+	border-collapse: collapse;
+	width: 100%;
+	height: auto;
+	margin-bottom: 65px;
+	min-height: 300px;
+	border-radius: 10px;
+}
+.confMen{
+	background: #fff;
+	border-radius: 10px;
+	height: auto;
+	padding: 10px 20px 20px 20px;
+}
+.menuSec{
+	display: flex;
+	flex-wrap: wrap;
+	position: relative;
+	background: #eee;
+	width: 100%;
+	height: 40px;
+	color: var(--blue);
+	padding-left: 10px;
+	align-items: center;
+}
+.menuSec div, h1{
+	margin-right: 10px;
+}
+/*______________________________________________________________________________________________*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
