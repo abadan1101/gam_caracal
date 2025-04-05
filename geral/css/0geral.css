@@ -18,6 +18,7 @@
 /*--importação do modulo controles--*/
 @import '../../controles/css/0ferramentas.css';
 @import '../../controles/css/1produtos.css';
+@import '../../controles/css/2equipe.css';
 
 /*--importação do modulo configurações--*/
 @import '../../configuracoes/css/0configuracoes.css';

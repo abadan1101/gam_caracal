@@ -797,5 +797,62 @@ function alterarProdutosDB(n, e){
 }
 
 
+//------------------FUNÇÕES ESPECIAIS DA TABELA DE CONTROLE DA EQUIPE-------------------
+//--------------------------------------------------------------------------------------------
+//excluir ferramenta
+function excluirEquipeDB(z){
+	
+	return new Promise((resolve)=>{
+		var transaction = db.transaction('equipe', "readwrite");
+		var store = transaction.objectStore('equipe');
+		var request = store.delete(z)
+		resolve()
+	})
+}
+
+//obter ferramenta
+function obterEquipesDB(id){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction('equipe', "readwrite");
+		var store = transaction.objectStore('equipe');
+		var request = store.get(id)
+		request.onsuccess = function (event) {
+			var find = event.target.result;
+			if(!find){find = "null"}
+			resolve(find)
+		}
+	})
+}
+
+//alterar ferramenta
+
+function alterarEquipesDB(n, e){
+	return new Promise((resolve)=>{
+		var transaction = db.transaction("equipe","readwrite");
+		var objectStore = transaction.objectStore("equipe");
+		var request = objectStore.get(n);
+		request.onsuccess = function(){
+			request.result["membro"] = e[0].membro;
+			request.result["funcao"] = e[0].funcao;
+			request.result["observacao"] = e[0].observacao;
+			objectStore.put(request.result);
+			resolve()
+		}
+		request.onerror = (event) => {
+			//mensagem de rejeitado
+			var icon = "img/imgAlert.png"
+			var msg = "Erro ao alterar membro da equipe!"
+			var act = event
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			console.log("Erro na transação com o banco de dados");
+		}
+	})
+}
+
+
+
 
 

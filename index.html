@@ -949,6 +949,35 @@
 						<div id="ctrlEquipe" class="ocultPainel">
 							<div>
 								<h3>EQUIPE DE TRABALHO</h3>
+								<div>
+									<button id="ctrlEquipeNova" onClick='criarEquipe()'>adicionar</button>
+									<button id="ctrlEquipesRelatorio">relatório</button>
+									
+								</div>
+								<div class="ctrlTblDivEqu">
+									<table id="controlesTabelaEqu">
+										<thead id="controlesTabelaHeadEqu">
+											<tr>
+												<th class="controlesCol01Equ">id</th>
+												<th class="controlesCol02Equ">nome</th>
+												<th class="controlesCol03Equ">função</th>
+												<th class="controlesCol04Equ">Observação</th>
+												<th class="controlesCol05Equ">opções</th>
+											</tr>
+											
+										</thead>
+										<tbody id="controlesTabelaBodyEqu">							
+										</tbody>
+										<tfoot>
+											<tr>
+												<td colspan="5">
+													<label id="controlesTabelaFootLbEqu">100 membros cadastradas</label>
+												</td>
+											</tr>
+										</tfoot>
+										
+									</table>
+								</div>
 							</div>
 						</div>
 					</section>
@@ -1068,6 +1097,7 @@
 	<!-- script do modulo controles -->
 	<script src="controles/js/0ferramentas.js"></script>
 	<script src="controles/js/1produtos.js"></script>
+	<script src="controles/js/2equipes.js"></script>
 	<script src="controles/js/4carregamento.js"></script>
 	
 	<!-- script do modulo das configurações -->

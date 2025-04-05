@@ -200,7 +200,9 @@ fileInput1.addEventListener('change', () => {
 					var tabela8 = [];
 					rows8.map((e)=>{
 						tabela8.push({
-							membro: e.equipe,
+							membro: JSON.parse(e.equipe).membro,
+							funcao: JSON.parse(e.equipe).funcao,
+							observacao: JSON.parse(e.equipe).observacao
 						})
 					});
 					
