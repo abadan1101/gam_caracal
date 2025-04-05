@@ -534,7 +534,7 @@ async function exportarTarefas(){
 	//montar arrays do backup equipe
 	bdTabelaEquipe.map((e)=>{
 		//ferramenta
-		equipeBKAdd.push(e.membro)
+		equipeBKAdd.push(JSON.stringify(e))
 		//popular array
 		EquipeBK.push(equipeBKAdd)
 		//limpar array
