@@ -637,11 +637,13 @@ async function loadProdutosGeral(){
 
 
 //inserir novo membro da equipe--------------------------------
-function addEquipeBd(mem){
+function addEquipeBd(mem, func, obs){
 	var transaction = db.transaction("equipe", "readwrite"); 
 	var tarefTable = transaction.objectStore("equipe")
 	tarefTable.put({
 			membro: mem,
+			funcao: func,
+			observacao: obs,
 	})
 	
 	//se hover erro na transação
@@ -776,7 +778,7 @@ function alterarProdutosDB(n, e){
 		var objectStore = transaction.objectStore("produtos");
 		var request = objectStore.get(n);
 		request.onsuccess = function(){
-			request.result["produtos"] = e[0].produtos;
+			request.result["produto"] = e[0].produto;
 			request.result["local"] = e[0].local;
 			request.result["observacao"] = e[0].observacao;
 			objectStore.put(request.result);
