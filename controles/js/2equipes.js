@@ -282,8 +282,3 @@ function salvarFormEquipe(){
 	}
 
 }
-
-
-
-
-

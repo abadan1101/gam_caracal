@@ -36,24 +36,6 @@ tmAf.addEventListener("click",(evt)=>{
 
 
 
-//------------------------------BOTÃO ADD EM LOTE---------------------------------------
-//--------------------------------------------------------------------------------------
-const trfTbl_AddLote = document.getElementById("trf_menu_afLote")	
-trfTbl_AddLote.addEventListener("click",(evt)=>{
-	//mensagem
-	var icon = "img/imgOK.png"
-	var msg = "Em Desenvolvimento"
-	var act = "Aguarde, rotina em desenvolvimento!"
-	var modo = "conf"
-	var reload = "false"
-	var func = ""
-	openMSG(icon, msg, act, modo, reload,func);
-})
-//--------------------------------------------------------------------------------------
-//--------------------------------------------------------------------------------------
-
-
-
 
 //------------------------------BOTÃO IMPORTAR TAREFAS----------------------------------
 //--------------------------------------------------------------------------------------
