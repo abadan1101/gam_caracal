@@ -283,5 +283,47 @@ function salvarFormProduto(){
 
 
 
+//------------------------------BOTÃO RELATÓRIOS---------------------------------------
+//--------------------------------------------------------------------------------------
+const relatorioProd = document.getElementById("ctrlProdutosRelatorio")	
+relatorioProd.addEventListener("click",()=>{
+	(async function exportarRelatorio(){
+
+		//variáveis
+		const nomeAba1 = "produtos"
+		const nomePlanilha = "relatorio.xlsx"
+	
+		var bdTabela = await loadProdutosGeral()//pertence a folha: /tarefas/js/banco.js
+		var produto = [
+			[
+				"nome","local","observação"
+			]
+		];
+
+		var produtoAdd = []
+		
+		//montar arrays
+		bdTabela.map((evt)=>{
+
+			produtoAdd.push(evt.produto)
+			produtoAdd.push(evt.local)
+			produtoAdd.push(evt.observacao)
+
+			produto.push(produtoAdd)
+			//limpar array
+			produtoAdd = []
+		})
+		//----------------------------------------------
+	
+		//gravar planilha
+		var workbook = XLSX.utils.book_new();
+		var worksheet = XLSX.utils.aoa_to_sheet(produto);
+		XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
+		XLSX.writeFile(workbook, nomePlanilha);
+		
+	})()
+})
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 

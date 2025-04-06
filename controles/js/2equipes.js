@@ -282,3 +282,49 @@ function salvarFormEquipe(){
 	}
 
 }
+
+
+
+//------------------------------BOTÃO RELATÓRIOS---------------------------------------
+//--------------------------------------------------------------------------------------
+const relatorioEqu = document.getElementById("ctrlEquipesRelatorio")	
+relatorioEqu.addEventListener("click",()=>{
+	(async function exportarRelatorio(){
+
+		//variáveis
+		const nomeAba1 = "equipe"
+		const nomePlanilha = "relatorio.xlsx"
+	
+		var bdTabela = await loadEquipeGeral()//pertence a folha: /tarefas/js/banco.js
+		var equipe = [
+			[
+				"membro","função","observação"
+			]
+		];
+
+
+		var equipeAdd = []
+		
+		//montar arrays
+		bdTabela.map((evt)=>{
+
+			equipeAdd.push(evt.membro)
+			equipeAdd.push(evt.funcao)
+			equipeAdd.push(evt.observacao)
+
+			equipe.push(equipeAdd)
+			//limpar array
+			equipeAdd = []
+		})
+		//----------------------------------------------
+	
+		//gravar planilha
+		var workbook = XLSX.utils.book_new();
+		var worksheet = XLSX.utils.aoa_to_sheet(equipe);
+		XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
+		XLSX.writeFile(workbook, nomePlanilha);
+		
+	})()
+})
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------

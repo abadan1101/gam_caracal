@@ -283,5 +283,47 @@ function salvarFormFerramenta(){
 
 
 
+//------------------------------BOTÃO RELATÓRIOS---------------------------------------
+//--------------------------------------------------------------------------------------
+const relatorioFer = document.getElementById("ctrlFerramentasRelatorio")	
+relatorioFer.addEventListener("click",()=>{
+	(async function exportarRelatorio(){
+
+		//variáveis
+		const nomeAba1 = "ferramentas"
+		const nomePlanilha = "relatorio.xlsx"
+	
+		var bdTabela = await loadFerramentasGeral()//pertence a folha: /tarefas/js/banco.js
+		var ferramenta = [
+			[
+				"ferramenta","local","observação"
+			]
+		];
+
+		var ferramentaAdd = []
+		
+		//montar arrays
+		bdTabela.map((evt)=>{
+
+			ferramentaAdd.push(evt.ferramenta)
+			ferramentaAdd.push(evt.local)
+			ferramentaAdd.push(evt.observacao)
+
+			ferramenta.push(ferramentaAdd)
+			//limpar array
+			ferramentaAdd = []
+		})
+		//----------------------------------------------
+	
+		//gravar planilha
+		var workbook = XLSX.utils.book_new();
+		var worksheet = XLSX.utils.aoa_to_sheet(ferramenta);
+		XLSX.utils.book_append_sheet(workbook, worksheet, nomeAba1);
+		XLSX.writeFile(workbook, nomePlanilha);
+		
+	})()
+})
+//--------------------------------------------------------------------------------------
+//--------------------------------------------------------------------------------------
 
 
