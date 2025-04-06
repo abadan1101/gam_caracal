@@ -8,7 +8,7 @@ if(!localStorage.getItem("senhaConfig")){localStorage.setItem("senhaConfig", 110
 if(!localStorage.getItem("tipoMenu")){localStorage.setItem("tipoMenu", 5000)}
 
 //estatica: não é possivel editar a tabela sem o formulário; normal: tabela editavel.
-if(!localStorage.getItem("tipoTabela")){localStorage.setItem("tipoTabela", "normal")}
+if(!localStorage.getItem("tipoTabela")){localStorage.setItem("tipoTabela", "estatica")}
 
 
 
