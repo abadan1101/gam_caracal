@@ -45,3 +45,9 @@
     margin-top: 20px;
     padding-bottom: 5px;
 }
+
+@media (max-width: 600px) {
+    .myChartTitle{
+        display: none;
+    }
+}
