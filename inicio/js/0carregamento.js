@@ -22,3 +22,10 @@ function openInicio(){
 document.getElementById("home").addEventListener('click',()=>{
 	openInicio()
 });
+
+//chamada em caso de primeiro acesso
+(function primeiroLoad() {
+    if(!sessionStorage.getItem("reload")){
+        openInicio();
+    }
+})();
