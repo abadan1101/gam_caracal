@@ -21,13 +21,27 @@
     width: 100%;
     flex-wrap: wrap;
     background: #ddd;
+    border-radius: 10px;
 }
 
-#pnlInicio section div{
+#pnlInicio section main{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     min-width: 300px;
     flex-grow: 1;
+}
+
+.myChartDiv{
+    display: flex;
+    width: 100%;
+    border: solid 1px #aaa;
+    justify-content: space-around;
+}
+
+.myChartGrafic{
+    margin-bottom: 30px;
+    margin-top: 20px;
+    padding-bottom: 5px;
 }
