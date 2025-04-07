@@ -9,6 +9,9 @@
 @import '2barraPesquisa.css';
 @import '3caixa_msg.css';
 
+/*--importação do modulo inicio--*/
+@import '../../inicio/css/inicio.css';
+
 /*--importação do modulo tarefas--*/
 @import '../../tarefas/css/0menuSec.css';
 @import '../../tarefas/css/1tabela.css';
