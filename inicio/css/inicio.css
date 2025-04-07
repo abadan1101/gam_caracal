@@ -3,6 +3,18 @@
     width: 100%;
 }
 
+#myChartLinha01{
+    display: none;
+}
+
+#myChartLinha02{
+    display: none;
+}
+
+#myChartLinha03{
+    display: none;
+}
+
 #pnlInicio header{
     display: flex;
     justify-content: center;
@@ -33,17 +45,22 @@
     flex-grow: 1;
 }
 
+.myChartTipo{
+    margin-bottom: 10px;
+    margin-top: 10px;
+}
+
 .myChartDiv{
     display: flex;
     width: 100%;
     border: solid 1px #aaa;
     justify-content: space-around;
+    margin-bottom: 20px;
 }
 
 .myChartGrafic{
     margin-bottom: 30px;
     margin-top: 20px;
-    padding-bottom: 5px;
 }
 
 @media (max-width: 600px) {

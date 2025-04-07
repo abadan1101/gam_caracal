@@ -81,49 +81,56 @@
 					</div>
 					<section class="configModul">
 						<div id="pnlInicio">
-							<header>LINHA 01 ANV 4102</header>
-							<section>
-								<main>
-									<div>
-										<h1>ANDAMENTO CARTÕES</h1>
-									</div>
-									<div class="myChartDiv">
-										<div class="myChartTitle">teste</div>
-										<div class="myChartGrafic">
-											<canvas id="myChart" class="myChart"></canvas>
-										</div> 
-									</div>
-									
-								</main>
-								<main>
-									<div>
-										<h1>ANDAMENTO DA INSPEÇÃO</h1>
-									</div>
-									<div class="myChartDiv">
-										<div class="myChartTitle">teste</div>
-										<div class="myChartGrafic">
-											<canvas id="myChart2" class="myChart"></canvas>
-										</div> 
-									</div>
-									
-								</main>
-								<main>
-									<div>
-										<h1>PRAZO DA INSPEÇÃO</h1>
-									</div>
-									<div class="myChartDiv">
-										<div class="myChartTitle">teste</div>
-										<div class="myChartGrafic">
-											<canvas id="myChart3" class="myChart"></canvas>
-										</div> 
-									</div>
-									
-								</main>
-							</section>
-							<header>LINHA 02 ANV 4102</header>
-							<section>teste2</section>
-							<header>LINHA 03 ANV 4102</header>
-							<section>teste3</section>
+							<div id="myChartLinha01">
+								<header>LINHA 01 ANV 4102</header>
+								<section>
+									<main>
+										<div class="myChartTipo">
+											<h1>ANDAMENTO CARTÕES</h1>
+										</div>
+										<div class="myChartDiv">
+											<div class="myChartTitle">teste</div>
+											<div class="myChartGrafic">
+												<canvas id="myChart" class="myChart"></canvas>
+											</div> 
+										</div>
+										
+									</main>
+									<main>
+										<div class="myChartTipo">
+											<h1>ANDAMENTO DA INSPEÇÃO</h1>
+										</div>
+										<div class="myChartDiv">
+											<div class="myChartTitle">teste</div>
+											<div class="myChartGrafic">
+												<canvas id="myChart2" class="myChart"></canvas>
+											</div> 
+										</div>
+										
+									</main>
+									<main>
+										<div class="myChartTipo">
+											<h1>PRAZO DA INSPEÇÃO</h1>
+										</div>
+										<div class="myChartDiv">
+											<div class="myChartTitle">teste</div>
+											<div class="myChartGrafic">
+												<canvas id="myChart3" class="myChart"></canvas>
+											</div> 
+										</div>
+										
+									</main>
+								</section>
+							</div>
+							<div id="myChartLinha02">
+								<header>LINHA 02 ANV 4102</header>
+								<section>teste2</section>
+							</div>
+							<div id="myChartLinha03">
+								<header>LINHA 03 ANV 4102</header>
+								<section>teste3</section>
+							</div>
+							
 						</div>
 					</section>
 				</div>
@@ -1128,9 +1135,8 @@
 
 
 	<!-- script do modulo inicio -->
-	<script src="inicio/js/0carregamento.js"></script>
 	<script src="inicio/js/1inicio.js"></script>
-
+	<script src="inicio/js/0carregamento.js"></script>
 
 	<!-- script do modulo das tarefas -->
 	<script src="tarefas/js/1menuSec.js"></script>

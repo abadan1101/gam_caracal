@@ -5,6 +5,10 @@ function openInicio(){
 
 	//configuração para reload
 	sessionStorage.setItem("reload", "inicio")
+
+	graficosLinha01()
+	graficosLinha02()
+	graficosLinha03()
 }
 
 //reload da aba início
