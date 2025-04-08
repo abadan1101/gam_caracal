@@ -56,11 +56,19 @@
     width: 100%;
     border: solid 1px #aaa;
     justify-content: space-around;
+    background: #fff;
+    border-radius: 10px;
 }
 
 .myChartGrafic{
     margin-bottom: 30px;
     margin-top: 20px;
+    overflow-x: hidden;
+}
+
+#myChart{
+    width: 100%;
+    height: 300px;
 }
 
 @media (max-width: 600px) {
