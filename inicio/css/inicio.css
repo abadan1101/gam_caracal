@@ -43,6 +43,7 @@
     align-items: center;
     min-width: 300px;
     flex-grow: 1;
+    margin: 10px 20px 20px 20px;
 }
 
 .myChartTipo{
@@ -55,7 +56,6 @@
     width: 100%;
     border: solid 1px #aaa;
     justify-content: space-around;
-    margin-bottom: 20px;
 }
 
 .myChartGrafic{
