@@ -2,15 +2,29 @@
 
 async function graficosLinha01(){
 
-    //verificar se está ativo
+	
     const dbConfig = await loadTBCfgLin(0)
     const db = await loadTBCfgLin(1)
+    
+    dbLinha = "linha01"
+    const bdTabela = await loadTBLin()
+    var andamento = []
+    
+    bdTabela.map((e)=>{
+    	andamento.push(e.chave00)
+    })
 
+    //verificar se está ativo
     if(db.status == "inativo"){
         document.getElementById('myChartLinha01').style.display = "none"
     }else{
 	
-	const dbData =  [78, 50, 100, 50, 30, 57, 98, 42, 65, 23];
+	const occurrences = andamento.reduce((acc, curr) => {
+	  return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
+	}, {});
+	
+	
+	const dbData =  [10, 50, 100, 50, 30, 57, 98, 42, 65, 23];
 	
 	document.getElementById("myChartANV").innerHTML = "LINHA 01 ANV " + db.nANV
 	
