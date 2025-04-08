@@ -23,8 +23,8 @@ async function graficosLinha01(){
 	  return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
 	}, {});
 	
-	
-	const dbData =  [10, 50, 100, 50, 30, 57, 98, 42, 65, 23];
+	var aberto = "Aberto"
+	const dbData =  [occurrences[aberto], 50, 100, 50, 30, 57, 98, 42, 65, 23];
 	
 	document.getElementById("myChartANV").innerHTML = "LINHA 01 ANV " + db.nANV
 	
