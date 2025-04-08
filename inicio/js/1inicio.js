@@ -73,7 +73,6 @@ async function graficosLinha01(){
                 ],
 		borderWidth: 1,
 		barPercentage: 0.5,
-		barThickness: 20,
 		maxBarThickness: 20,
 		minBarLength: 2,
             }]
