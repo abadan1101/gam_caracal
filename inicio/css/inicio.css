@@ -5,10 +5,12 @@
 
 #myChartLinha01{
     display: none;
+    margin-bottom: 50px;
 }
 
 #myChartLinha02{
     display: none;
+    margin-bottom: 50px;
 }
 
 #myChartLinha03{
@@ -66,7 +68,7 @@
     overflow-x: hidden;
 }
 
-#myChart{
+#myChart, #myChart4, #myChart7{
     width: 100%;
     min-height: 300px;
 }

@@ -142,6 +142,26 @@ async function loadTBLin(){
 	})
 }
 
+//baixar tabelas das tarefas das linhas com cariavel
+async function loadTBLinVar(dbLinha){
+	await bdOK()
+	return new Promise((resolve)=>{
+		const tabela =  []
+		var transaction1 = db.transaction(dbLinha, "readonly");
+		var store1 = transaction1.objectStore(dbLinha);
+		var request1 = store1.openCursor();
+		request1.onsuccess = function (event) {
+			var cursor = event.target.result;
+			if (cursor) {
+				tabela.push(cursor.value)
+				cursor.continue();
+			}else{
+				resolve(tabela)
+			}
+		}
+	})
+}
+
 //baixar tabelas completas das configurações das tarefas
 async function loadTBCfgGeral(){
 	await bdOK()
