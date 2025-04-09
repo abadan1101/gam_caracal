@@ -30,10 +30,14 @@ async function graficosLinha01(){
         bdTabela.map((e)=>{
             totalCumprido += parseInt(e.porcentagem)
         })
-        const percentual = totalCumprido / totalcartoes
-        const emAndamento = 100 - percentual
-        
+        var percentual = totalCumprido / totalcartoes
+        var emAndamento = 100 - percentual
 
+	if(andamento.length <=0){
+        	percentual = 0
+        	emAndamento = 100
+        }
+        
         //valores de percentual do prazo
         const dataInicio = new Date(db.inicio)
         const dataFim = new Date(db.fim)
@@ -45,14 +49,28 @@ async function graficosLinha01(){
         if(dataHoje <= dataInicio){
             porcentagemDias = 0
             diasRest = 100
+            document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+	    document.getElementById("myChartTitleL1_Pass").innerHTML = 0 + " dias passados"
+	    document.getElementById("myChartTitleL1_Disp").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias totais disponíveis"
+	    document.getElementById("myChartTitleL1_util").innerHTML = '?' + " dias uteis disponíveis"
         }else{
             if(dataHoje <= dataFim){
                 diasTotais =  Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 diasPassados = Math.floor((dataHoje - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 porcentagemDias = diasPassados / diasTotais * 100
                 diasRest = 100 - porcentagemDias
+                document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+                document.getElementById("myChartTitleL1_Pass").innerHTML = diasPassados + " dias passados"
+                document.getElementById("myChartTitleL1_Disp").innerHTML = diasTotais - diasPassados + " dias totais disponíveis"
+                document.getElementById("myChartTitleL1_util").innerHTML = '?' + " dias uteis disponíveis"
+            }else{
+            	document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+        	document.getElementById("myChartTitleL1_Pass").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias passados"
+        	document.getElementById("myChartTitleL1_Disp").innerHTML = 0 + " dias totais disponíveis"
+        	document.getElementById("myChartTitleL1_util").innerHTML = 0 + " dias uteis disponíveis"
             }
         }
+        
         
         
 
@@ -219,9 +237,14 @@ async function graficosLinha02(){
         bdTabela.map((e)=>{
             totalCumprido += parseInt(e.porcentagem)
         })
-        const percentual = totalCumprido / totalcartoes
-        const emAndamento = 100 - percentual
         
+        var percentual = totalCumprido / totalcartoes
+        var emAndamento = 100 - percentual
+        
+        if(andamento.length <=0){
+        	percentual = 0
+        	emAndamento = 100
+        }
 
         //valores de percentual do prazo
         const dataInicio = new Date(db.inicio)
@@ -249,7 +272,7 @@ async function graficosLinha02(){
         document.getElementById('myChartLinha02').style.display = "block"
 
         //nome da linha
-	    document.getElementById("myChartANV2").innerHTML = "LINHA 02 ANV " + db.nANV
+	   document.getElementById("myChartANV2").innerHTML = "LINHA 02 ANV " + db.nANV
 
 
         //GRÁFICO DE ANDAMENTO DOS CARTÕES
@@ -409,9 +432,13 @@ async function graficosLinha03(){
         bdTabela.map((e)=>{
             totalCumprido += parseInt(e.porcentagem)
         })
-        const percentual = totalCumprido / totalcartoes
-        const emAndamento = 100 - percentual
+        var percentual = totalCumprido / totalcartoes
+        var emAndamento = 100 - percentual
         
+        if(andamento.length <=0){
+        	percentual = 0
+        	emAndamento = 100
+        }
 
         //valores de percentual do prazo
         const dataInicio = new Date(db.inicio)
