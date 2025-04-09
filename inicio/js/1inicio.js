@@ -13,6 +13,7 @@ async function graficosLinha01(){
     bdTabela.map((e)=>{
     	andamento.push(e.chave00)
     })
+    console.log(bdTabela.length)
 
     //verificar se está ativo
     if(db.status == "inativo"){
@@ -23,8 +24,18 @@ async function graficosLinha01(){
 	  return acc[curr] ? ++acc[curr] : acc[curr] = 1, acc
 	}, {});
 	
-	var aberto = "Aberto"
-	const dbData =  [occurrences[aberto], 50, 100, 50, 30, 57, 98, 42, 65, 23];
+	const dbData =  [
+        occurrences[dbConfig.chave00[2]],
+        occurrences[dbConfig.chave00[3]],
+        occurrences[dbConfig.chave00[4]],
+        occurrences[dbConfig.chave00[5]],
+        occurrences[dbConfig.chave00[6]],
+        occurrences[dbConfig.chave00[7]],
+        occurrences[dbConfig.chave00[8]],
+        occurrences[dbConfig.chave00[9]],
+        occurrences[dbConfig.chave00[10]],
+        occurrences[dbConfig.chave00[11]],
+    ];
 	
 	document.getElementById("myChartANV").innerHTML = "LINHA 01 ANV " + db.nANV
 	
@@ -45,7 +56,7 @@ async function graficosLinha01(){
                 dbConfig.chave00[11],
             ],
             datasets: [{
-                label: 'Cartões de inspeção',
+                label: 'Total de ' + bdTabela.length + ' cartões',
                 data: dbData,
                 backgroundColor: [
 		        '#f77',
