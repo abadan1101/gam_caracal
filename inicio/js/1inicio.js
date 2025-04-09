@@ -71,11 +71,11 @@ async function graficosLinha01(){
 		        '#F00',
 		        '#BC8F8F'
                 ],
-		borderWidth: 1,
-		barPercentage: 0.5,
-		barThickness: 20,
-		maxBarThickness: 20,
-		minBarLength: 2,
+                borderWidth: 1,
+                barPercentage: 1,
+                barThickness: 20,
+                maxBarThickness: 20,
+                minBarLength: 2,
             }]
         };
 
