@@ -98,7 +98,7 @@ fileInput.addEventListener('change', () => {
 						chave05: "",
 						porcentagem: "0",
 						tarefa: e.descricao,
-						serviço: "",
+						serviço: e.servico,
 						pedidos: [],
 						ferramentas: [],
 						produtos: [],
