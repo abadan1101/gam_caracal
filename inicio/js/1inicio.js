@@ -46,13 +46,32 @@ async function graficosLinha01(){
         var diasPassados
         var porcentagemDias = 100
         var diasRest = 0
+        var x = dataHoje
+        var y = dataFim.getTime()
+        var z = dataInicio.getTime() 
+	var diasUteis = 0
+	var diasUteis2 = 0
+        while(x<y){
+        	var d = new Date(x).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis++
+        	}
+        	x += 86400000
+        }
+        while(z<y){
+        	var d = new Date(z).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis2++
+        	}
+        	z += 86400000
+        }
         if(dataHoje <= dataInicio){
             porcentagemDias = 0
             diasRest = 100
             document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
 	    document.getElementById("myChartTitleL1_Pass").innerHTML = 0 + " dias passados"
 	    document.getElementById("myChartTitleL1_Disp").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias totais disponíveis"
-	    document.getElementById("myChartTitleL1_util").innerHTML = '?' + " dias uteis disponíveis"
+	    document.getElementById("myChartTitleL1_util").innerHTML = diasUteis2 + " dias uteis disponíveis"
         }else{
             if(dataHoje <= dataFim){
                 diasTotais =  Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1)
@@ -62,7 +81,7 @@ async function graficosLinha01(){
                 document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
                 document.getElementById("myChartTitleL1_Pass").innerHTML = diasPassados + " dias passados"
                 document.getElementById("myChartTitleL1_Disp").innerHTML = diasTotais - diasPassados + " dias totais disponíveis"
-                document.getElementById("myChartTitleL1_util").innerHTML = '?' + " dias uteis disponíveis"
+                document.getElementById("myChartTitleL1_util").innerHTML = diasUteis + " dias uteis disponíveis"
             }else{
             	document.getElementById("myChartTitleL1_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
         	document.getElementById("myChartTitleL1_Pass").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias passados"
@@ -254,15 +273,47 @@ async function graficosLinha02(){
         var diasPassados
         var porcentagemDias = 100
         var diasRest = 0
+        var x = dataHoje
+        var y = dataFim.getTime()
+        var z = dataInicio.getTime() 
+	var diasUteis = 0
+	var diasUteis2 = 0
+        while(x<y){
+        	var d = new Date(x).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis++
+        	}
+        	x += 86400000
+        }
+        while(z<y){
+        	var d = new Date(z).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis2++
+        	}
+        	z += 86400000
+        }
         if(dataHoje <= dataInicio){
             porcentagemDias = 0
             diasRest = 100
+            document.getElementById("myChartTitleL2_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+	    document.getElementById("myChartTitleL2_Pass").innerHTML = 0 + " dias passados"
+	    document.getElementById("myChartTitleL2_Disp").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias totais disponíveis"
+	    document.getElementById("myChartTitleL2_util").innerHTML = diasUteis2 + " dias uteis disponíveis"
         }else{
             if(dataHoje <= dataFim){
                 diasTotais =  Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 diasPassados = Math.floor((dataHoje - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 porcentagemDias = diasPassados / diasTotais * 100
                 diasRest = 100 - porcentagemDias
+                document.getElementById("myChartTitleL2_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+                document.getElementById("myChartTitleL2_Pass").innerHTML = diasPassados + " dias passados"
+                document.getElementById("myChartTitleL2_Disp").innerHTML = diasTotais - diasPassados + " dias totais disponíveis"
+                document.getElementById("myChartTitleL2_util").innerHTML = diasUteis + " dias uteis disponíveis"
+            }else{
+            	document.getElementById("myChartTitleL2_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+        	document.getElementById("myChartTitleL2_Pass").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias passados"
+        	document.getElementById("myChartTitleL2_Disp").innerHTML = 0 + " dias totais disponíveis"
+        	document.getElementById("myChartTitleL2_util").innerHTML = 0 + " dias uteis disponíveis"
             }
         }
         
@@ -448,15 +499,47 @@ async function graficosLinha03(){
         var diasPassados
         var porcentagemDias = 100
         var diasRest = 0
+         var x = dataHoje
+        var y = dataFim.getTime()
+        var z = dataInicio.getTime() 
+	var diasUteis = 0
+	var diasUteis2 = 0
+        while(x<y){
+        	var d = new Date(x).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis++
+        	}
+        	x += 86400000
+        }
+        while(z<y){
+        	var d = new Date(z).getDay()
+        	if(d != 6 && d != 0){
+        		diasUteis2++
+        	}
+        	z += 86400000
+        }
         if(dataHoje <= dataInicio){
             porcentagemDias = 0
             diasRest = 100
+            document.getElementById("myChartTitleL3_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+	    document.getElementById("myChartTitleL3_Pass").innerHTML = 0 + " dias passados"
+	    document.getElementById("myChartTitleL3_Disp").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias totais disponíveis"
+	    document.getElementById("myChartTitleL3_util").innerHTML = diasUteis2 + " dias uteis disponíveis"
         }else{
             if(dataHoje <= dataFim){
                 diasTotais =  Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 diasPassados = Math.floor((dataHoje - dataInicio) / (1000 * 60 * 60 * 24) + 1)
                 porcentagemDias = diasPassados / diasTotais * 100
                 diasRest = 100 - porcentagemDias
+                document.getElementById("myChartTitleL3_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+                document.getElementById("myChartTitleL3_Pass").innerHTML = diasPassados + " dias passados"
+                document.getElementById("myChartTitleL3_Disp").innerHTML = diasTotais - diasPassados + " dias totais disponíveis"
+                document.getElementById("myChartTitleL3_util").innerHTML = diasUteis + " dias uteis disponíveis"
+            }else{
+            	document.getElementById("myChartTitleL3_pz").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias de prazo"
+        	document.getElementById("myChartTitleL3_Pass").innerHTML = Math.floor((dataFim - dataInicio) / (1000 * 60 * 60 * 24) + 1) + " dias passados"
+        	document.getElementById("myChartTitleL3_Disp").innerHTML = 0 + " dias totais disponíveis"
+        	document.getElementById("myChartTitleL3_util").innerHTML = 0 + " dias uteis disponíveis"
             }
         }
         
