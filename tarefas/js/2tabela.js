@@ -376,6 +376,7 @@ async function TrfTbl_LoadStatic(bdTabela){//função chamada na folha: /tarefas
 				var andamento = linha.insertCell(4);
 				andamento.innerHTML = bdTabela[i].chave00;
 				andamento.classList.add('trfTblCol5');
+				andamento.addEventListener("dblclick",(e)=>{tblEstatAndamento(e.target)})
 				//-------------------------------------------------
 
 				//preencher coluna chave 01------------------------
@@ -418,6 +419,7 @@ async function TrfTbl_LoadStatic(bdTabela){//função chamada na folha: /tarefas
 				var serv = linha.insertCell(11);
 				serv.innerHTML = bdTabela[i].serviço;
 				serv.classList.add('trfTblCol12');
+				serv.addEventListener("dblclick",(e)=>{tblEstat(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna das pendencias------------------	
@@ -515,6 +517,182 @@ async function TrfTbl_LoadStatic(bdTabela){//função chamada na folha: /tarefas
 		}
 	})
 	//---------------------------------------------------------------------------------------------
+}
+//alterar andamento
+async function tblEstatAndamento(e){
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const slct = document.createElement("select")
+	slct.classList.add('trf_tblSlctTbl');
+	slct.classList.add('trf_tblSlctAdmt');
+	const n = bdCfg.chave00.length
+	for(f=2;f<n;f++){
+		const z1 = document.createElement("option");
+		var num = bdCfg.chave00[f]
+		if(num != ""){
+			z1.innerHTML = bdCfg.chave00[f]
+			slct.appendChild(z1);
+		}
+	}
+	e.appendChild(slct);
+	e.firstChild.value = texto
+	trfTbl_configAndamento(slct)
+	slct.focus()
+	slct.addEventListener("change", (j)=>{
+		trfTbl_altetarAndamentoStat(j.target)
+	})
+	slct.addEventListener("focusout",(x)=>{
+		e.innerHTML = slct.value
+	})
+	
+}
+//salvar andamento
+async function trfTbl_altetarAndamentoStat(e){
+
+	const j = e.value
+	var y = e.parentElement.parentElement
+	var z = parseInt(y.children[0].innerHTML)
+	
+	await AltTarefasBd(z, "chave00", e.value)
+	const vlAlt = await obterDados(z, "chave00")
+	
+	//mensagem de erro!
+	if(vlAlt != e.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			e.value = j
+	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(z, "atualizacao", dataAtlz)
+		y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
+		//cor da linha
+		trfTbl_CorLinha(e.value, y)
+
+		//ajustar porcentagem
+		if(e.value == "Fechado" || e.value == "Ag. Virada" || e.value == "Ag. Abrir"){
+			trfTbl_autoPorcentagem(e.value, y)
+		}else{
+			const prtgem = e.parentElement.parentElement.children[9]
+			if(prtgem.innerHTML == "100%"){
+				trfTbl_autoPorcentagem(e.value, y)
+			}
+		}	
+	}
+}
+
+//altetar serviços executados
+function tblEstat(e){
+	
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const k = document.createElement("TEXTAREA");
+	k.classList.add('trfTblCol12txaStat');
+	e.appendChild(k);
+	e.firstChild.value = texto;
+	e.firstChild.focus();
+	//altura automática ao digitar
+	trfTbl_auturaAutomaticaTXA(e.firstChild)
+	//altura automática ao focar
+	trfTbl_auturaAutomaticaTXAFoco(k)
+	//rotinas para salvar serviço executado
+	e.firstChild.addEventListener("focusout",(x)=>{
+		
+		trfTbl_salvarTarefaTXAStat(x.target)
+		e.innerHTML = k.value
+	})
+	
+}
+//salvar serviço executado
+async function trfTbl_salvarTarefaTXAStat(e){
+	var y = e.parentElement.parentElement
+	const u = e.value
+
+	if(alturaTXA != 0){
+		e.style.height = alturaTXA + "px"
+	}
+
+	var z = parseInt(y.children[0].innerHTML)
+		const vlAlt = await obterDados(z, "serviço")
+		if(u != vlAlt){
+			await AltTarefasBd(z, "serviço", e.value)
+			const vlAltx = await obterDados(z, "serviço")
+			if(vlAltx != e.value){
+				var icon = "img/imgError.png"
+				var msg = "Erro"
+				var act = "Erro ao alterar serviço executado"
+				var modo = "conf"
+				var reload = "false"
+				var func = ""
+				openMSG(icon, msg, act, modo, reload,func);
+			}else{
+				//alterar andamento da tarefa ao mudar o serviço executado
+				const trfTbl_selectAndamento = y.children[4]
+				var servico = e
+				const pendente = trTbl_verificarPendencias(y)
+
+				if(trfTbl_selectAndamento.innerHTML != "Aberto"){
+					trfTbl_andamentoAtv = trfTbl_selectAndamento.innerHTML
+				}else{
+					trfTbl_andamentoAtv = "Em Exec."
+				}
+
+				if(pendente != true){
+					if(servico.value == ""){
+						if(trfTbl_andamentoAtv != "Ag. Abrir"){
+							trfTbl_selectAndamento.innerHTML = "Aberto"
+						}else{
+							trfTbl_selectAndamento.innerHTML = "Ag. Abrir"
+						}
+					}else{
+						if(trfTbl_andamentoAtv == "Aberto" || trfTbl_andamentoAtv == ""){
+							trfTbl_selectAndamento.innerHTML = "Em Exec."
+						}else{
+							trfTbl_selectAndamento.innerHTML = trfTbl_andamentoAtv
+							
+						}
+					}
+					var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+					for(i = 0; i < bdCfg.chave00.length; i++){
+						if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && u.includes(bdCfg.chave00[i] + "**")){
+							trfTbl_selectAndamento.innerHTML = bdCfg.chave00[i]
+						}
+					}
+				}
+				
+				await AltTarefasBd(z, "chave00", trfTbl_selectAndamento.innerHTML)
+				const vlAlt = await obterDados(z, "chave00")
+
+				//mensagem de erro!
+				if(vlAlt != trfTbl_selectAndamento.innerHTML){
+					var icon = "img/imgError.png"
+					var msg = "Erro"
+					var act = "Erro ao alterar andamento"
+					var modo = "conf"
+					var reload = "false"
+					var func = ""
+					openMSG(icon, msg, act, modo, reload,func);
+				}else{
+					//atualizar data
+					var dataAtlz = new Date().getTime()
+					AltTarefasBd(z, "atualizacao", dataAtlz)
+					y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
+					//cor da linha
+					trfTbl_CorLinha(trfTbl_selectAndamento.innerHTML, y)
+
+					//atualizar porcentagem
+					trfTbl_autoPorcentagem(trfTbl_selectAndamento.innerHTML, y)
+				}
+			}
+		}
 }
 //--------------------------------------------------------------------------------------
 //--------------------------------------------------------------------------------------
