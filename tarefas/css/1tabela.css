@@ -279,9 +279,9 @@
 	border: none;
 	font-size: 16px;
 	height: 45px;
+	padding:5px;
 	outline: none;
-	scrollbar-width:thin;
-	scrollbar-color: #999 #fff;
+	overflow-y: hidden;
 	margin-bottom: -1px; /*-5px para o chrome*/
 }
 .trfTblCol12txaStat:focus{
