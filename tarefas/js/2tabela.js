@@ -383,24 +383,28 @@ async function TrfTbl_LoadStatic(bdTabela){//função chamada na folha: /tarefas
 				var ch01 = linha.insertCell(5);
 				ch01.innerHTML = bdTabela[i].chave02;
 				ch01.classList.add('trfTblCol6');
+				ch01.addEventListener("dblclick",(e)=>{tblEstatChave01(e.target)})
 				//-------------------------------------------------
 				
 				//preencher coluna chave 02------------------------
 				var ch02 = linha.insertCell(6);
 				ch02.innerHTML = bdTabela[i].chave03;
 				ch02.classList.add('trfTblCol7');
+				ch02.addEventListener("dblclick",(e)=>{tblEstatChave02(e.target)})
 				//-------------------------------------------------
 
 				//preencher chave 03-------------------------------
 				var ch03 = linha.insertCell(7);
 				ch03.innerHTML = bdTabela[i].chave04;
 				ch03.classList.add('trfTblCol8');
+				ch03.addEventListener("dblclick",(e)=>{tblEstatChave03(e.target)})
 				//-------------------------------------------------
 				
 				//preencher chave 04-------------------------------
 				var ch04 = linha.insertCell(8);
 				ch04.innerHTML = bdTabela[i].chave05;
 				ch04.classList.add('trfTblCol9');
+				ch04.addEventListener("dblclick",(e)=>{tblEstatChave04(e.target)})
 				//-------------------------------------------------
 				
 				//preencher porcentagem----------------------------
@@ -537,7 +541,7 @@ async function tblEstatAndamento(e){
 	}
 	e.appendChild(slct);
 	e.firstChild.value = texto
-	trfTbl_configAndamento(slct)
+	trfTbl_configAndamentoStat(slct)
 	slct.focus()
 	slct.addEventListener("change", (j)=>{
 		trfTbl_altetarAndamentoStat(j.target)
@@ -588,6 +592,287 @@ async function trfTbl_altetarAndamentoStat(e){
 	}
 }
 
+//função para configurar opções de andamento
+async function trfTbl_configAndamentoStat(select){
+	const tarefa = select.parentElement.parentElement;
+	const opcoes = select.children
+	const pendente = trTbl_verificarPendencias(tarefa)
+
+	//verificar uso de andamento automático no textarea
+	const vlTXA = select.parentElement.parentElement.children[11].innerHTML
+	var usoTXA = false
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	for(i = 0; i < bdCfg.chave00.length; i++){
+		if(i != 2 && i != 4 && bdCfg.chave00[i] != "" && vlTXA.includes(bdCfg.chave00[i] + "**")){
+			usoTXA = true
+		}
+	}
+
+	//caso alguma pendência
+	if(pendente == true || usoTXA == true){
+		for(i=0;i<opcoes.length;i++){
+			opcoes[i].disabled = true
+			opcoes[i].style.color = "#ddd"
+		}
+	}else{
+		//caso caixa de serviço vazia
+		const Servico = tarefa.children[11].innerHTML
+		if(Servico == ""){
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = true
+				opcoes[i].style.color = "#ddd"
+				opcoes[0].disabled = false
+				opcoes[0].style.color = "#000"
+				opcoes[4].disabled = false
+				opcoes[4].style.color = "#000"
+			}
+		}else{
+			for(i=0;i<opcoes.length;i++){
+				opcoes[i].disabled = false
+				opcoes[i].style.color = "#000"
+				opcoes[0].disabled = true
+				opcoes[0].style.color = "#ddd"
+				opcoes[2].disabled = true
+				opcoes[2].style.color = "#ddd"
+			}
+		}
+	}
+}
+
+//alterar chave01
+async function tblEstatChave01(e){
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const slct = document.createElement("select")
+	slct.classList.add('trf_tblSlctTbl');
+	const h = document.createElement("option");
+	h.innerHTML = ""
+	slct.appendChild(h);
+	const n = bdCfg.chave02.length
+	for(f=2;f<n;f++){
+		const z1 = document.createElement("option");
+		var num = bdCfg.chave02[f]
+		if(num != ""){
+			z1.innerHTML = bdCfg.chave02[f]
+			slct.appendChild(z1);
+		}
+	}
+	e.appendChild(slct);
+	e.firstChild.value = texto
+	slct.focus()
+	slct.addEventListener("change", (j)=>{
+		trfTbl_altetarChave01Stat(j.target)
+	})
+	slct.addEventListener("focusout",(x)=>{
+		e.innerHTML = slct.value
+	})
+	
+}
+
+//salvar chave01
+async function trfTbl_altetarChave01Stat(e){
+
+	const j = e.value
+	var y = e.parentElement.parentElement
+	var z = parseInt(y.children[0].innerHTML)
+	
+	await AltTarefasBd(z, "chave02", e.value)
+	const vlAlt = await obterDados(z, "chave02")
+	
+	//mensagem de erro!
+	if(vlAlt != e.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			e.value = j
+	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(z, "atualizacao", dataAtlz)
+		y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")	
+
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+
+//alterar chave02
+async function tblEstatChave02(e){
+	var bdCfg = await loadTBCfgLin(0)//pertence a folha: /tarefas/js/banco.js
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const slct = document.createElement("select")
+	slct.classList.add('trf_tblSlctTbl');
+	const h = document.createElement("option");
+	h.innerHTML = ""
+	slct.appendChild(h);
+	const n = bdCfg.chave03.length
+	for(f=2;f<n;f++){
+		const z1 = document.createElement("option");
+		var num = bdCfg.chave03[f]
+		if(num != ""){
+			z1.innerHTML = bdCfg.chave03[f]
+			slct.appendChild(z1);
+		}
+	}
+	e.appendChild(slct);
+	e.firstChild.value = texto
+	slct.focus()
+	slct.addEventListener("change", (j)=>{
+		trfTbl_altetarChave02Stat(j.target)
+	})
+	slct.addEventListener("focusout",(x)=>{
+		e.innerHTML = slct.value
+	})
+	
+}
+
+//salvar chave02
+async function trfTbl_altetarChave02Stat(e){
+
+	const j = e.value
+	var y = e.parentElement.parentElement
+	var z = parseInt(y.children[0].innerHTML)
+	
+	await AltTarefasBd(z, "chave03", e.value)
+	const vlAlt = await obterDados(z, "chave03")
+	
+	//mensagem de erro!
+	if(vlAlt != e.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+			e.value = j
+	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(z, "atualizacao", dataAtlz)
+		y.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")	
+
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+
+//alterar chave03
+async function tblEstatChave03(e){
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const cxText1 = document.createElement("INPUT");
+	cxText1.type = "text";
+	cxText1.setAttribute("maxLength","30")
+	cxText1.classList.add('trfTbl_inputTxtStat');
+	e.appendChild(cxText1);
+	e.firstChild.value = texto
+	cxText1.focus()
+	//eventos do select chave 02
+	cxText1.addEventListener("change", (j)=>{
+		trfTbl_altetarChave03Stat(j.target)
+	})
+	cxText1.addEventListener("focusout",(x)=>{
+		e.innerHTML = cxText1.value
+	})
+	e.firstChild.addEventListener("change", (e)=>{})
+}
+
+//salvar chave 03
+async function trfTbl_altetarChave03Stat(elemento){
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave04", elemento.value)
+	const vlAlt = await obterDados(id, "chave04")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+
+//alterar chave04
+async function tblEstatChave04(e){
+	const texto = e.innerHTML
+	e.innerHTML = ""
+	const cxText1 = document.createElement("INPUT");
+	cxText1.type = "text";
+	cxText1.setAttribute("maxLength","30")
+	cxText1.classList.add('trfTbl_inputTxtStat');
+	e.appendChild(cxText1);
+	e.firstChild.value = texto
+	cxText1.focus()
+	//eventos do select chave 02
+	cxText1.addEventListener("change", (j)=>{
+		trfTbl_altetarChave04Stat(j.target)
+	})
+	cxText1.addEventListener("focusout",(x)=>{
+		e.innerHTML = cxText1.value
+	})
+	e.firstChild.addEventListener("change", (e)=>{})
+}
+
+//salvar chave 04
+async function trfTbl_altetarChave04Stat(elemento){
+	var linha = elemento.parentElement.parentElement
+	var id = parseInt(linha.children[0].innerHTML)
+	
+	await AltTarefasBd(id, "chave05", elemento.value)
+	const vlAlt = await obterDados(id, "chave05")
+	
+	//mensagem de erro!
+	if(vlAlt != elemento.value){
+			var icon = "img/imgError.png"
+			var msg = "Erro"
+			var act = "Erro ao alterar andamento"
+			var modo = "conf"
+			var reload = "false"
+			var func = ""
+			openMSG(icon, msg, act, modo, reload,func);
+	}else{
+		//atualizar data
+		var dataAtlz = new Date().getTime()
+		AltTarefasBd(id, "atualizacao", dataAtlz)
+		linha.children[14].innerHTML = new Date(dataAtlz).toLocaleDateString("pt-BR")
+
+		//mensagem de confirmação
+		document.getElementById('trf_tblmsgSec').style.display = "flex"
+		setTimeout(()=>{
+			document.getElementById('trf_tblmsgSec').style.display = "none"
+		},3000)
+	}
+}
+
 //altetar serviços executados
 function tblEstat(e){
 	
@@ -611,6 +896,8 @@ function tblEstat(e){
 	
 }
 //salvar serviço executado
+//variável que define andamento
+var trfTbl_andamentoAtvStat = ""
 async function trfTbl_salvarTarefaTXAStat(e){
 	var y = e.parentElement.parentElement
 	const u = e.value
@@ -639,23 +926,23 @@ async function trfTbl_salvarTarefaTXAStat(e){
 				const pendente = trTbl_verificarPendencias(y)
 
 				if(trfTbl_selectAndamento.innerHTML != "Aberto"){
-					trfTbl_andamentoAtv = trfTbl_selectAndamento.innerHTML
+					trfTbl_andamentoAtvStat = trfTbl_selectAndamento.innerHTML
 				}else{
-					trfTbl_andamentoAtv = "Em Exec."
+					trfTbl_andamentoAtvStat = "Em Exec."
 				}
 
 				if(pendente != true){
 					if(servico.value == ""){
-						if(trfTbl_andamentoAtv != "Ag. Abrir"){
+						if(trfTbl_andamentoAtvStat != "Ag. Abrir"){
 							trfTbl_selectAndamento.innerHTML = "Aberto"
 						}else{
 							trfTbl_selectAndamento.innerHTML = "Ag. Abrir"
 						}
 					}else{
-						if(trfTbl_andamentoAtv == "Aberto" || trfTbl_andamentoAtv == ""){
+						if(trfTbl_andamentoAtvStat == "Aberto" || trfTbl_andamentoAtvStat == ""){
 							trfTbl_selectAndamento.innerHTML = "Em Exec."
 						}else{
-							trfTbl_selectAndamento.innerHTML = trfTbl_andamentoAtv
+							trfTbl_selectAndamento.innerHTML = trfTbl_andamentoAtvStat
 							
 						}
 					}
