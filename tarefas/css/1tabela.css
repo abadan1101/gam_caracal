@@ -98,7 +98,6 @@
 	overflow-x: auto;
 	max-height: calc(100vh - 200px);
 	border: solid 1px #ccc;
-	scrollbar-width:thin;
 	scrollbar-color: #999 #fff;
 }
 #trf_tblTb{
